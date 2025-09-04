@@ -4,9 +4,20 @@ Blob generation helper for D3 python plugin.
 
 ## Overview
 
-This package offers an API `get_d3_function_blob` generating a blob of function body in `str` format. It can also be thought as a function template provider. This allows to leverage python stub file `d3.pyi` from Disguise for plugin development, so full type information can be accessed throughout the development process. 
+This package provides a decorator-based API for creating D3 Designer plugin functions with automatic blob generation and module registration. Using the `@d3function` decorator, you can transform regular Python functions into D3-compatible functions that generate execution blobs for remote execution in Designer.
 
-The main functionality involves extracting Python functions, parsing their structure, and generating code templates with placeholder substitution.
+### IDE Integration & Type Safety
+
+The `@d3function` decorator preserves full type information and function signatures, providing excellent IDE support:
+
+![Function Definition](data/demo1.png)
+
+*Functions decorated with `@d3function` maintain their original signature and type hints*
+
+![Type Hints](data/demo2.png)
+
+*IDE shows complete type information including return types and method signatures for the wrapped D3Function*
+
 
 ## Project Structure
 
@@ -14,11 +25,11 @@ The main functionality involves extracting Python functions, parsing their struc
 ├── src/
 │   ├── main.py                    # Entry point for demonstration
 │   └── d3blobgen/                 # Core package
-│       ├── __init__.py            # Package initialization
-│       ├── core.py                # Function extraction and parsing logic
+│       ├── __init__.py            # Package exports (d3function, D3Function, etc.)
+│       ├── core.py                # Core D3Function wrapper and decorator implementation
 │       └── scripts/               # Directory to add any plugin python scripts
 │           ├── d3.pyi             # D3 stubs file (replace with latest version)
-│           ├── example.py         # Example plugin functions
+│           ├── example.py         # Example plugin functions using @d3function
 │           └── <YOUR_SCRIPT>.py   # Any plugin python script can be added here
 ├── tests/
 │   ├── __init__.py                # Test package initialization
@@ -28,19 +39,19 @@ The main functionality involves extracting Python functions, parsing their struc
 └── README.md
 ```
 
-**d3blobgen as package**
+**Using d3blobgen as a package**
 
--  The directory structure below demonstrate how you can setup the stub file with scripts for the plugin development. The key take is that, d3 stub file must be located in the same directory as other script to generate blob from to access all type information.
+When using d3blobgen in your own projects, ensure the D3 stub file (`d3.pyi`) is located in the same directory as your plugin scripts to access all type information:
 
 ```
-<REPO_ROOT>
+<YOUR_PROJECT>
 ├── src/
 │   └── main.py                    # Your entry point
-│       └── scripts/               # Directory to add any plugin python scripts
-│           ├── d3.pyi             # D3 stubs file (replace with latest version)
-│           └── <YOUR_SCRIPT>.py   # Any plugin python script can be added here
+│   └── scripts/                   # Directory for your plugin python scripts
+│       ├── d3.pyi                 # D3 stubs file (replace with latest version)
+│       └── <YOUR_SCRIPT>.py       # Your plugin scripts using @d3function
 └── .venv/               
-    └── Lib/site-packages/d3blobgen/core.py # d3blobgen package
+    └── Lib/site-packages/d3blobgen/ # Installed d3blobgen package
 ```
 
 ## Requirements
@@ -58,68 +69,108 @@ uv sync
 
 ## Usage
 
-### 1. Basic Example
+The `@d3function` decorator is the core of d3blobgen. It wraps Python functions and provides automatic blob generation for D3 Designer execution.
+
+### 1. Basic Execute Blob Example
+
+When `d3function` is registered without module name, the execute blob will contain full script along with leading arguments assignment. Also note that the retrieved blob does not have `module_name` field.
 
 ```python
-from d3blobgen import get_d3_function_blob
+from d3blobgen import d3function
 
-# Define your plugin function (no args)
-def mrset_fn_with_args() -> dict[str, str]:
+# Define your plugin function with decorator (no module)
+@d3function()
+def mrset_fn_with_args(mrset_name:str) -> dict[str, str]:
     import d3
     mr_set: d3.MixedRealitySet = d3.resourceManager.load(
-        f'objects/mixedrealityset/mymrset.apx',
+        'objects/mixedrealityset/{}.apx'.format(mrset_name),
         d3.MixedRealitySet)
     # do anything with mrset
     return { "name": mr_set.name }
 
-# Pass your plugin function to create d3 function blob
-result = get_d3_function_blob(mrset_fn_with_args)
+# Retrieve execute blob to send to Designer execute endpoint
+result = mrset_fn_with_args.get_execute_blob("my_mrset")
+print(result["script"])
 
-print(result)
 """
+mrset_name='my_mrset'
 import d3
-mr_set: d3.MixedRealitySet = d3.resourceManager.load(
-    f'objects/mixedrealityset/mymrset.apx',
-    d3.MixedRealitySet)
-# do anything with mrset
-return { "name": mr_set.name }
+mr_set: d3.MixedRealitySet = d3.resourceManager.load('objects/mixedrealityset/{}.apx'.format(mrset_name), d3.MixedRealitySet)
+return {'name': mr_set.name}
 """
 ```
 
-### 2. Example with Argument
+### 2. Module-Based Function Registration
+
+When `d3function` is registered with module name, the execute blob will contain only function call along with module name. 
+
+**Important note:**
+- module must be registered first.
+- registering module can be done only once.
+  - you must define all `d3function`s first, then register the module at the end.
+
+**Register function to module**
 
 ```python
-from d3blobgen import get_d3_function_blob
+from d3blobgen import (
+    d3function,
+    register_all_d3functions,
+    register_module_d3functions
+)
 
-# Define your plugin function (with arg mr_set_name)
-def mrset_fn_with_args(mr_set_name: str) -> dict[str, str]:
+@d3function(module_name="my_d3_module")
+def get_mrset_uid(mrset_name:str) -> dict[str, str]:
     import d3
     mr_set: d3.MixedRealitySet = d3.resourceManager.load(
-        f'objects/mixedrealityset/{mr_set_name}.apx',
+        'objects/mixedrealityset/{}.apx'.format(mrset_name),
         d3.MixedRealitySet)
-    # do anything with mrset
-    
-    return { "name": mr_set.name }
+    return { "uid": mr_set.uid }
 
-# Pass your plugin function and argument to create d3 function blob
-# - key: name of argument to replace in your function
-# - val: value that will be replace the key
-result = get_d3_function_blob(mrset_fn_with_args, {"mr_set_name": "my_scene"})
+@d3function(module_name="my_d3_module")
+def get_camera_uid(camera_name:str) -> dict[str, str]:
+    import d3
+    camera: d3.MixedRealitySet = d3.resourceManager.load(
+        'objects/camera/{}.apx'.format(camera_name),
+        d3.Camera)
+    return { "uid": camera.uid }
 
-print(result)
+register_all_d3functions("localhost") # or register_module_d3functions("localhost", "my_d3_module")
+```
+
+**Executing registered function**
+
+```python
+# Retrieve execute blob to send to Designer execute endpoint
+result1 = get_mrset_uid.get_execute_blob("my_mrset")
+result2 = get_camera_uid.get_execute_blob("my_cam")
+print(result1)
+print(result2)
 """
-import d3
-mr_set: d3.MixedRealitySet = d3.resourceManager.load(
-    f'objects/mixedrealityset/my_scene.apx',
-    d3.MixedRealitySet)
-# do anything with mrset
-return { "name": mr_set.name }
+{'moduleName': 'my_d3_module', 'script': "get_mrset_uid('my_mrset')"}
+{'moduleName': 'my_d3_module', 'script': "get_camera_uid('my_cam')"}
 """
 ```
-- `{mr_set_name}` has been replaced with `my_scene`
 
+### 3. Function Inspection
 
-### 3. Running the Demo
+The package provides utilities to inspect registered functions:
+
+```python
+from d3blobgen import get_all_d3functions, get_all_modules, D3Function
+
+# List all registered functions
+for module_name, function_name in get_all_d3functions():
+    print(f"Module: {module_name}, Function: {function_name}")
+
+# List all registered modules
+print("Modules:", get_all_modules())
+
+# Get module registration blob for a specific module
+blob = D3Function.get_module_register_blob("my_d3_module")
+print(blob)  # Contains module name and combined function definitions
+```
+
+### 4. Running the Demo
 
 ```bash
 uv run python src/main.py
