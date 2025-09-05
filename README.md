@@ -77,12 +77,15 @@ When `d3function` is registered without module name, the execute blob will conta
 
 ```python
 from d3blobgen import d3function
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    # your stub file d3.pyi
+    from . import d3
 
 # Define your plugin function with decorator (no module)
 @d3function()
 def mrset_fn_with_args(mrset_name:str) -> dict[str, str]:
-    import d3
-    mr_set: d3.MixedRealitySet = d3.resourceManager.load(
+    mr_set = d3.resourceManager.load(
         'objects/mixedrealityset/{}.apx'.format(mrset_name),
         d3.MixedRealitySet)
     # do anything with mrset
@@ -94,8 +97,7 @@ print(result["script"])
 
 """
 mrset_name='my_mrset'
-import d3
-mr_set: d3.MixedRealitySet = d3.resourceManager.load('objects/mixedrealityset/{}.apx'.format(mrset_name), d3.MixedRealitySet)
+mr_set = d3.resourceManager.load('objects/mixedrealityset/{}.apx'.format(mrset_name), d3.MixedRealitySet)
 return {'name': mr_set.name}
 """
 ```
@@ -117,20 +119,22 @@ from d3blobgen import (
     register_all_d3functions,
     register_module_d3functions
 )
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    # your stub file d3.pyi
+    from . import d3
 
 @d3function(module_name="my_d3_module")
 def get_mrset_uid(mrset_name:str) -> dict[str, str]:
-    import d3
-    mr_set: d3.MixedRealitySet = d3.resourceManager.load(
-        'objects/mixedrealityset/{}.apx'.format(mrset_name),
+    mr_set = d3.resourceManager.load(
+        d3.Path('objects/mixedrealityset/{}.apx'.format(mrset_name)),
         d3.MixedRealitySet)
     return { "uid": mr_set.uid }
 
 @d3function(module_name="my_d3_module")
 def get_camera_uid(camera_name:str) -> dict[str, str]:
-    import d3
-    camera: d3.MixedRealitySet = d3.resourceManager.load(
-        'objects/camera/{}.apx'.format(camera_name),
+    camera = d3.resourceManager.load(
+        d3.Path('objects/camera/{}.apx'.format(camera_name)),
         d3.Camera)
     return { "uid": camera.uid }
 
@@ -157,17 +161,41 @@ The package provides utilities to inspect registered functions:
 
 ```python
 from d3blobgen import get_all_d3functions, get_all_modules, D3Function
+import json
 
 # List all registered functions
 for module_name, function_name in get_all_d3functions():
     print(f"Module: {module_name}, Function: {function_name}")
+"""
+Module: my_d3_module, Function: get_camera_uid
+Module: my_d3_module, Function: get_mrset_uid
+"""
 
 # List all registered modules
 print("Modules:", get_all_modules())
+"""
+Modules: ['my_d3_module']
+"""
 
-# Get module registration blob for a specific module
-blob = D3Function.get_module_register_blob("my_d3_module")
-print(blob)  # Contains module name and combined function definitions
+# Blob that gets sent to Designer register endpoint
+blob = D3Function.get_module_register_blob("my_d3_module"), indent=2)
+print(json.dumps(blob, indent=2))
+"""
+{
+  "moduleName": "my_d3_module",
+  "contents": "..."
+}
+"""
+print(blob["contents"])
+"""
+def get_camera_uid(camera_name: str) -> dict[str, str]:
+    camera = d3.resourceManager.load(d3.Path('objects/camera/{}.apx'.format(camera_name)), d3.Camera)
+    return {'uid': camera.uid}
+
+def get_mrset_uid(mrset_name: str) -> dict[str, str]:
+    mr_set = d3.resourceManager.load(d3.Path('objects/mixedrealityset/{}.apx'.format(mrset_name)), d3.MixedRealitySet)
+    return {'uid': mr_set.uid}
+"""
 ```
 
 ### 4. Running the Demo
