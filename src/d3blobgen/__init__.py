@@ -5,6 +5,8 @@ from d3blobgen.core import (
     D3Function, 
     register_module_d3functions, 
     register_all_d3functions,
+    aregister_module_d3functions,
+    aregister_all_d3functions,
     get_all_d3functions, 
     get_all_modules
 )

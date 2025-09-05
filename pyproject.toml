@@ -9,6 +9,7 @@ description = "Blob generation helper for d3 python plugin"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "aiohttp>=3.12.15",
     "pydantic>=2.11.7",
     "requests>=2.32.5",
 ]
@@ -23,4 +24,9 @@ where = ["src"]
 
 [tool.setuptools.package-dir]
 "" = "src"
+
+[dependency-groups]
+dev = [
+    "pytest-asyncio>=1.1.0",
+]
 

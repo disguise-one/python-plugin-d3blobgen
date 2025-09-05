@@ -198,7 +198,60 @@ def get_mrset_uid(mrset_name: str) -> dict[str, str]:
 """
 ```
 
-### 4. Running the Demo
+### 4. Async Support
+
+d3blobgen provides full async support for all remote operations, allowing for non-blocking execution and registration:
+
+**Async function execution:**
+
+```python
+import asyncio
+from d3blobgen import d3function
+
+@d3function(module_name="my_d3_module")
+def get_mrset_uid(mrset_name: str) -> dict[str, str]:
+    mr_set = d3.resourceManager.load(
+        d3.Path('objects/mixedrealityset/{}.apx'.format(mrset_name)),
+        d3.MixedRealitySet)
+    return {"uid": mr_set.uid}
+
+async def main():
+    # Async execution - non-blocking
+    result = await get_mrset_uid.aexecute("my_mrset")
+    print(f"MRSet UID: {result['uid']}")
+
+# Run the async function
+asyncio.run(main())
+```
+
+**Async module registration:**
+
+```python
+import asyncio
+from d3blobgen import aregister_all_d3functions, aregister_module_d3functions
+
+async def register_modules():
+    # Register all modules asynchronously
+    results = await aregister_all_d3functions("localhost")
+    
+    # Or register a specific module
+    success, error = await aregister_module_d3functions("localhost", "my_d3_module")
+    
+    for module_name, (success, error) in results.items():
+        if success:
+            print(f"Module '{module_name}' registered successfully")
+        else:
+            print(f"Module '{module_name}' failed: {error}")
+
+asyncio.run(register_modules())
+```
+
+**Available async methods:**
+- `D3Function.aexecute(*args, **kwargs)` - Async function execution
+- `aregister_module_d3functions(ipaddr, module_name)` - Async module registration
+- `aregister_all_d3functions(ipaddr)` - Async registration of all modules
+
+### 5. Running the Demo
 
 ```bash
 uv run python src/main.py
@@ -206,21 +259,25 @@ uv run python src/main.py
 
 ## Testing
 
-This project uses pytest for testing. To run the tests:
+This project uses pytest with pytest-asyncio for testing both synchronous and asynchronous functionality. To run the tests:
 
 **Install test dependencies**
 ```bash
 uv sync --extra test
 ```
 
-**Run tests**
-```bash
-uv run pytest
-```
-
-**Run tests with verbose output**
+**Run all tests**
 ```bash
 uv run pytest -v
+```
+
+**Run specific test classes**
+```bash
+# Test async functionality
+uv run pytest tests/test_core.py::TestAsyncRegisterAllD3Functions -v
+
+# Test sync functionality  
+uv run pytest tests/test_core.py::TestD3Function -v
 ```
 
 ## License
