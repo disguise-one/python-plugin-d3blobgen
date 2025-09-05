@@ -35,6 +35,25 @@ def main():
     print(normal_function1.get_execute_blob(1, "b"))
     print(normal_function2.get_execute_blob(2, "c"))
 
+    # Actual plugin implementation with Designer
+    # Note: Designer must be running for following example
+    """
+    print("\n1. register d3 functions")
+    register_all_d3functions("localhost")
+    print("\n2. get return value with return_increment")
+    num = return_increment.execute(1)
+    print(num)
+    print("\n3. get return value of get_projection_surface")
+    surface = get_projection_surface.execute("surface 1")
+    print(surface)
+    print("\n4. execute rename_projection_surface")
+    rename_projection_surface.execute("surface 1", "surface new")
+    surface = get_projection_surface.execute("surface new")
+    print("- after rename:", surface)
+    rename_projection_surface.execute("surface new", "surface 1")
+    surface = get_projection_surface.execute("surface 1")
+    print("- after reverting rename:", surface)
+    """
 
 if __name__ == "__main__":
     main()

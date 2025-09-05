@@ -22,6 +22,20 @@ def example_function_with_args(name, value):
     return f"Hello {name}, value is {value}"
 
 
+def typed_function_with_args(name: str, value: int) -> str:
+    """Type-annotated function with arguments for testing"""
+    result: str = f"Hello {name}, value is {value}"
+    return result
+
+
+def typed_function_complex(items: list[str], count: int = 5) -> dict[str, int]:
+    """Complex type-annotated function for testing"""
+    data: dict[str, int] = {}
+    for i, item in enumerate(items[:count]):
+        data[item] = i
+    return data
+
+
 @d3function("test_module")
 def decorated_example_function():
     """Decorated example function for testing"""
@@ -73,6 +87,46 @@ class TestExtractFunctionInfo:
         assert info.args == []
         # Should not contain the decorator in the blob
         assert "@d3function" not in info.blob
+    
+    def test_extract_info_typed_function(self):
+        # Test type annotation handling
+        info = extract_function_info(typed_function_with_args)
+        
+        assert info.name == "typed_function_with_args"
+        assert info.args == ["name", "value"]
+        
+        # Regular blob should contain type annotations
+        assert ": str" in info.blob
+        assert "-> str" in info.blob
+        assert "result: str" in info.blob
+        
+        # Python 2.7 blob should NOT contain type annotations
+        assert ": str" not in info.blob_py27
+        assert "-> str" not in info.blob_py27
+        assert "result: str" not in info.blob_py27
+        # But should contain the variable assignment without type hint
+        assert "result =" in info.blob_py27
+    
+    def test_extract_info_complex_typed_function(self):
+        # Test complex type annotations
+        info = extract_function_info(typed_function_complex)
+        
+        assert info.name == "typed_function_complex"
+        assert info.args == ["items", "count"]
+        
+        # Regular blob should contain complex type annotations
+        assert "list[str]" in info.blob
+        assert "dict[str, int]" in info.blob
+        assert "-> dict[str, int]" in info.blob
+        assert "data: dict[str, int]" in info.blob
+        
+        # Python 2.7 blob should NOT contain type annotations
+        assert "list[str]" not in info.blob_py27
+        assert "dict[str, int]" not in info.blob_py27
+        assert "-> dict[str, int]" not in info.blob_py27
+        assert "data: dict[str, int]" not in info.blob_py27
+        # But should contain the variable assignment without type hint
+        assert "data =" in info.blob_py27
 
 
 class TestD3Function:
@@ -103,7 +157,7 @@ class TestD3Function:
         blob = decorated_example_function.get_execute_blob()
         
         assert blob["moduleName"] == "test_module"
-        assert blob["script"] == "decorated_example_function()"
+        assert blob["script"] == "return decorated_example_function()"
     
     def test_get_execute_blob_standalone_function(self):
         blob = standalone_function.get_execute_blob(10, 20)
@@ -124,22 +178,28 @@ class TestFunctionInfo:
     
     def test_function_info_creation(self):
         info = FunctionInfo(
-            blob="def test_func(x, y):\n    return 42",
+            blob="def test_func(x: int, y: int) -> int:\n    return 42",
+            blob_py27="def test_func(x, y):\n    return 42",
             name="test_func",
             body="return 42",
+            body_py27="return 42",
             args=["x", "y"]
         )
         
         assert info.name == "test_func"
         assert info.body == "return 42"
+        assert info.body_py27 == "return 42"
         assert info.args == ["x", "y"]
-        assert info.blob == "def test_func(x, y):\n    return 42"
+        assert info.blob == "def test_func(x: int, y: int) -> int:\n    return 42"
+        assert info.blob_py27 == "def test_func(x, y):\n    return 42"
     
     def test_function_info_defaults(self):
         info = FunctionInfo(
-            blob="def test_func():\n    return 42",
+            blob="def test_func() -> int:\n    return 42",
+            blob_py27="def test_func():\n    return 42",
             name="test_func", 
-            body="return 42"
+            body="return 42",
+            body_py27="return 42"
         )
         assert info.args == []
 

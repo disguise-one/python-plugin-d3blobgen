@@ -3,6 +3,7 @@ import inspect
 import functools
 import requests
 import textwrap
+import json
 from pydantic import BaseModel, Field
 from typing import TypeVar, ParamSpec, Callable, Any, Generic, DefaultDict
 from collections import defaultdict
@@ -15,10 +16,91 @@ class FunctionInfo(BaseModel):
     including its complete definition, name, body statements, and argument list.
     """
     blob: str = Field(description="full body of function blob without decorator (Function definition + body)")
+    blob_py27: str =  Field(description="full body of function blob without decorator in python2.7 format (Function definition + body)")
     name: str = Field(description="name of extracted function")
     body: str = Field(description="body of extracted function in str format")
+    body_py27: str = Field(description="body of extracted function in python2.7 str format")
     args: list[str] = Field(default=[], description="list of arguments from extracted function")
 
+def convert_ann_assign_to_assign(ann_assign_node: ast.AnnAssign) -> ast.Assign|None:
+    """Convert an annotated assignment node to a regular assignment node.
+    
+    This function transforms type-annotated variable assignments (e.g., 'x: int = 5') 
+    into regular assignments (e.g., 'x = 5') for Python 2.7 compatibility.
+    
+    Args:
+        ann_assign_node: AST node representing an annotated assignment.
+        
+    Returns:
+        ast.Assign node without type annotation, or None if no value is assigned.
+    """
+    if ann_assign_node.value is None:
+        return None
+    
+    return ast.Assign(
+        targets=[ann_assign_node.target],
+        value=ann_assign_node.value,
+        lineno = ann_assign_node.lineno,
+        col_offset = ann_assign_node.col_offset)
+
+class FastRemoveTypeHints(ast.NodeTransformer):
+    """AST transformer to remove type hints from Python code for 2.7 compatibility."""
+    
+    def visit_AnnAssign(self, node):
+        """Transform annotated assignment nodes to regular assignment nodes.
+        
+        Args:
+            node: The annotated assignment AST node to transform.
+            
+        Returns:
+            Regular assignment node without type annotation.
+        """
+        return convert_ann_assign_to_assign(node)
+
+def remove_type_hints_from_body(function_node: ast.FunctionDef) -> None:
+    """Remove type hints from the body statements of a function.
+    
+    This function applies the FastRemoveTypeHints transformer to remove
+    annotated assignments from function body statements.
+    
+    Args:
+        function_node: The function AST node to process.
+    """
+    transformer = FastRemoveTypeHints()
+    transformer.visit(function_node)
+
+def convert_to_py27(function_node: ast.FunctionDef) -> None:
+    """Convert a function AST node to Python 2.7 compatible format.
+    
+    This function removes all type annotations from a function definition,
+    including return type annotations, parameter type annotations, and
+    type hints within the function body to ensure Python 2.7 compatibility.
+    
+    Args:
+        function_node: The function AST node to convert to Python 2.7 format.
+    """
+    # Strip type hints for Python 2 compatibility
+    # Remove return type annotation
+    function_node.returns = None
+    
+    # Remove argument type annotations
+    for arg in function_node.args.args:
+        arg.annotation = None
+    
+    # Remove keyword-only argument type annotations
+    for arg in function_node.args.kwonlyargs:
+        arg.annotation = None
+    
+    # Remove vararg type annotation (*args)
+    if function_node.args.vararg:
+        function_node.args.vararg.annotation = None
+    
+    # Remove kwarg type annotation (**kwargs)  
+    if function_node.args.kwarg:
+        function_node.args.kwarg.annotation = None
+    
+    # Remove type hints from function body
+    remove_type_hints_from_body(function_node)
 
 def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
     """Parse function source code and extract name, body statements, and argument list.
@@ -52,6 +134,9 @@ def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
     
     # Extract function blob without decorator
     first_node.decorator_list.clear()
+    
+    # Extract blob in python 3 format
+    blob:str = ast.unparse(first_node)
 
     # Extract function name
     function_name = first_node.name
@@ -60,9 +145,9 @@ def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
     body_nodes = first_node.body
     
     # Convert back to source code
-    body_source = ""
+    body = ""
     for stmt in body_nodes:
-        body_source += ast.unparse(stmt) + "\n"
+        body += ast.unparse(stmt) + "\n"
 
     # Extract function arguments
     args: list[str] = []
@@ -70,13 +155,21 @@ def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
         args.append(arg.arg)
         arg.type_comment
     
+    convert_to_py27(first_node)
+    blob_py27:str = ast.unparse(first_node)
+
+    body_py27 = ""
+    for stmt in body_nodes:
+        body_py27 += ast.unparse(stmt) + "\n"
+
     return FunctionInfo(
-        blob=ast.unparse(first_node),
+        blob=blob,
+        blob_py27=blob_py27,
         name=function_name,
-        body=body_source.strip(),
+        body=body.strip(),
+        body_py27=body_py27,
         args=args
     )
-
 
 P = ParamSpec('P')
 T = TypeVar('T')
@@ -89,6 +182,7 @@ class D3Function(Generic[P, T]):
     """
 
     _available_d3functions: DefaultDict[str, set["D3Function"]] = defaultdict(set)
+    _registered_ipaddr:str = "localhost"
 
     def __init__(self, module_name: str, func: Callable[P, T]):
         """Initialise a D3Function wrapper around a Python function.
@@ -155,7 +249,7 @@ class D3Function(Generic[P, T]):
         """
         return {
             "moduleName": module_name,
-            "contents": "\n\n".join([func.function_info.blob for func in D3Function._available_d3functions[module_name]])
+            "contents": "\n\n".join([func.function_info.blob_py27 for func in D3Function._available_d3functions[module_name]])
         }
 
     @property 
@@ -228,13 +322,52 @@ class D3Function(Generic[P, T]):
         if self._is_module_function:
             return {
                 "moduleName": self._module_name,
-                "script": f"{self._function_info.name}({self._args_to_string(*args, **kwargs)})"
+                "script": f"return {self._function_info.name}({self._args_to_string(*args, **kwargs)})"
             }
         else:
             all_args: str = self._args_to_assign(*args, **kwargs)
             return {
-                "script": f"{all_args}\n{self._function_info.body}"
+                "script": f"{all_args}\n{self._function_info.body_py27}"
             }
+    
+    def execute(self, *args: P.args, **kwargs: P.kwargs) -> T:
+        """Execute this function remotely on a D3 Designer instance.
+        
+        This method sends the function and its arguments to the registered Designer
+        instance for remote execution, then returns the parsed result.
+        
+        Args:
+            *args: Positional arguments to pass to the function.
+            **kwargs: Keyword arguments to pass to the function.
+            
+        Returns:
+            The return value from the remote function execution.
+            
+        Raises:
+            RuntimeError: If the HTTP request fails, Designer returns an error,
+                         or the return value is empty/invalid.
+        """
+        response: requests.Response = requests.post(
+            url=f"http://{D3Function._registered_ipaddr}/api/session/python/execute", 
+            json=self.get_execute_blob(*args, **kwargs)
+        )
+        if not response.ok:
+            raise RuntimeError(f"HTTP error {response.status_code}: { response.text}")
+        
+        data: dict = response.json()
+        status: dict = data.get("status", {})
+        if status.get("code") != 0:
+            raise RuntimeError(f"""\
+Designer API error:
+- message   : {status.get('message')}
+- d3Log     : {status.get('d3Log')}
+- pythonLog : {status.get('pythonLog')}
+""")
+        ret_val: dict|None = data.get("returnValue")
+        if ret_val is None:
+            raise RuntimeError("Empty returnValue")
+
+        return json.loads(ret_val)
 
 def d3function(module_name: str = "") -> Callable[[Callable[P, T]], D3Function[P, T]]:
     """Decorator to wrap a Python function for D3 Designer execution.
@@ -301,6 +434,7 @@ def register_all_d3functions(ipaddr:str) -> dict[str, tuple[bool, str]]:
         Dictionary mapping module names to registration results (success status and error message).
     """
     responses: dict[str, tuple[bool, str]] = {}
+    D3Function._registered_ipaddr = ipaddr
     for module_name in D3Function._available_d3functions.keys():
         responses[module_name] = register_module_d3functions(ipaddr, module_name)
     return responses
