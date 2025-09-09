@@ -79,8 +79,7 @@ When `d3function` is registered without module name, the execute blob will conta
 from d3blobgen import d3function
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    # your stub file d3.pyi
-    from . import d3
+    from d3blobgen.scripts.d3 import * # type: ignore[reportMissingModuleSource]
 
 # Define your plugin function with decorator (no module)
 @d3function()
@@ -121,8 +120,7 @@ from d3blobgen import (
 )
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    # your stub file d3.pyi
-    from . import d3
+    from d3blobgen.scripts.d3 import * # type: ignore[reportMissingModuleSource]
 
 @d3function(module_name="my_d3_module")
 def get_mrset_uid(mrset_name:str) -> dict[str, str]:

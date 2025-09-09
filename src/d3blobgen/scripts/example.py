@@ -2,7 +2,7 @@ from d3blobgen import d3function
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from .d3 import *
+    from d3blobgen.scripts.d3 import * # type: ignore[reportMissingModuleSource]
 
 # Function without module
 @d3function()
