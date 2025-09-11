@@ -5,6 +5,7 @@ class _BlipValue(object):
     ...
 
 # TypeVars
+resourceT = TypeVar('resourceT', bound='Resource')
 SubsystemT = TypeVar('SubsystemT', bound='Subsystem')
 
 class Upgrade[T](_BlipValue):
@@ -436,6 +437,9 @@ class AcesInputTransformParameters(_BlipValue):
 
     @property
     def genericCurve(self) -> int:
+        """The curve applied in the transform, if the transform type is Generic
+           
+           Options: {0: 'Unused', 1: 'Linear', 2: 'sRGB', 3: 'BT1886', 4: 'Gamma18', 5: 'Gamma22', 6: 'Gamma24', 7: 'PQ', 8: 'HLG', 9: 'Gamma26'}"""
         ...
 
     @genericCurve.setter
@@ -444,6 +448,9 @@ class AcesInputTransformParameters(_BlipValue):
 
     @property
     def genericSpace(self) -> int:
+        """The input colour space of the transform, if the transform type is Generic
+           
+           Options: {0: 'Unused', 1: 'AP0', 2: 'AP1', 3: 'sRGB', 4: 'BT1886', 5: 'P3DCI', 6: 'P3D65'}"""
         ...
 
     @genericSpace.setter
@@ -452,6 +459,9 @@ class AcesInputTransformParameters(_BlipValue):
 
     @property
     def type(self) -> int:
+        """The type of the ACES input transform
+           
+           Options: {0: 'ACES', 1: 'ACEScc', 2: 'ACEScct', 3: 'ACEScg', 4: 'ADX10', 5: 'ADX16', 6: 'Alexa_EI400', 7: 'Alexa_EI800', 8: 'Canon_EOS_C100_Daylight', 9: 'Canon_EOS_C100_Tungsten', 10: 'Canon_EOS_C100_Mark_II_Daylight', 11: 'Canon_EOS_C100_Mark_II_Tungsten', 12: 'Canon_EOS_C200_CanonLog2_Daylight_Rec2020', 13: 'Canon_EOS_C200_CanonLog2_Tungsten_Rec2020', 14: 'Canon_EOS_C200_CanonLog2_Daylight_Cinema', 15: 'Canon_EOS_C200_CanonLog2_Tungsten_Cinema', 16: 'Canon_EOS_C200_CanonLog3_Daylight_Rec709', 17: 'Canon_EOS_C200_CanonLog3_Tungsten_Rec709', 18: 'Canon_EOS_C200_CanonLog3_Daylight_Rec2020', 19: 'Canon_EOS_C200_CanonLog3_Tungsten_Rec2020', 20: 'Canon_EOS_C200_CanonLog3_Daylight_Cinema', 21: 'Canon_EOS_C200_CanonLog3_Tungsten_Cinema', 22: 'Canon_EOS_C300_Daylight', 23: 'Canon_EOS_C300_Tungsten', 24: 'Canon_EOS_C300_Mark_II_CanonLog_Daylight_Rec2020', 25: 'Canon_EOS_C300_Mark_II_CanonLog_Tungsten_Rec2020', 26: 'Canon_EOS_C300_Mark_II_CanonLog_Daylight_Cinema', 27: 'Canon_EOS_C300_Mark_II_CanonLog_Tungsten_Cinema', 28: 'Canon_EOS_C300_Mark_II_CanonLog2_Daylight_Rec2020', 29: 'Canon_EOS_C300_Mark_II_CanonLog2_Tungsten_Rec2020', 30: 'Canon_EOS_C300_Mark_II_CanonLog2_Daylight_Cinema', 31: 'Canon_EOS_C300_Mark_II_CanonLog2_Tungsten_Cinema', 32: 'Canon_EOS_C500_Daylight_Rec709', 33: 'Canon_EOS_C500_Tungsten_Rec709', 34: 'Canon_EOS_C500_Daylight_DCIP3', 35: 'Canon_EOS_C500_Tungsten_DCIP3', 36: 'Canon_EOS_C500_Daylight_Cinema', 37: 'Canon_EOS_C500_Tungsten_Cinema', 38: 'Canon_EOS_C700_CanonLog_Daylight_Rec2020', 39: 'Canon_EOS_C700_CanonLog_Tungsten_Rec2020', 40: 'Canon_EOS_C700_CanonLog_Daylight_Cinema', 41: 'Canon_EOS_C700_CanonLog_Tungsten_Cinema', 42: 'Canon_EOS_C700_CanonLog2_Daylight_Rec2020', 43: 'Canon_EOS_C700_CanonLog2_Tungsten_Rec2020', 44: 'Canon_EOS_C700_CanonLog2_Daylight_Cinema', 45: 'Canon_EOS_C700_CanonLog2_Tungsten_Cinema', 46: 'Canon_EOS_C700_CanonLog3_Daylight_Rec2020', 47: 'Canon_EOS_C700_CanonLog3_Tungsten_Rec2020', 48: 'Canon_EOS_C700_CanonLog3_Daylight_Cinema', 49: 'Canon_EOS_C700_CanonLog3_Tungsten_Cinema', 50: 'DCDM', 51: 'DCDM_P3D65_Limited', 52: 'P3DCI_D60sim', 53: 'P3DCI_D65sim', 54: 'Panasonic_V35', 55: 'Rec2020', 56: 'Rec2020_HLG_1000nits', 57: 'Rec2020_ST2084_1000nits', 58: 'Rec2020_ST2084_2000nits', 59: 'Rec2020_ST2084_4000nits', 60: 'Rec709', 61: 'Rec709_D60sim', 62: 'Rec709_Limited', 63: 'RedWideGamutLog3G10', 64: 'Sony_Slog1', 65: 'Sony_Slog2_Daylight', 66: 'Sony_Slog2_Tungsten', 67: 'Sony_Slog3_SGamut3', 68: 'Sony_Slog3_SGamut3Cine', 69: 'sRGB', 70: 'sRGBD60sim', 71: 'sRGBLinear', 72: 'P3D65_ST2084_108nits', 73: 'P3D65_ST2084_1000nits', 74: 'P3D65_ST2084_2000nits', 75: 'P3D65_ST2084_4000nits', 76: 'Utility_sRGB_Linear', 77: 'Utility_sRGB_Texture', 78: 'Utility_IDT_P3D65_ST2084', 79: 'Generic', 80: 'IDT_BMFG5', 81: 'Arri_LogCv4'}"""
         ...
 
     @type.setter
@@ -489,6 +499,39 @@ class AcesOutputTransformBox(ValueBox):
 class AcesOutputTransformParameters(_BlipValue):
     null: Self
     _classInfo: 'ClassInfo'
+
+    @property
+    def genericCurve(self) -> int:
+        """The curve applied in the transform, if the transform type is Generic
+           
+           Options: {0: 'Unused', 1: 'Linear', 2: 'sRGB', 3: 'BT1886', 4: 'Gamma18', 5: 'Gamma22', 6: 'Gamma24', 7: 'PQ', 8: 'HLG', 9: 'Gamma26'}"""
+        ...
+
+    @genericCurve.setter
+    def genericCurve(self, value: int) -> None:
+        ...
+
+    @property
+    def genericSpace(self) -> int:
+        """The output colour space of the transform, if the transform type is Generic
+           
+           Options: {0: 'Unused', 1: 'AP0', 2: 'AP1', 3: 'sRGB', 4: 'BT1886', 5: 'P3DCI', 6: 'P3D65'}"""
+        ...
+
+    @genericSpace.setter
+    def genericSpace(self, value: int) -> None:
+        ...
+
+    @property
+    def type(self) -> int:
+        """The type of the ACES output transform
+           
+           Options: {0: 'ACES', 1: 'ACEScc', 2: 'ACEScct', 3: 'ACEScg', 4: 'DCDM', 5: 'DCDM_P3D65_Limited', 6: 'P3DCI_D60sim', 7: 'P3DCI_D65sim', 8: 'Rec2020', 9: 'Rec2020_HLG_1000nits', 10: 'Rec2020_ST2084_1000nits', 11: 'Rec2020_ST2084_2000nits', 12: 'Rec2020_ST2084_4000nits', 13: 'Rec709', 14: 'Rec709_D60sim', 15: 'Rec709_Legal', 16: 'sRGB', 17: 'sRGBD60sim', 18: 'sRGBLinear', 19: 'P3D65_ST2084_108nits', 20: 'P3D65_ST2084_1000nits', 21: 'P3D65_ST2084_2000nits', 22: 'P3D65_ST2084_4000nits', 23: 'Utility_ODT_P3D65_ST2084', 24: 'Generic', 25: 'ODT_BMFG5', 26: 'RedWideGamutLog3G10'}"""
+        ...
+
+    @type.setter
+    def type(self, value: int) -> None:
+        ...
 
     @overload
     def __init__(self) -> None:
@@ -1845,6 +1888,7 @@ class AudioInfo(MediaInfo):
 
     @property
     def nSamples(self) -> int:
+        """The total number of sample in the audio"""
         ...
 
     @nSamples.setter
@@ -2065,6 +2109,7 @@ class AudioOutDeviceMap2(Resource):
 
     @property
     def hardware(self) -> List[AudioHardwareIdentifier]:
+        """List of all available (plus old, if still mapped) hardware on this machine"""
         ...
 
     @hardware.setter
@@ -2077,6 +2122,7 @@ class AudioOutDeviceMap2(Resource):
 
     @property
     def mappings(self) -> List[Mapping]:
+        """List of active LogicalDevice -> (hardwareId + channelMap) mappings for this machine"""
         ...
 
     @mappings.setter
@@ -2697,14 +2743,6 @@ class BarWidget(Widget):
     def selectionStart(self) -> float:
         ...
 
-    @property
-    def tagTypeFromPopup(self) -> int:
-        ...
-
-    @tagTypeFromPopup.setter
-    def tagTypeFromPopup(self, value: int) -> None:
-        ...
-
     def __init__(self, *args, **kwargs) -> None:
         ...
 
@@ -2747,7 +2785,15 @@ class BarWidget(Widget):
         """Drag note/tag along with the section"""
         ...
 
+    def newCueTag(self) -> None:
+        """Create a Cue tag here"""
+        ...
+
     def newLayerNamed(self, arg0: str) -> None:
+        ...
+
+    def newMidiTag(self) -> None:
+        """Create a Midi tag here"""
         ...
 
     def newNote(self) -> None:
@@ -2756,6 +2802,10 @@ class BarWidget(Widget):
 
     def newTag(self) -> None:
         """Create a tag here"""
+        ...
+
+    def newTcTag(self) -> None:
+        """Create a TC tag here"""
         ...
 
     def newUnnamedLayer(self) -> None:
@@ -4384,6 +4434,14 @@ class Camera(SlcAwareDisplay):
 
     @renderTimeToVideoReceiveTimeSec.setter
     def renderTimeToVideoReceiveTimeSec(self, value: float) -> None:
+        ...
+
+    @property
+    def sensorSizeMM(self) -> Vec2:
+        ...
+
+    @sensorSizeMM.setter
+    def sensorSizeMM(self, value: Vec2) -> None:
         ...
 
     @property
@@ -6886,6 +6944,7 @@ class ChromaticitySet(_BlipValue):
 
     @property
     def blue(self) -> Vec2:
+        """Blue primary chromaticity coordinates (xy)"""
         ...
 
     @blue.setter
@@ -6894,6 +6953,7 @@ class ChromaticitySet(_BlipValue):
 
     @property
     def ca(self) -> int:
+        """Chromatic adaptation transform"""
         ...
 
     @ca.setter
@@ -6902,6 +6962,7 @@ class ChromaticitySet(_BlipValue):
 
     @property
     def green(self) -> Vec2:
+        """Green primary chromaticity coordinates (xy)"""
         ...
 
     @green.setter
@@ -6910,6 +6971,7 @@ class ChromaticitySet(_BlipValue):
 
     @property
     def red(self) -> Vec2:
+        """Red primary chromaticity coordinates (xy)"""
         ...
 
     @red.setter
@@ -6918,6 +6980,7 @@ class ChromaticitySet(_BlipValue):
 
     @property
     def white(self) -> Vec2:
+        """White point chromaticity coordinates (xy)"""
         ...
 
     @white.setter
@@ -8405,7 +8468,9 @@ class ComposeModule(Module):
 
     @property
     def content_source_1(self) -> ContentSource:
-        """UserName: Content source 1"""
+        """One of the sources of the content to be composed
+           
+           UserName: Content source 1"""
         ...
 
     @content_source_1.setter
@@ -8414,7 +8479,9 @@ class ComposeModule(Module):
 
     @property
     def content_source_2(self) -> ContentSource:
-        """UserName: Content source 2"""
+        """One of the sources of the content to be composed
+           
+           UserName: Content source 2"""
         ...
 
     @content_source_2.setter
@@ -8423,7 +8490,9 @@ class ComposeModule(Module):
 
     @property
     def content_source_3(self) -> ContentSource:
-        """UserName: Content source 3"""
+        """One of the sources of the content to be composed
+           
+           UserName: Content source 3"""
         ...
 
     @content_source_3.setter
@@ -8432,7 +8501,9 @@ class ComposeModule(Module):
 
     @property
     def content_source_4(self) -> ContentSource:
-        """UserName: Content source 4"""
+        """One of the sources of the content to be composed
+           
+           UserName: Content source 4"""
         ...
 
     @content_source_4.setter
@@ -8459,7 +8530,9 @@ class ComposeModule(Module):
 
     @property
     def source_1(self) -> float:
-        """UserName: Source 1"""
+        """The proportion of source 1 which is included in the composition
+           
+           UserName: Source 1"""
         ...
 
     @source_1.setter
@@ -8468,7 +8541,9 @@ class ComposeModule(Module):
 
     @property
     def source_2(self) -> float:
-        """UserName: Source 2"""
+        """The proportion of source 2 which is included in the composition
+           
+           UserName: Source 2"""
         ...
 
     @source_2.setter
@@ -8477,7 +8552,9 @@ class ComposeModule(Module):
 
     @property
     def source_3(self) -> float:
-        """UserName: Source 3"""
+        """The proportion of source 3 which is included in the composition
+           
+           UserName: Source 3"""
         ...
 
     @source_3.setter
@@ -8486,7 +8563,9 @@ class ComposeModule(Module):
 
     @property
     def source_4(self) -> float:
-        """UserName: Source 4"""
+        """The proportion of source 4 which is included in the composition
+           
+           UserName: Source 4"""
         ...
 
     @source_4.setter
@@ -8610,7 +8689,10 @@ class CompressionOptions(_BlipValue):
 
     @property
     def compressionLevel(self) -> int:
-        """UserName: Compression level"""
+        """The compression level from 0 (least compression) to 10 (most compression)
+           Set to -1 to turn off compression
+           
+           UserName: Compression level"""
         ...
 
     @compressionLevel.setter
@@ -8619,7 +8701,9 @@ class CompressionOptions(_BlipValue):
 
     @property
     def normalsQuantizationBits(self) -> int:
-        """Category: Quantization Bits
+        """Number of bits to compress vertex normals into
+           
+           Category: Quantization Bits
            UserName: Normals"""
         ...
 
@@ -8629,7 +8713,9 @@ class CompressionOptions(_BlipValue):
 
     @property
     def positionsQuantizationBits(self) -> int:
-        """Category: Quantization Bits
+        """Number of bits to compress vertex positions into
+           
+           Category: Quantization Bits
            UserName: Positions"""
         ...
 
@@ -8639,7 +8725,9 @@ class CompressionOptions(_BlipValue):
 
     @property
     def texCoordsQuantizationBits(self) -> int:
-        """Category: Quantization Bits
+        """Number of bits to compress texture UV coordinates into
+           
+           Category: Quantization Bits
            UserName: Texture coordinates"""
         ...
 
@@ -9016,6 +9104,86 @@ class CoutEndpoint(ConsoleEndpoint):
 class CpsAxisState(TrackingScalarState):
     null: Self
     _classInfo: 'ClassInfo'
+
+class Cue(Resource):
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'Cue'
+
+    @property
+    def note(self) -> str:
+        ...
+
+    @note.setter
+    def note(self, value: str) -> None:
+        ...
+
+    @property
+    def section(self) -> bool:
+        ...
+
+    @section.setter
+    def section(self, value: bool) -> None:
+        ...
+
+    @property
+    def sectionTransition(self) -> TrackTransitionInfo:
+        ...
+
+    @sectionTransition.setter
+    def sectionTransition(self, value: TrackTransitionInfo) -> None:
+        ...
+
+    def getNote(self) -> str:
+        ...
+
+    def getTag(self, arg0: int) -> Tag:
+        ...
+
+    def getTags(self) -> List[Tag]:
+        ...
+
+    def hasNote(self) -> bool:
+        ...
+
+    def hasTags(self) -> bool:
+        ...
+
+    def isEmpty(self) -> bool:
+        ...
+
+    def isSection(self) -> bool:
+        ...
+
+    def setNote(self, arg0: str) -> None:
+        ...
+
+    def setTag(self, arg0: Tag) -> None:
+        ...
+
+class CueAttributesWidget(Widget):
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'CueAttributesWidget'
+
+    def __init__(self, *args, **kwargs) -> None:
+        ...
+
+class CueNoteEditorWidget(Widget):
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'CueNoteEditorWidget'
+
+    def __init__(self, *args, **kwargs) -> None:
+        ...
+
+class CueTagEditorWidget(Widget):
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'CueTagEditorWidget'
+
+    def __init__(self, *args, **kwargs) -> None:
+        ...
 
 class CustomEngineDefinition(EngineDefinition):
     null: Self
@@ -13682,6 +13850,10 @@ class DomainManager(Subsystem):
     def getDomainConnectionByType(self, arg0: Type) -> DomainConnection:
         ...
 
+class DownloadTask(Task):
+    null: Self
+    _classInfo: 'ClassInfo'
+
 class DownloadableDisplay(Display):
     null: Self
     _classInfo: 'ClassInfo'
@@ -15174,7 +15346,9 @@ class EventTransportOSC(EventTransport):
 
     @property
     def feedbackMode(self) -> int:
-        """Options: {0: 'Send Changes Only', 1: 'Always Send', 2: 'Never Send'}
+        """The expression determining what is sent by the OSC event transport
+           
+           Options: {0: 'Send Changes Only', 1: 'Always Send', 2: 'Never Send'}
            Category: Output Messages
            UserName: Feedback mode"""
         ...
@@ -15639,6 +15813,7 @@ class Expression(Resource):
 
     @property
     def expression(self) -> str:
+        """The string defining the expression"""
         ...
 
     @expression.setter
@@ -15675,7 +15850,9 @@ class ExpressionVariable(_BlipValue):
 
     @property
     def defaultFloat(self) -> float:
-        """UserName: Default"""
+        """The default value of the variable, if it is a float type
+           
+           UserName: Default"""
         ...
 
     @defaultFloat.setter
@@ -15684,7 +15861,9 @@ class ExpressionVariable(_BlipValue):
 
     @property
     def defaultString(self) -> str:
-        """UserName: Default"""
+        """The default value of the variable, if it is a string type
+           
+           UserName: Default"""
         ...
 
     @defaultString.setter
@@ -15701,7 +15880,9 @@ class ExpressionVariable(_BlipValue):
 
     @property
     def name(self) -> str:
-        """UserName: Name"""
+        """The name of the variable
+           
+           UserName: Name"""
         ...
 
     @name.setter
@@ -15710,7 +15891,9 @@ class ExpressionVariable(_BlipValue):
 
     @property
     def type(self) -> int:
-        """Options: {0: 'Float', 1: 'String', 2: 'Function'}
+        """The type of the variable
+           
+           Options: {0: 'Float', 1: 'String', 2: 'Function'}
            UserName: Type"""
         ...
 
@@ -15735,6 +15918,7 @@ class ExpressionVariablesContainer(_BlipValue):
 
     @property
     def variables(self) -> List[ExpressionVariable]:
+        """The expression variables held within the container"""
         ...
 
     @variables.setter
@@ -15892,7 +16076,10 @@ class FadeModule(Module):
 
     @property
     def fade_0(self) -> float:
-        """UserName: Fade 1"""
+        """The fade applied to the brightness of all screens in mapping group 1
+           0 is black, 1 is maximum brightness
+           
+           UserName: Fade 1"""
         ...
 
     @fade_0.setter
@@ -15901,7 +16088,10 @@ class FadeModule(Module):
 
     @property
     def fade_1(self) -> float:
-        """UserName: Fade 2"""
+        """The fade applied to the brightness of all screens in mapping group 2
+           0 is black, 1 is maximum brightness
+           
+           UserName: Fade 2"""
         ...
 
     @fade_1.setter
@@ -15910,7 +16100,10 @@ class FadeModule(Module):
 
     @property
     def fade_2(self) -> float:
-        """UserName: Fade 3"""
+        """The fade applied to the brightness of all screens in mapping group 3
+           0 is black, 1 is maximum brightness
+           
+           UserName: Fade 3"""
         ...
 
     @fade_2.setter
@@ -15919,7 +16112,10 @@ class FadeModule(Module):
 
     @property
     def fade_3(self) -> float:
-        """UserName: Fade 4"""
+        """The fade applied to the brightness of all screens in mapping group 4
+           0 is black, 1 is maximum brightness
+           
+           UserName: Fade 4"""
         ...
 
     @fade_3.setter
@@ -15928,7 +16124,10 @@ class FadeModule(Module):
 
     @property
     def fade_4(self) -> float:
-        """UserName: Fade 5"""
+        """The fade applied to the brightness of all screens in mapping group 5
+           0 is black, 1 is maximum brightness
+           
+           UserName: Fade 5"""
         ...
 
     @fade_4.setter
@@ -15937,7 +16136,10 @@ class FadeModule(Module):
 
     @property
     def fade_5(self) -> float:
-        """UserName: Fade 6"""
+        """The fade applied to the brightness of all screens in mapping group 6
+           0 is black, 1 is maximum brightness
+           
+           UserName: Fade 6"""
         ...
 
     @fade_5.setter
@@ -15946,7 +16148,10 @@ class FadeModule(Module):
 
     @property
     def fade_6(self) -> float:
-        """UserName: Fade 7"""
+        """The fade applied to the brightness of all screens in mapping group 7
+           0 is black, 1 is maximum brightness
+           
+           UserName: Fade 7"""
         ...
 
     @fade_6.setter
@@ -15955,7 +16160,10 @@ class FadeModule(Module):
 
     @property
     def fade_7(self) -> float:
-        """UserName: Fade 8"""
+        """The fade applied to the brightness of all screens in mapping group 8
+           0 is black, 1 is maximum brightness
+           
+           UserName: Fade 8"""
         ...
 
     @fade_7.setter
@@ -15964,7 +16172,10 @@ class FadeModule(Module):
 
     @property
     def group_0(self) -> Projection:
-        """UserName: Group 1"""
+        """The mapping targetted by fade 1.
+           All screens in this mapping will be faded based on the value of fade 1
+           
+           UserName: Group 1"""
         ...
 
     @group_0.setter
@@ -15973,7 +16184,10 @@ class FadeModule(Module):
 
     @property
     def group_1(self) -> Projection:
-        """UserName: Group 2"""
+        """The mapping targetted by fade 2.
+           All screens in this mapping will be faded based on the value of fade 2
+           
+           UserName: Group 2"""
         ...
 
     @group_1.setter
@@ -15982,7 +16196,10 @@ class FadeModule(Module):
 
     @property
     def group_2(self) -> Projection:
-        """UserName: Group 3"""
+        """The mapping targetted by fade 3.
+           All screens in this mapping will be faded based on the value of fade 3
+           
+           UserName: Group 3"""
         ...
 
     @group_2.setter
@@ -15991,7 +16208,10 @@ class FadeModule(Module):
 
     @property
     def group_3(self) -> Projection:
-        """UserName: Group 4"""
+        """The mapping targetted by fade 4.
+           All screens in this mapping will be faded based on the value of fade 4
+           
+           UserName: Group 4"""
         ...
 
     @group_3.setter
@@ -16000,7 +16220,10 @@ class FadeModule(Module):
 
     @property
     def group_4(self) -> Projection:
-        """UserName: Group 5"""
+        """The mapping targetted by fade 5.
+           All screens in this mapping will be faded based on the value of fade 5
+           
+           UserName: Group 5"""
         ...
 
     @group_4.setter
@@ -16009,7 +16232,10 @@ class FadeModule(Module):
 
     @property
     def group_5(self) -> Projection:
-        """UserName: Group 6"""
+        """The mapping targetted by fade 6.
+           All screens in this mapping will be faded based on the value of fade 6
+           
+           UserName: Group 6"""
         ...
 
     @group_5.setter
@@ -16018,7 +16244,10 @@ class FadeModule(Module):
 
     @property
     def group_6(self) -> Projection:
-        """UserName: Group 7"""
+        """The mapping targetted by fade 7.
+           All screens in this mapping will be faded based on the value of fade 7
+           
+           UserName: Group 7"""
         ...
 
     @group_6.setter
@@ -16027,7 +16256,10 @@ class FadeModule(Module):
 
     @property
     def group_7(self) -> Projection:
-        """UserName: Group 8"""
+        """The mapping targetted by fade 8.
+           All screens in this mapping will be faded based on the value of fade 8
+           
+           UserName: Group 8"""
         ...
 
     @group_7.setter
@@ -18147,7 +18379,9 @@ class GltfExportOptions(ExportOptions):
 
     @property
     def doubleSidedMaterials(self) -> bool:
-        """UserName: Double-sided materials"""
+        """Whether the exported materials are double-sided
+           
+           UserName: Double-sided materials"""
         ...
 
     @doubleSidedMaterials.setter
@@ -19056,6 +19290,19 @@ class GuiSystem(Subsystem):
         ...
 
     @property
+    def selectedLayers(self) -> ReflectionValue:
+        """The set of layers selected in the GUI"""
+        ...
+
+    @property
+    def selectedLayersDelegate(self) -> Callable:
+        ...
+
+    @selectedLayersDelegate.setter
+    def selectedLayersDelegate(self, value: Callable) -> None:
+        ...
+
+    @property
     def setFeedBookmarkDelegate(self) -> Callable:
         ...
 
@@ -19916,6 +20163,7 @@ class ImageInfo(ResolutionInfo):
 
     @property
     def gpuBpp(self) -> int:
+        """The number of bits per pixel for the image data on the GPU"""
         ...
 
     @gpuBpp.setter
@@ -19924,6 +20172,7 @@ class ImageInfo(ResolutionInfo):
 
     @property
     def gpuHeight(self) -> int:
+        """The height of the image data on the GPU in pixels"""
         ...
 
     @gpuHeight.setter
@@ -19932,6 +20181,7 @@ class ImageInfo(ResolutionInfo):
 
     @property
     def gpuWidth(self) -> int:
+        """The width of the image data on the GPU in pixels"""
         ...
 
     @gpuWidth.setter
@@ -24144,7 +24394,9 @@ class Mat(_BlipValue):
 
     @property
     def m00(self) -> float:
-        """UserName: M00"""
+        """The (0, 0) component of the matrix
+           
+           UserName: M00"""
         ...
 
     @m00.setter
@@ -24153,7 +24405,9 @@ class Mat(_BlipValue):
 
     @property
     def m01(self) -> float:
-        """UserName: M01"""
+        """The (0, 1) component of the matrix
+           
+           UserName: M01"""
         ...
 
     @m01.setter
@@ -24162,7 +24416,9 @@ class Mat(_BlipValue):
 
     @property
     def m02(self) -> float:
-        """UserName: M02"""
+        """The (0, 2) component of the matrix
+           
+           UserName: M02"""
         ...
 
     @m02.setter
@@ -24171,7 +24427,9 @@ class Mat(_BlipValue):
 
     @property
     def m03(self) -> float:
-        """UserName: M03"""
+        """The (0, 3) component of the matrix
+           
+           UserName: M03"""
         ...
 
     @m03.setter
@@ -24180,7 +24438,9 @@ class Mat(_BlipValue):
 
     @property
     def m10(self) -> float:
-        """UserName: M10"""
+        """The (1, 0) component of the matrix
+           
+           UserName: M10"""
         ...
 
     @m10.setter
@@ -24189,7 +24449,9 @@ class Mat(_BlipValue):
 
     @property
     def m11(self) -> float:
-        """UserName: M11"""
+        """The (1, 1) component of the matrix
+           
+           UserName: M11"""
         ...
 
     @m11.setter
@@ -24198,7 +24460,9 @@ class Mat(_BlipValue):
 
     @property
     def m12(self) -> float:
-        """UserName: M12"""
+        """The (1, 2) component of the matrix
+           
+           UserName: M12"""
         ...
 
     @m12.setter
@@ -24207,7 +24471,9 @@ class Mat(_BlipValue):
 
     @property
     def m13(self) -> float:
-        """UserName: M13"""
+        """The (1, 3) component of the matrix
+           
+           UserName: M13"""
         ...
 
     @m13.setter
@@ -24216,7 +24482,9 @@ class Mat(_BlipValue):
 
     @property
     def m20(self) -> float:
-        """UserName: M20"""
+        """The (2, 0) component of the matrix
+           
+           UserName: M20"""
         ...
 
     @m20.setter
@@ -24225,7 +24493,9 @@ class Mat(_BlipValue):
 
     @property
     def m21(self) -> float:
-        """UserName: M21"""
+        """The (2, 1) component of the matrix
+           
+           UserName: M21"""
         ...
 
     @m21.setter
@@ -24234,7 +24504,9 @@ class Mat(_BlipValue):
 
     @property
     def m22(self) -> float:
-        """UserName: M22"""
+        """The (2, 2) component of the matrix
+           
+           UserName: M22"""
         ...
 
     @m22.setter
@@ -24243,7 +24515,9 @@ class Mat(_BlipValue):
 
     @property
     def m23(self) -> float:
-        """UserName: M23"""
+        """The (2, 3) component of the matrix
+           
+           UserName: M23"""
         ...
 
     @m23.setter
@@ -24252,7 +24526,9 @@ class Mat(_BlipValue):
 
     @property
     def m30(self) -> float:
-        """UserName: M30"""
+        """The (3, 0) component of the matrix
+           
+           UserName: M30"""
         ...
 
     @m30.setter
@@ -24261,7 +24537,9 @@ class Mat(_BlipValue):
 
     @property
     def m31(self) -> float:
-        """UserName: M31"""
+        """The (3, 1) component of the matrix
+           
+           UserName: M31"""
         ...
 
     @m31.setter
@@ -24270,7 +24548,9 @@ class Mat(_BlipValue):
 
     @property
     def m32(self) -> float:
-        """UserName: M32"""
+        """The (3, 2) component of the matrix
+           
+           UserName: M32"""
         ...
 
     @m32.setter
@@ -24279,7 +24559,9 @@ class Mat(_BlipValue):
 
     @property
     def m33(self) -> float:
-        """UserName: M33"""
+        """The (3, 3) component of the matrix
+           
+           UserName: M33"""
         ...
 
     @m33.setter
@@ -25719,6 +26001,7 @@ class MidiOut(Thread):
 
     @property
     def name(self) -> str:
+        """The name of the MidiOut thread"""
         ...
 
 class MidiPatchChangeState(IDataState):
@@ -28630,6 +28913,8 @@ class OcioColourSpace(_BlipValue):
 
     @property
     def isBuiltin(self) -> bool:
+        """Whether this is a built-in transform.
+           If false, this is a transform provided in a .ocio config file."""
         ...
 
     @isBuiltin.setter
@@ -28638,6 +28923,7 @@ class OcioColourSpace(_BlipValue):
 
     @property
     def name(self) -> str:
+        """The name of the colour space, or the display if this is a display-view transform"""
         ...
 
     @name.setter
@@ -28646,6 +28932,9 @@ class OcioColourSpace(_BlipValue):
 
     @property
     def type(self) -> int:
+        """Whether this colour space represents an input or output transform, or a working space
+           
+           Options: {0: 'Invalid', 1: 'Input', 2: 'Output'}"""
         ...
 
     @type.setter
@@ -28654,6 +28943,8 @@ class OcioColourSpace(_BlipValue):
 
     @property
     def view(self) -> str:
+        """The name of the view, if this is a display-view transform.
+           Empty if this is a regular colour space transform."""
         ...
 
     @view.setter
@@ -28877,17 +29168,7 @@ class OpenModule(Module):
     _classInfo: 'ClassInfo'
     __username__ = 'OpenModule'
 
-    @property
-    def params(self) -> List[OpenModuleConfig.Param]:
-        ...
-
-    def addParam(self, arg0: OpenModuleConfig.Param) -> None:
-        ...
-
-    def makeParam(self, arg0: Resource, arg1: ReflectionValue, arg2: FieldInfo, arg3: str) -> None:
-        ...
-
-    def removeParam(self, arg0: str) -> None:
+    def __init__(self) -> None:
         ...
 
 class OpenModuleConfig(ModuleConfig):
@@ -28938,13 +29219,14 @@ class OpenModuleConfig(ModuleConfig):
     def params(self, value: List[OpenModuleConfig.Param]) -> None:
         ...
 
-    def __init__(self) -> None:
+    def addParam(self, arg0: OpenModuleConfig.Param) -> bool:
         ...
 
-class OpenVPCalCaptureProcess(FastCaptureProcess):
-    null: Self
-    _classInfo: 'ClassInfo'
-    __username__ = 'OpenVPCalCaptureProcess'
+    def makeParam(self, arg0: Resource, arg1: ReflectionValue, arg2: FieldInfo, arg3: str) -> bool:
+        ...
+
+    def removeParam(self, arg0: str, arg1: Layer) -> None:
+        ...
 
 class Operation(_BlipValue):
     null: Self
@@ -29029,14 +29311,6 @@ class OptiCalCameraPlan(Camera):
 
     @referenceImage.setter
     def referenceImage(self, value: DxTexture) -> None:
-        ...
-
-    @property
-    def sensorSizeMM(self) -> Vec2:
-        ...
-
-    @sensorSizeMM.setter
-    def sensorSizeMM(self, value: Vec2) -> None:
         ...
 
     @property
@@ -29978,6 +30252,7 @@ class OpticalCalibrator(Resource):
     getGridToleranceMethodNames: Callable
     getOutlierModeNames: Callable
     getVisualisationNames: Callable
+    helpText: Callable
 
     @property
     def applyAlignment(self) -> int:
@@ -30317,6 +30592,7 @@ class Options(_BlipValue):
 
     @property
     def GPUFanSpeedPercentOverride(self) -> OptionValue[int]:
+        """The value of the option switch GPUFanSpeedPercentOverride"""
         ...
 
     @GPUFanSpeedPercentOverride.setter
@@ -30325,6 +30601,7 @@ class Options(_BlipValue):
 
     @property
     def RgbEasyVideoFormat(self) -> OptionValue[int]:
+        """The value of the option switch RgbEasyVideoFormat"""
         ...
 
     @RgbEasyVideoFormat.setter
@@ -30333,6 +30610,7 @@ class Options(_BlipValue):
 
     @property
     def additionalCommandLatency(self) -> OptionValue[int]:
+        """The value of the option switch additionalCommandLatency"""
         ...
 
     @additionalCommandLatency.setter
@@ -30341,6 +30619,7 @@ class Options(_BlipValue):
 
     @property
     def allocateExtraMB(self) -> OptionValue[int]:
+        """The value of the option switch allocateExtraMB"""
         ...
 
     @allocateExtraMB.setter
@@ -30349,6 +30628,7 @@ class Options(_BlipValue):
 
     @property
     def allowOpenEditorsWhilePlaying(self) -> OptionValue[bool]:
+        """The value of the option switch allowOpenEditorsWhilePlaying"""
         ...
 
     @allowOpenEditorsWhilePlaying.setter
@@ -30357,6 +30637,7 @@ class Options(_BlipValue):
 
     @property
     def allowPersistentMute(self) -> OptionValue[bool]:
+        """The value of the option switch allowPersistentMute"""
         ...
 
     @allowPersistentMute.setter
@@ -30365,6 +30646,7 @@ class Options(_BlipValue):
 
     @property
     def allowPrefetcherLookaheadModulation(self) -> OptionValue[bool]:
+        """The value of the option switch allowPrefetcherLookaheadModulation"""
         ...
 
     @allowPrefetcherLookaheadModulation.setter
@@ -30373,6 +30655,7 @@ class Options(_BlipValue):
 
     @property
     def allowProjectCorruption(self) -> OptionValue[bool]:
+        """The value of the option switch allowProjectCorruption"""
         ...
 
     @allowProjectCorruption.setter
@@ -30381,6 +30664,7 @@ class Options(_BlipValue):
 
     @property
     def applyCalibrationLUTInVisualiser(self) -> OptionValue[bool]:
+        """The value of the option switch applyCalibrationLUTInVisualiser"""
         ...
 
     @applyCalibrationLUTInVisualiser.setter
@@ -30389,6 +30673,7 @@ class Options(_BlipValue):
 
     @property
     def audioInputDriver(self) -> OptionValue[int]:
+        """The value of the option switch audioInputDriver"""
         ...
 
     @audioInputDriver.setter
@@ -30397,6 +30682,7 @@ class Options(_BlipValue):
 
     @property
     def audioLinePcmSize(self) -> OptionValue[int]:
+        """The value of the option switch audioLinePcmSize"""
         ...
 
     @audioLinePcmSize.setter
@@ -30405,6 +30691,7 @@ class Options(_BlipValue):
 
     @property
     def audioMinFadeRamp(self) -> OptionValue[int]:
+        """The value of the option switch audioMinFadeRamp"""
         ...
 
     @audioMinFadeRamp.setter
@@ -30413,6 +30700,7 @@ class Options(_BlipValue):
 
     @property
     def audioStreamBufferSize(self) -> OptionValue[int]:
+        """The value of the option switch audioStreamBufferSize"""
         ...
 
     @audioStreamBufferSize.setter
@@ -30421,6 +30709,7 @@ class Options(_BlipValue):
 
     @property
     def automationKeyframeInterval(self) -> OptionValue[int]:
+        """The value of the option switch automationKeyframeInterval"""
         ...
 
     @automationKeyframeInterval.setter
@@ -30429,6 +30718,7 @@ class Options(_BlipValue):
 
     @property
     def blackMagicMatrixSendDelay(self) -> OptionValue[int]:
+        """The value of the option switch blackMagicMatrixSendDelay"""
         ...
 
     @blackMagicMatrixSendDelay.setter
@@ -30437,6 +30727,7 @@ class Options(_BlipValue):
 
     @property
     def bluefishVITCEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch bluefishVITCEnabled"""
         ...
 
     @bluefishVITCEnabled.setter
@@ -30445,6 +30736,7 @@ class Options(_BlipValue):
 
     @property
     def cameraVideoInFpsDivisor(self) -> OptionValue[int]:
+        """The value of the option switch cameraVideoInFpsDivisor"""
         ...
 
     @cameraVideoInFpsDivisor.setter
@@ -30453,6 +30745,7 @@ class Options(_BlipValue):
 
     @property
     def cefLoggingVerbosity(self) -> OptionValue[int]:
+        """The value of the option switch cefLoggingVerbosity"""
         ...
 
     @cefLoggingVerbosity.setter
@@ -30461,6 +30754,7 @@ class Options(_BlipValue):
 
     @property
     def commsProcessingTime(self) -> OptionValue[int]:
+        """The value of the option switch commsProcessingTime"""
         ...
 
     @commsProcessingTime.setter
@@ -30469,6 +30763,7 @@ class Options(_BlipValue):
 
     @property
     def commsResendWindowSize(self) -> OptionValue[int]:
+        """The value of the option switch commsResendWindowSize"""
         ...
 
     @commsResendWindowSize.setter
@@ -30477,6 +30772,7 @@ class Options(_BlipValue):
 
     @property
     def crtBreakAlloc(self) -> OptionValue[int]:
+        """The value of the option switch crtBreakAlloc"""
         ...
 
     @crtBreakAlloc.setter
@@ -30485,6 +30781,7 @@ class Options(_BlipValue):
 
     @property
     def debugBlackBox(self) -> OptionValue[bool]:
+        """The value of the option switch debugBlackBox"""
         ...
 
     @debugBlackBox.setter
@@ -30493,6 +30790,7 @@ class Options(_BlipValue):
 
     @property
     def debugCameraTrackingReceiveDelta(self) -> OptionValue[bool]:
+        """The value of the option switch debugCameraTrackingReceiveDelta"""
         ...
 
     @debugCameraTrackingReceiveDelta.setter
@@ -30501,6 +30799,7 @@ class Options(_BlipValue):
 
     @property
     def debugCameraTrackingSync(self) -> OptionValue[bool]:
+        """The value of the option switch debugCameraTrackingSync"""
         ...
 
     @debugCameraTrackingSync.setter
@@ -30509,6 +30808,7 @@ class Options(_BlipValue):
 
     @property
     def debugComms(self) -> OptionValue[int]:
+        """The value of the option switch debugComms"""
         ...
 
     @debugComms.setter
@@ -30517,6 +30817,7 @@ class Options(_BlipValue):
 
     @property
     def debugControlDevice(self) -> OptionValue[bool]:
+        """The value of the option switch debugControlDevice"""
         ...
 
     @debugControlDevice.setter
@@ -30525,6 +30826,7 @@ class Options(_BlipValue):
 
     @property
     def debugGPUAllocation(self) -> OptionValue[bool]:
+        """The value of the option switch debugGPUAllocation"""
         ...
 
     @debugGPUAllocation.setter
@@ -30533,6 +30835,7 @@ class Options(_BlipValue):
 
     @property
     def debugLevelAudio(self) -> OptionValue[int]:
+        """The value of the option switch debugLevelAudio"""
         ...
 
     @debugLevelAudio.setter
@@ -30541,6 +30844,7 @@ class Options(_BlipValue):
 
     @property
     def debugLevelBluefish(self) -> OptionValue[int]:
+        """The value of the option switch debugLevelBluefish"""
         ...
 
     @debugLevelBluefish.setter
@@ -30549,6 +30853,7 @@ class Options(_BlipValue):
 
     @property
     def debugLiveUpdate(self) -> OptionValue[int]:
+        """The value of the option switch debugLiveUpdate"""
         ...
 
     @debugLiveUpdate.setter
@@ -30557,6 +30862,7 @@ class Options(_BlipValue):
 
     @property
     def debugLiveUpdateMaxCache(self) -> OptionValue[int]:
+        """The value of the option switch debugLiveUpdateMaxCache"""
         ...
 
     @debugLiveUpdateMaxCache.setter
@@ -30565,6 +30871,7 @@ class Options(_BlipValue):
 
     @property
     def debugLocalisation(self) -> OptionValue[bool]:
+        """The value of the option switch debugLocalisation"""
         ...
 
     @debugLocalisation.setter
@@ -30573,6 +30880,7 @@ class Options(_BlipValue):
 
     @property
     def debugMediaManager(self) -> OptionValue[bool]:
+        """The value of the option switch debugMediaManager"""
         ...
 
     @debugMediaManager.setter
@@ -30581,6 +30889,7 @@ class Options(_BlipValue):
 
     @property
     def debugMessaging(self) -> OptionValue[bool]:
+        """The value of the option switch debugMessaging"""
         ...
 
     @debugMessaging.setter
@@ -30589,6 +30898,7 @@ class Options(_BlipValue):
 
     @property
     def debugPrefetchScan(self) -> OptionValue[bool]:
+        """The value of the option switch debugPrefetchScan"""
         ...
 
     @debugPrefetchScan.setter
@@ -30597,6 +30907,7 @@ class Options(_BlipValue):
 
     @property
     def debugPresentData(self) -> OptionValue[bool]:
+        """The value of the option switch debugPresentData"""
         ...
 
     @debugPresentData.setter
@@ -30605,6 +30916,7 @@ class Options(_BlipValue):
 
     @property
     def debugResourceFileDeletion(self) -> OptionValue[bool]:
+        """The value of the option switch debugResourceFileDeletion"""
         ...
 
     @debugResourceFileDeletion.setter
@@ -30613,6 +30925,7 @@ class Options(_BlipValue):
 
     @property
     def debugRivermaxStream(self) -> OptionValue[bool]:
+        """The value of the option switch debugRivermaxStream"""
         ...
 
     @debugRivermaxStream.setter
@@ -30621,6 +30934,7 @@ class Options(_BlipValue):
 
     @property
     def debugSockPuppetTimecode(self) -> OptionValue[bool]:
+        """The value of the option switch debugSockPuppetTimecode"""
         ...
 
     @debugSockPuppetTimecode.setter
@@ -30629,6 +30943,7 @@ class Options(_BlipValue):
 
     @property
     def debugTextureLifetimes(self) -> OptionValue[bool]:
+        """The value of the option switch debugTextureLifetimes"""
         ...
 
     @debugTextureLifetimes.setter
@@ -30637,6 +30952,7 @@ class Options(_BlipValue):
 
     @property
     def debugVSyncEstimationLevel(self) -> OptionValue[int]:
+        """The value of the option switch debugVSyncEstimationLevel"""
         ...
 
     @debugVSyncEstimationLevel.setter
@@ -30645,6 +30961,7 @@ class Options(_BlipValue):
 
     @property
     def defaultDetachedBankEditorResources(self) -> OptionValue[bool]:
+        """The value of the option switch defaultDetachedBankEditorResources"""
         ...
 
     @defaultDetachedBankEditorResources.setter
@@ -30653,6 +30970,7 @@ class Options(_BlipValue):
 
     @property
     def deferActorStartup(self) -> OptionValue[bool]:
+        """The value of the option switch deferActorStartup"""
         ...
 
     @deferActorStartup.setter
@@ -30661,6 +30979,7 @@ class Options(_BlipValue):
 
     @property
     def disableActiveLatencyPhaseAdjustment(self) -> OptionValue[bool]:
+        """The value of the option switch disableActiveLatencyPhaseAdjustment"""
         ...
 
     @disableActiveLatencyPhaseAdjustment.setter
@@ -30669,6 +30988,7 @@ class Options(_BlipValue):
 
     @property
     def disableAlignmentTransport(self) -> OptionValue[bool]:
+        """The value of the option switch disableAlignmentTransport"""
         ...
 
     @disableAlignmentTransport.setter
@@ -30677,6 +30997,7 @@ class Options(_BlipValue):
 
     @property
     def disableAltTab(self) -> OptionValue[bool]:
+        """The value of the option switch disableAltTab"""
         ...
 
     @disableAltTab.setter
@@ -30685,6 +31006,7 @@ class Options(_BlipValue):
 
     @property
     def disableAudioASIODriver(self) -> OptionValue[bool]:
+        """The value of the option switch disableAudioASIODriver"""
         ...
 
     @disableAudioASIODriver.setter
@@ -30693,6 +31015,7 @@ class Options(_BlipValue):
 
     @property
     def disableAudioCrossfade(self) -> OptionValue[bool]:
+        """The value of the option switch disableAudioCrossfade"""
         ...
 
     @disableAudioCrossfade.setter
@@ -30701,6 +31024,7 @@ class Options(_BlipValue):
 
     @property
     def disableAudioInput(self) -> OptionValue[bool]:
+        """The value of the option switch disableAudioInput"""
         ...
 
     @disableAudioInput.setter
@@ -30709,6 +31033,7 @@ class Options(_BlipValue):
 
     @property
     def disableCaptureDropFrameNotifications(self) -> OptionValue[bool]:
+        """The value of the option switch disableCaptureDropFrameNotifications"""
         ...
 
     @disableCaptureDropFrameNotifications.setter
@@ -30717,6 +31042,7 @@ class Options(_BlipValue):
 
     @property
     def disableColourCalAcceleration(self) -> OptionValue[bool]:
+        """The value of the option switch disableColourCalAcceleration"""
         ...
 
     @disableColourCalAcceleration.setter
@@ -30725,6 +31051,7 @@ class Options(_BlipValue):
 
     @property
     def disableConfirmationDialog(self) -> OptionValue[bool]:
+        """The value of the option switch disableConfirmationDialog"""
         ...
 
     @disableConfirmationDialog.setter
@@ -30733,6 +31060,7 @@ class Options(_BlipValue):
 
     @property
     def disableDMXKeepAlive(self) -> OptionValue[bool]:
+        """The value of the option switch disableDMXKeepAlive"""
         ...
 
     @disableDMXKeepAlive.setter
@@ -30741,6 +31069,7 @@ class Options(_BlipValue):
 
     @property
     def disableDllVersionCheck(self) -> OptionValue[bool]:
+        """The value of the option switch disableDllVersionCheck"""
         ...
 
     @disableDllVersionCheck.setter
@@ -30749,6 +31078,7 @@ class Options(_BlipValue):
 
     @property
     def disableDmxAdapterPoll(self) -> OptionValue[bool]:
+        """The value of the option switch disableDmxAdapterPoll"""
         ...
 
     @disableDmxAdapterPoll.setter
@@ -30757,6 +31087,7 @@ class Options(_BlipValue):
 
     @property
     def disableDmxPacketSendWait(self) -> OptionValue[bool]:
+        """The value of the option switch disableDmxPacketSendWait"""
         ...
 
     @disableDmxPacketSendWait.setter
@@ -30765,6 +31096,7 @@ class Options(_BlipValue):
 
     @property
     def disableDmxScreenChannelConflictCheck(self) -> OptionValue[bool]:
+        """The value of the option switch disableDmxScreenChannelConflictCheck"""
         ...
 
     @disableDmxScreenChannelConflictCheck.setter
@@ -30773,6 +31105,7 @@ class Options(_BlipValue):
 
     @property
     def disableDormantMode(self) -> OptionValue[bool]:
+        """The value of the option switch disableDormantMode"""
         ...
 
     @disableDormantMode.setter
@@ -30781,6 +31114,7 @@ class Options(_BlipValue):
 
     @property
     def disableFeedRectangleProxies(self) -> OptionValue[bool]:
+        """The value of the option switch disableFeedRectangleProxies"""
         ...
 
     @disableFeedRectangleProxies.setter
@@ -30789,6 +31123,7 @@ class Options(_BlipValue):
 
     @property
     def disableFrameBlending(self) -> OptionValue[bool]:
+        """The value of the option switch disableFrameBlending"""
         ...
 
     @disableFrameBlending.setter
@@ -30797,6 +31132,7 @@ class Options(_BlipValue):
 
     @property
     def disableFreeSpaceCheck(self) -> OptionValue[bool]:
+        """The value of the option switch disableFreeSpaceCheck"""
         ...
 
     @disableFreeSpaceCheck.setter
@@ -30805,6 +31141,7 @@ class Options(_BlipValue):
 
     @property
     def disableHdrOnPrimary(self) -> OptionValue[bool]:
+        """The value of the option switch disableHdrOnPrimary"""
         ...
 
     @disableHdrOnPrimary.setter
@@ -30813,6 +31150,7 @@ class Options(_BlipValue):
 
     @property
     def disableInputInCameraEditor(self) -> OptionValue[bool]:
+        """The value of the option switch disableInputInCameraEditor"""
         ...
 
     @disableInputInCameraEditor.setter
@@ -30821,6 +31159,7 @@ class Options(_BlipValue):
 
     @property
     def disableLicenseOverLAN(self) -> OptionValue[bool]:
+        """The value of the option switch disableLicenseOverLAN"""
         ...
 
     @disableLicenseOverLAN.setter
@@ -30829,6 +31168,7 @@ class Options(_BlipValue):
 
     @property
     def disableLiveUpdate(self) -> OptionValue[bool]:
+        """The value of the option switch disableLiveUpdate"""
         ...
 
     @disableLiveUpdate.setter
@@ -30837,6 +31177,7 @@ class Options(_BlipValue):
 
     @property
     def disableNonSurfaceProxies(self) -> OptionValue[bool]:
+        """The value of the option switch disableNonSurfaceProxies"""
         ...
 
     @disableNonSurfaceProxies.setter
@@ -30845,6 +31186,7 @@ class Options(_BlipValue):
 
     @property
     def disableOutputModeHotkeys(self) -> OptionValue[bool]:
+        """The value of the option switch disableOutputModeHotkeys"""
         ...
 
     @disableOutputModeHotkeys.setter
@@ -30853,6 +31195,7 @@ class Options(_BlipValue):
 
     @property
     def disableOverlayMessages(self) -> OptionValue[bool]:
+        """The value of the option switch disableOverlayMessages"""
         ...
 
     @disableOverlayMessages.setter
@@ -30861,6 +31204,7 @@ class Options(_BlipValue):
 
     @property
     def disablePrefetcherNotifications(self) -> OptionValue[bool]:
+        """The value of the option switch disablePrefetcherNotifications"""
         ...
 
     @disablePrefetcherNotifications.setter
@@ -30869,6 +31213,7 @@ class Options(_BlipValue):
 
     @property
     def disableProxyMaker(self) -> OptionValue[bool]:
+        """The value of the option switch disableProxyMaker"""
         ...
 
     @disableProxyMaker.setter
@@ -30877,6 +31222,7 @@ class Options(_BlipValue):
 
     @property
     def disableRefWarnings(self) -> OptionValue[bool]:
+        """The value of the option switch disableRefWarnings"""
         ...
 
     @disableRefWarnings.setter
@@ -30885,6 +31231,7 @@ class Options(_BlipValue):
 
     @property
     def disableResourceSend(self) -> OptionValue[bool]:
+        """The value of the option switch disableResourceSend"""
         ...
 
     @disableResourceSend.setter
@@ -30893,6 +31240,7 @@ class Options(_BlipValue):
 
     @property
     def disableSendDisengagedObjects(self) -> OptionValue[bool]:
+        """The value of the option switch disableSendDisengagedObjects"""
         ...
 
     @disableSendDisengagedObjects.setter
@@ -30901,6 +31249,7 @@ class Options(_BlipValue):
 
     @property
     def disableShaderCache(self) -> OptionValue[bool]:
+        """The value of the option switch disableShaderCache"""
         ...
 
     @disableShaderCache.setter
@@ -30909,6 +31258,7 @@ class Options(_BlipValue):
 
     @property
     def disableTelnetNotification(self) -> OptionValue[bool]:
+        """The value of the option switch disableTelnetNotification"""
         ...
 
     @disableTelnetNotification.setter
@@ -30917,6 +31267,7 @@ class Options(_BlipValue):
 
     @property
     def disableTrackSanityChecks(self) -> OptionValue[bool]:
+        """The value of the option switch disableTrackSanityChecks"""
         ...
 
     @disableTrackSanityChecks.setter
@@ -30925,6 +31276,7 @@ class Options(_BlipValue):
 
     @property
     def disableTrackingDataRedistribution(self) -> OptionValue[bool]:
+        """The value of the option switch disableTrackingDataRedistribution"""
         ...
 
     @disableTrackingDataRedistribution.setter
@@ -30933,6 +31285,7 @@ class Options(_BlipValue):
 
     @property
     def disableUnrealConfigUpdate(self) -> OptionValue[bool]:
+        """The value of the option switch disableUnrealConfigUpdate"""
         ...
 
     @disableUnrealConfigUpdate.setter
@@ -30941,6 +31294,7 @@ class Options(_BlipValue):
 
     @property
     def disableUnsupportedEmbeddedAudioNotification(self) -> OptionValue[bool]:
+        """The value of the option switch disableUnsupportedEmbeddedAudioNotification"""
         ...
 
     @disableUnsupportedEmbeddedAudioNotification.setter
@@ -30949,6 +31303,7 @@ class Options(_BlipValue):
 
     @property
     def disableVFCConfigOnStartup(self) -> OptionValue[bool]:
+        """The value of the option switch disableVFCConfigOnStartup"""
         ...
 
     @disableVFCConfigOnStartup.setter
@@ -30957,6 +31312,7 @@ class Options(_BlipValue):
 
     @property
     def disableVR(self) -> OptionValue[bool]:
+        """The value of the option switch disableVR"""
         ...
 
     @disableVR.setter
@@ -30965,6 +31321,7 @@ class Options(_BlipValue):
 
     @property
     def disableVideoInDeviceMap(self) -> OptionValue[bool]:
+        """The value of the option switch disableVideoInDeviceMap"""
         ...
 
     @disableVideoInDeviceMap.setter
@@ -30973,6 +31330,7 @@ class Options(_BlipValue):
 
     @property
     def disableVideoclipThumbnailVersions(self) -> OptionValue[bool]:
+        """The value of the option switch disableVideoclipThumbnailVersions"""
         ...
 
     @disableVideoclipThumbnailVersions.setter
@@ -30981,6 +31339,7 @@ class Options(_BlipValue):
 
     @property
     def disableWDGA36ACRC(self) -> OptionValue[bool]:
+        """The value of the option switch disableWDGA36ACRC"""
         ...
 
     @disableWDGA36ACRC.setter
@@ -30989,6 +31348,7 @@ class Options(_BlipValue):
 
     @property
     def drawMouseCursor(self) -> OptionValue[bool]:
+        """The value of the option switch drawMouseCursor"""
         ...
 
     @drawMouseCursor.setter
@@ -30997,6 +31357,7 @@ class Options(_BlipValue):
 
     @property
     def dumpFrameStats(self) -> OptionValue[bool]:
+        """The value of the option switch dumpFrameStats"""
         ...
 
     @dumpFrameStats.setter
@@ -31005,6 +31366,7 @@ class Options(_BlipValue):
 
     @property
     def dumpReflectionTypePointers(self) -> OptionValue[bool]:
+        """The value of the option switch dumpReflectionTypePointers"""
         ...
 
     @dumpReflectionTypePointers.setter
@@ -31013,6 +31375,7 @@ class Options(_BlipValue):
 
     @property
     def enableACESFinalMatrix(self) -> OptionValue[bool]:
+        """The value of the option switch enableACESFinalMatrix"""
         ...
 
     @enableACESFinalMatrix.setter
@@ -31021,6 +31384,7 @@ class Options(_BlipValue):
 
     @property
     def enableActiveRegions(self) -> OptionValue[bool]:
+        """The value of the option switch enableActiveRegions"""
         ...
 
     @enableActiveRegions.setter
@@ -31029,6 +31393,7 @@ class Options(_BlipValue):
 
     @property
     def enableAlphaMaskDSE(self) -> OptionValue[bool]:
+        """The value of the option switch enableAlphaMaskDSE"""
         ...
 
     @enableAlphaMaskDSE.setter
@@ -31037,6 +31402,7 @@ class Options(_BlipValue):
 
     @property
     def enableArtificialLatency(self) -> OptionValue[bool]:
+        """The value of the option switch enableArtificialLatency"""
         ...
 
     @enableArtificialLatency.setter
@@ -31045,6 +31411,7 @@ class Options(_BlipValue):
 
     @property
     def enableChromaKeyModule(self) -> OptionValue[bool]:
+        """The value of the option switch enableChromaKeyModule"""
         ...
 
     @enableChromaKeyModule.setter
@@ -31053,6 +31420,7 @@ class Options(_BlipValue):
 
     @property
     def enableColourFormat(self) -> OptionValue[bool]:
+        """The value of the option switch enableColourFormat"""
         ...
 
     @enableColourFormat.setter
@@ -31061,6 +31429,7 @@ class Options(_BlipValue):
 
     @property
     def enableCrashReporting(self) -> OptionValue[bool]:
+        """The value of the option switch enableCrashReporting"""
         ...
 
     @enableCrashReporting.setter
@@ -31069,6 +31438,7 @@ class Options(_BlipValue):
 
     @property
     def enableDeleteOldMedia(self) -> OptionValue[bool]:
+        """The value of the option switch enableDeleteOldMedia"""
         ...
 
     @enableDeleteOldMedia.setter
@@ -31077,6 +31447,7 @@ class Options(_BlipValue):
 
     @property
     def enableDualModeVFC(self) -> OptionValue[bool]:
+        """The value of the option switch enableDualModeVFC"""
         ...
 
     @enableDualModeVFC.setter
@@ -31085,6 +31456,7 @@ class Options(_BlipValue):
 
     @property
     def enableExperimentalOutput(self) -> OptionValue[bool]:
+        """The value of the option switch enableExperimentalOutput"""
         ...
 
     @enableExperimentalOutput.setter
@@ -31093,6 +31465,7 @@ class Options(_BlipValue):
 
     @property
     def enableFeedAlpha(self) -> OptionValue[bool]:
+        """The value of the option switch enableFeedAlpha"""
         ...
 
     @enableFeedAlpha.setter
@@ -31101,6 +31474,7 @@ class Options(_BlipValue):
 
     @property
     def enableFfmpegLogging(self) -> OptionValue[bool]:
+        """The value of the option switch enableFfmpegLogging"""
         ...
 
     @enableFfmpegLogging.setter
@@ -31109,6 +31483,7 @@ class Options(_BlipValue):
 
     @property
     def enableGuiFeed(self) -> OptionValue[bool]:
+        """The value of the option switch enableGuiFeed"""
         ...
 
     @enableGuiFeed.setter
@@ -31117,6 +31492,7 @@ class Options(_BlipValue):
 
     @property
     def enableHighDynamicRange(self) -> OptionValue[bool]:
+        """The value of the option switch enableHighDynamicRange"""
         ...
 
     @enableHighDynamicRange.setter
@@ -31125,6 +31501,7 @@ class Options(_BlipValue):
 
     @property
     def enableIPSDIExperimentalModes(self) -> OptionValue[bool]:
+        """The value of the option switch enableIPSDIExperimentalModes"""
         ...
 
     @enableIPSDIExperimentalModes.setter
@@ -31133,6 +31510,7 @@ class Options(_BlipValue):
 
     @property
     def enableIPVideo(self) -> OptionValue[int]:
+        """The value of the option switch enableIPVideo"""
         ...
 
     @enableIPVideo.setter
@@ -31141,6 +31519,7 @@ class Options(_BlipValue):
 
     @property
     def enableLensCalibrationLoading(self) -> OptionValue[bool]:
+        """The value of the option switch enableLensCalibrationLoading"""
         ...
 
     @enableLensCalibrationLoading.setter
@@ -31149,6 +31528,7 @@ class Options(_BlipValue):
 
     @property
     def enableMeshDeform(self) -> OptionValue[bool]:
+        """The value of the option switch enableMeshDeform"""
         ...
 
     @enableMeshDeform.setter
@@ -31157,6 +31537,7 @@ class Options(_BlipValue):
 
     @property
     def enableMixedReality(self) -> OptionValue[bool]:
+        """The value of the option switch enableMixedReality"""
         ...
 
     @enableMixedReality.setter
@@ -31165,6 +31546,7 @@ class Options(_BlipValue):
 
     @property
     def enableMultiview(self) -> OptionValue[bool]:
+        """The value of the option switch enableMultiview"""
         ...
 
     @enableMultiview.setter
@@ -31173,6 +31555,7 @@ class Options(_BlipValue):
 
     @property
     def enableNotchNDI(self) -> OptionValue[bool]:
+        """The value of the option switch enableNotchNDI"""
         ...
 
     @enableNotchNDI.setter
@@ -31181,6 +31564,7 @@ class Options(_BlipValue):
 
     @property
     def enablePerAxisScreenPositionLockout(self) -> OptionValue[bool]:
+        """The value of the option switch enablePerAxisScreenPositionLockout"""
         ...
 
     @enablePerAxisScreenPositionLockout.setter
@@ -31189,6 +31573,7 @@ class Options(_BlipValue):
 
     @property
     def enablePrefetcherGraphDebug(self) -> OptionValue[bool]:
+        """The value of the option switch enablePrefetcherGraphDebug"""
         ...
 
     @enablePrefetcherGraphDebug.setter
@@ -31197,6 +31582,7 @@ class Options(_BlipValue):
 
     @property
     def enableProjectorDeviceLogging(self) -> OptionValue[int]:
+        """The value of the option switch enableProjectorDeviceLogging"""
         ...
 
     @enableProjectorDeviceLogging.setter
@@ -31205,6 +31591,7 @@ class Options(_BlipValue):
 
     @property
     def enableProjectorDeviceRetries(self) -> OptionValue[int]:
+        """The value of the option switch enableProjectorDeviceRetries"""
         ...
 
     @enableProjectorDeviceRetries.setter
@@ -31213,6 +31600,7 @@ class Options(_BlipValue):
 
     @property
     def enableProjectorStacking(self) -> OptionValue[bool]:
+        """The value of the option switch enableProjectorStacking"""
         ...
 
     @enableProjectorStacking.setter
@@ -31221,6 +31609,7 @@ class Options(_BlipValue):
 
     @property
     def enableProofOfPlay(self) -> OptionValue[bool]:
+        """The value of the option switch enableProofOfPlay"""
         ...
 
     @enableProofOfPlay.setter
@@ -31229,6 +31618,7 @@ class Options(_BlipValue):
 
     @property
     def enableRenderStreamEngineSync(self) -> OptionValue[bool]:
+        """The value of the option switch enableRenderStreamEngineSync"""
         ...
 
     @enableRenderStreamEngineSync.setter
@@ -31237,6 +31627,7 @@ class Options(_BlipValue):
 
     @property
     def enableRenderStreamNDI(self) -> OptionValue[bool]:
+        """The value of the option switch enableRenderStreamNDI"""
         ...
 
     @enableRenderStreamNDI.setter
@@ -31245,6 +31636,7 @@ class Options(_BlipValue):
 
     @property
     def enableResourceFileDeletion(self) -> OptionValue[bool]:
+        """The value of the option switch enableResourceFileDeletion"""
         ...
 
     @enableResourceFileDeletion.setter
@@ -31253,6 +31645,7 @@ class Options(_BlipValue):
 
     @property
     def enableSLC(self) -> OptionValue[bool]:
+        """The value of the option switch enableSLC"""
         ...
 
     @enableSLC.setter
@@ -31261,6 +31654,7 @@ class Options(_BlipValue):
 
     @property
     def enableSeparateRotationAndSpatialDelays(self) -> OptionValue[bool]:
+        """The value of the option switch enableSeparateRotationAndSpatialDelays"""
         ...
 
     @enableSeparateRotationAndSpatialDelays.setter
@@ -31269,6 +31663,7 @@ class Options(_BlipValue):
 
     @property
     def enableShaderSourceDebugging(self) -> OptionValue[bool]:
+        """The value of the option switch enableShaderSourceDebugging"""
         ...
 
     @enableShaderSourceDebugging.setter
@@ -31277,6 +31672,7 @@ class Options(_BlipValue):
 
     @property
     def enableShadowResourceDomain(self) -> OptionValue[bool]:
+        """The value of the option switch enableShadowResourceDomain"""
         ...
 
     @enableShadowResourceDomain.setter
@@ -31285,6 +31681,7 @@ class Options(_BlipValue):
 
     @property
     def enableSharedLayers(self) -> OptionValue[bool]:
+        """The value of the option switch enableSharedLayers"""
         ...
 
     @enableSharedLayers.setter
@@ -31293,6 +31690,7 @@ class Options(_BlipValue):
 
     @property
     def enableSkeletalPointTrackingSourceTwist(self) -> OptionValue[int]:
+        """The value of the option switch enableSkeletalPointTrackingSourceTwist"""
         ...
 
     @enableSkeletalPointTrackingSourceTwist.setter
@@ -31301,6 +31699,7 @@ class Options(_BlipValue):
 
     @property
     def enableSmartGroups(self) -> OptionValue[bool]:
+        """The value of the option switch enableSmartGroups"""
         ...
 
     @enableSmartGroups.setter
@@ -31309,6 +31708,7 @@ class Options(_BlipValue):
 
     @property
     def enableSpinelFloor(self) -> OptionValue[bool]:
+        """The value of the option switch enableSpinelFloor"""
         ...
 
     @enableSpinelFloor.setter
@@ -31317,6 +31717,7 @@ class Options(_BlipValue):
 
     @property
     def enableTimelineZoomOnScroll(self) -> OptionValue[bool]:
+        """The value of the option switch enableTimelineZoomOnScroll"""
         ...
 
     @enableTimelineZoomOnScroll.setter
@@ -31325,6 +31726,7 @@ class Options(_BlipValue):
 
     @property
     def enableUnusedMediaManagement(self) -> OptionValue[bool]:
+        """The value of the option switch enableUnusedMediaManagement"""
         ...
 
     @enableUnusedMediaManagement.setter
@@ -31333,6 +31735,7 @@ class Options(_BlipValue):
 
     @property
     def enableVicon(self) -> OptionValue[bool]:
+        """The value of the option switch enableVicon"""
         ...
 
     @enableVicon.setter
@@ -31341,6 +31744,7 @@ class Options(_BlipValue):
 
     @property
     def enableVideoBlackCompensation(self) -> OptionValue[bool]:
+        """The value of the option switch enableVideoBlackCompensation"""
         ...
 
     @enableVideoBlackCompensation.setter
@@ -31349,6 +31753,7 @@ class Options(_BlipValue):
 
     @property
     def enableVideoFileBuffering(self) -> OptionValue[bool]:
+        """The value of the option switch enableVideoFileBuffering"""
         ...
 
     @enableVideoFileBuffering.setter
@@ -31357,6 +31762,7 @@ class Options(_BlipValue):
 
     @property
     def enableWebGL(self) -> OptionValue[bool]:
+        """The value of the option switch enableWebGL"""
         ...
 
     @enableWebGL.setter
@@ -31365,6 +31771,7 @@ class Options(_BlipValue):
 
     @property
     def enableWebGLPublish(self) -> OptionValue[bool]:
+        """The value of the option switch enableWebGLPublish"""
         ...
 
     @enableWebGLPublish.setter
@@ -31373,6 +31780,7 @@ class Options(_BlipValue):
 
     @property
     def etwLevel(self) -> OptionValue[int]:
+        """The value of the option switch etwLevel"""
         ...
 
     @etwLevel.setter
@@ -31381,6 +31789,7 @@ class Options(_BlipValue):
 
     @property
     def fixedModeTimerFPS(self) -> OptionValue[int]:
+        """The value of the option switch fixedModeTimerFPS"""
         ...
 
     @fixedModeTimerFPS.setter
@@ -31389,6 +31798,7 @@ class Options(_BlipValue):
 
     @property
     def forceDXGIColorSpace(self) -> OptionValue[int]:
+        """The value of the option switch forceDXGIColorSpace"""
         ...
 
     @forceDXGIColorSpace.setter
@@ -31397,6 +31807,7 @@ class Options(_BlipValue):
 
     @property
     def forceDXGISwapChainType(self) -> OptionValue[int]:
+        """The value of the option switch forceDXGISwapChainType"""
         ...
 
     @forceDXGISwapChainType.setter
@@ -31405,6 +31816,7 @@ class Options(_BlipValue):
 
     @property
     def forceDXGISwapEffect(self) -> OptionValue[int]:
+        """The value of the option switch forceDXGISwapEffect"""
         ...
 
     @forceDXGISwapEffect.setter
@@ -31413,6 +31825,7 @@ class Options(_BlipValue):
 
     @property
     def forceDXGIWindowed(self) -> OptionValue[bool]:
+        """The value of the option switch forceDXGIWindowed"""
         ...
 
     @forceDXGIWindowed.setter
@@ -31421,6 +31834,7 @@ class Options(_BlipValue):
 
     @property
     def forceDirectorLiveUpdateBlocked(self) -> OptionValue[bool]:
+        """The value of the option switch forceDirectorLiveUpdateBlocked"""
         ...
 
     @forceDirectorLiveUpdateBlocked.setter
@@ -31429,6 +31843,7 @@ class Options(_BlipValue):
 
     @property
     def forceOpenCL(self) -> OptionValue[bool]:
+        """The value of the option switch forceOpenCL"""
         ...
 
     @forceOpenCL.setter
@@ -31437,6 +31852,7 @@ class Options(_BlipValue):
 
     @property
     def forceOutputBitDepth(self) -> OptionValue[int]:
+        """The value of the option switch forceOutputBitDepth"""
         ...
 
     @forceOutputBitDepth.setter
@@ -31445,6 +31861,7 @@ class Options(_BlipValue):
 
     @property
     def forcePIDTimecodeChase(self) -> OptionValue[bool]:
+        """The value of the option switch forcePIDTimecodeChase"""
         ...
 
     @forcePIDTimecodeChase.setter
@@ -31453,6 +31870,7 @@ class Options(_BlipValue):
 
     @property
     def forcePrimaryOutputTo8Bit(self) -> OptionValue[bool]:
+        """The value of the option switch forcePrimaryOutputTo8Bit"""
         ...
 
     @forcePrimaryOutputTo8Bit.setter
@@ -31461,6 +31879,7 @@ class Options(_BlipValue):
 
     @property
     def forceRSUCNumaNode(self) -> OptionValue[int]:
+        """The value of the option switch forceRSUCNumaNode"""
         ...
 
     @forceRSUCNumaNode.setter
@@ -31469,6 +31888,7 @@ class Options(_BlipValue):
 
     @property
     def forceShadowBufferRendering(self) -> OptionValue[bool]:
+        """The value of the option switch forceShadowBufferRendering"""
         ...
 
     @forceShadowBufferRendering.setter
@@ -31477,6 +31897,7 @@ class Options(_BlipValue):
 
     @property
     def forceVsyncOnPrimary(self) -> OptionValue[int]:
+        """The value of the option switch forceVsyncOnPrimary"""
         ...
 
     @forceVsyncOnPrimary.setter
@@ -31485,6 +31906,7 @@ class Options(_BlipValue):
 
     @property
     def gameSetEspresso(self) -> OptionValue[bool]:
+        """The value of the option switch gameSetEspresso"""
         ...
 
     @gameSetEspresso.setter
@@ -31493,6 +31915,7 @@ class Options(_BlipValue):
 
     @property
     def generateWorkloadHTTPCommands(self) -> OptionValue[bool]:
+        """The value of the option switch generateWorkloadHTTPCommands"""
         ...
 
     @generateWorkloadHTTPCommands.setter
@@ -31501,6 +31924,7 @@ class Options(_BlipValue):
 
     @property
     def genlockPhaseAdjustLines(self) -> OptionValue[int]:
+        """The value of the option switch genlockPhaseAdjustLines"""
         ...
 
     @genlockPhaseAdjustLines.setter
@@ -31509,6 +31933,7 @@ class Options(_BlipValue):
 
     @property
     def genlockPhaseAdjustPixels(self) -> OptionValue[int]:
+        """The value of the option switch genlockPhaseAdjustPixels"""
         ...
 
     @genlockPhaseAdjustPixels.setter
@@ -31517,6 +31942,7 @@ class Options(_BlipValue):
 
     @property
     def gpuPoolLogLevel(self) -> OptionValue[int]:
+        """The value of the option switch gpuPoolLogLevel"""
         ...
 
     @gpuPoolLogLevel.setter
@@ -31525,6 +31951,7 @@ class Options(_BlipValue):
 
     @property
     def gpuPoolMemoryPercentage(self) -> OptionValue[int]:
+        """The value of the option switch gpuPoolMemoryPercentage"""
         ...
 
     @gpuPoolMemoryPercentage.setter
@@ -31533,6 +31960,7 @@ class Options(_BlipValue):
 
     @property
     def importUsingVmap(self) -> OptionValue[bool]:
+        """The value of the option switch importUsingVmap"""
         ...
 
     @importUsingVmap.setter
@@ -31541,6 +31969,7 @@ class Options(_BlipValue):
 
     @property
     def isAudioInMovDisabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAudioInMovDisabled"""
         ...
 
     @isAudioInMovDisabled.setter
@@ -31549,6 +31978,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalib4PointDisabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalib4PointDisabled"""
         ...
 
     @isAutoCalib4PointDisabled.setter
@@ -31557,6 +31987,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalib4PointExperimentalEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalib4PointExperimentalEnabled"""
         ...
 
     @isAutoCalib4PointExperimentalEnabled.setter
@@ -31565,6 +31996,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalib4PointPlusEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalib4PointPlusEnabled"""
         ...
 
     @isAutoCalib4PointPlusEnabled.setter
@@ -31573,6 +32005,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalibAltMethodEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalibAltMethodEnabled"""
         ...
 
     @isAutoCalibAltMethodEnabled.setter
@@ -31581,6 +32014,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalibDeveloper(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalibDeveloper"""
         ...
 
     @isAutoCalibDeveloper.setter
@@ -31589,6 +32023,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalibDistortionEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalibDistortionEnabled"""
         ...
 
     @isAutoCalibDistortionEnabled.setter
@@ -31597,6 +32032,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalibGoldDisabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalibGoldDisabled"""
         ...
 
     @isAutoCalibGoldDisabled.setter
@@ -31605,6 +32041,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalibMethodsEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalibMethodsEnabled"""
         ...
 
     @isAutoCalibMethodsEnabled.setter
@@ -31613,6 +32050,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalibUpdateViewEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalibUpdateViewEnabled"""
         ...
 
     @isAutoCalibUpdateViewEnabled.setter
@@ -31621,6 +32059,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalibWarnMovedRefPointsEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalibWarnMovedRefPointsEnabled"""
         ...
 
     @isAutoCalibWarnMovedRefPointsEnabled.setter
@@ -31629,6 +32068,7 @@ class Options(_BlipValue):
 
     @property
     def isAutoCalibZhangDisabled(self) -> OptionValue[bool]:
+        """The value of the option switch isAutoCalibZhangDisabled"""
         ...
 
     @isAutoCalibZhangDisabled.setter
@@ -31637,6 +32077,7 @@ class Options(_BlipValue):
 
     @property
     def isBlackBoxPlaybackIgnoreD3Version(self) -> OptionValue[bool]:
+        """The value of the option switch isBlackBoxPlaybackIgnoreD3Version"""
         ...
 
     @isBlackBoxPlaybackIgnoreD3Version.setter
@@ -31645,6 +32086,7 @@ class Options(_BlipValue):
 
     @property
     def isCITPVerbose(self) -> OptionValue[bool]:
+        """The value of the option switch isCITPVerbose"""
         ...
 
     @isCITPVerbose.setter
@@ -31653,6 +32095,7 @@ class Options(_BlipValue):
 
     @property
     def isCefSingleThreaded(self) -> OptionValue[bool]:
+        """The value of the option switch isCefSingleThreaded"""
         ...
 
     @isCefSingleThreaded.setter
@@ -31661,6 +32104,7 @@ class Options(_BlipValue):
 
     @property
     def isClearArrowsEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isClearArrowsEnabled"""
         ...
 
     @isClearArrowsEnabled.setter
@@ -31669,6 +32113,7 @@ class Options(_BlipValue):
 
     @property
     def isDebugFullScreen(self) -> OptionValue[bool]:
+        """The value of the option switch isDebugFullScreen"""
         ...
 
     @isDebugFullScreen.setter
@@ -31677,6 +32122,7 @@ class Options(_BlipValue):
 
     @property
     def isDebugMultiHead(self) -> OptionValue[bool]:
+        """The value of the option switch isDebugMultiHead"""
         ...
 
     @isDebugMultiHead.setter
@@ -31685,6 +32131,7 @@ class Options(_BlipValue):
 
     @property
     def isDebuggingBlackTrax(self) -> OptionValue[int]:
+        """The value of the option switch isDebuggingBlackTrax"""
         ...
 
     @isDebuggingBlackTrax.setter
@@ -31693,6 +32140,7 @@ class Options(_BlipValue):
 
     @property
     def isDebuggingFolderWatcher(self) -> OptionValue[bool]:
+        """The value of the option switch isDebuggingFolderWatcher"""
         ...
 
     @isDebuggingFolderWatcher.setter
@@ -31701,6 +32149,7 @@ class Options(_BlipValue):
 
     @property
     def isDebuggingInReleaseAllowed(self) -> OptionValue[bool]:
+        """The value of the option switch isDebuggingInReleaseAllowed"""
         ...
 
     @isDebuggingInReleaseAllowed.setter
@@ -31709,6 +32158,7 @@ class Options(_BlipValue):
 
     @property
     def isDebuggingNDI(self) -> OptionValue[bool]:
+        """The value of the option switch isDebuggingNDI"""
         ...
 
     @isDebuggingNDI.setter
@@ -31717,6 +32167,7 @@ class Options(_BlipValue):
 
     @property
     def isDebuggingTargetChanges(self) -> OptionValue[bool]:
+        """The value of the option switch isDebuggingTargetChanges"""
         ...
 
     @isDebuggingTargetChanges.setter
@@ -31725,6 +32176,7 @@ class Options(_BlipValue):
 
     @property
     def isDebuggingTexturePool(self) -> OptionValue[bool]:
+        """The value of the option switch isDebuggingTexturePool"""
         ...
 
     @isDebuggingTexturePool.setter
@@ -31733,6 +32185,7 @@ class Options(_BlipValue):
 
     @property
     def isDeveloper(self) -> OptionValue[bool]:
+        """The value of the option switch isDeveloper"""
         ...
 
     @isDeveloper.setter
@@ -31741,6 +32194,7 @@ class Options(_BlipValue):
 
     @property
     def isForceGPUFanControl(self) -> OptionValue[bool]:
+        """The value of the option switch isForceGPUFanControl"""
         ...
 
     @isForceGPUFanControl.setter
@@ -31749,6 +32203,7 @@ class Options(_BlipValue):
 
     @property
     def isInputMapTracingEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isInputMapTracingEnabled"""
         ...
 
     @isInputMapTracingEnabled.setter
@@ -31757,6 +32212,7 @@ class Options(_BlipValue):
 
     @property
     def isKalmanFilterEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isKalmanFilterEnabled"""
         ...
 
     @isKalmanFilterEnabled.setter
@@ -31765,6 +32221,7 @@ class Options(_BlipValue):
 
     @property
     def isMouseUnrestricted(self) -> OptionValue[bool]:
+        """The value of the option switch isMouseUnrestricted"""
         ...
 
     @isMouseUnrestricted.setter
@@ -31773,6 +32230,7 @@ class Options(_BlipValue):
 
     @property
     def isNotCachingTextureHandles(self) -> OptionValue[bool]:
+        """The value of the option switch isNotCachingTextureHandles"""
         ...
 
     @isNotCachingTextureHandles.setter
@@ -31781,6 +32239,7 @@ class Options(_BlipValue):
 
     @property
     def isPythonVerbose(self) -> OptionValue[bool]:
+        """The value of the option switch isPythonVerbose"""
         ...
 
     @isPythonVerbose.setter
@@ -31789,6 +32248,7 @@ class Options(_BlipValue):
 
     @property
     def isQuietFeedMapEdit(self) -> OptionValue[bool]:
+        """The value of the option switch isQuietFeedMapEdit"""
         ...
 
     @isQuietFeedMapEdit.setter
@@ -31797,6 +32257,7 @@ class Options(_BlipValue):
 
     @property
     def isRenameTableEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isRenameTableEnabled"""
         ...
 
     @isRenameTableEnabled.setter
@@ -31805,6 +32266,7 @@ class Options(_BlipValue):
 
     @property
     def isSingleKeyGlobalJumpEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch isSingleKeyGlobalJumpEnabled"""
         ...
 
     @isSingleKeyGlobalJumpEnabled.setter
@@ -31813,6 +32275,7 @@ class Options(_BlipValue):
 
     @property
     def isSockPuppetBidirectional(self) -> OptionValue[bool]:
+        """The value of the option switch isSockPuppetBidirectional"""
         ...
 
     @isSockPuppetBidirectional.setter
@@ -31821,6 +32284,7 @@ class Options(_BlipValue):
 
     @property
     def isSyncProjectFromDirectorDisabled(self) -> OptionValue[bool]:
+        """The value of the option switch isSyncProjectFromDirectorDisabled"""
         ...
 
     @isSyncProjectFromDirectorDisabled.setter
@@ -31829,6 +32293,7 @@ class Options(_BlipValue):
 
     @property
     def isTelnetVerbose(self) -> OptionValue[bool]:
+        """The value of the option switch isTelnetVerbose"""
         ...
 
     @isTelnetVerbose.setter
@@ -31837,6 +32302,7 @@ class Options(_BlipValue):
 
     @property
     def isWatchingForFrameJumps(self) -> OptionValue[bool]:
+        """The value of the option switch isWatchingForFrameJumps"""
         ...
 
     @isWatchingForFrameJumps.setter
@@ -31845,6 +32311,7 @@ class Options(_BlipValue):
 
     @property
     def isWindowed(self) -> OptionValue[bool]:
+        """The value of the option switch isWindowed"""
         ...
 
     @isWindowed.setter
@@ -31853,6 +32320,7 @@ class Options(_BlipValue):
 
     @property
     def lockMouseWhileOrbiting(self) -> OptionValue[bool]:
+        """The value of the option switch lockMouseWhileOrbiting"""
         ...
 
     @lockMouseWhileOrbiting.setter
@@ -31861,6 +32329,7 @@ class Options(_BlipValue):
 
     @property
     def logicalVideoInDeviceBufferSize(self) -> OptionValue[int]:
+        """The value of the option switch logicalVideoInDeviceBufferSize"""
         ...
 
     @logicalVideoInDeviceBufferSize.setter
@@ -31869,6 +32338,7 @@ class Options(_BlipValue):
 
     @property
     def luxProjectorBatchSize(self) -> OptionValue[int]:
+        """The value of the option switch luxProjectorBatchSize"""
         ...
 
     @luxProjectorBatchSize.setter
@@ -31877,6 +32347,7 @@ class Options(_BlipValue):
 
     @property
     def matroxClockNotificationsDisabled(self) -> OptionValue[bool]:
+        """The value of the option switch matroxClockNotificationsDisabled"""
         ...
 
     @matroxClockNotificationsDisabled.setter
@@ -31885,6 +32356,7 @@ class Options(_BlipValue):
 
     @property
     def matroxClockWaitOverride(self) -> OptionValue[int]:
+        """The value of the option switch matroxClockWaitOverride"""
         ...
 
     @matroxClockWaitOverride.setter
@@ -31893,6 +32365,7 @@ class Options(_BlipValue):
 
     @property
     def matroxDisableContinuousEnqueuing(self) -> OptionValue[bool]:
+        """The value of the option switch matroxDisableContinuousEnqueuing"""
         ...
 
     @matroxDisableContinuousEnqueuing.setter
@@ -31901,6 +32374,7 @@ class Options(_BlipValue):
 
     @property
     def matroxInputClockEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch matroxInputClockEnabled"""
         ...
 
     @matroxInputClockEnabled.setter
@@ -31909,6 +32383,7 @@ class Options(_BlipValue):
 
     @property
     def matroxOverrideAsyncPrequeue(self) -> OptionValue[int]:
+        """The value of the option switch matroxOverrideAsyncPrequeue"""
         ...
 
     @matroxOverrideAsyncPrequeue.setter
@@ -31917,6 +32392,7 @@ class Options(_BlipValue):
 
     @property
     def matroxOverrideAsyncPreroll(self) -> OptionValue[int]:
+        """The value of the option switch matroxOverrideAsyncPreroll"""
         ...
 
     @matroxOverrideAsyncPreroll.setter
@@ -31925,6 +32401,7 @@ class Options(_BlipValue):
 
     @property
     def matroxOverrideAsyncWait(self) -> OptionValue[int]:
+        """The value of the option switch matroxOverrideAsyncWait"""
         ...
 
     @matroxOverrideAsyncWait.setter
@@ -31933,6 +32410,7 @@ class Options(_BlipValue):
 
     @property
     def matroxSurfaceNodeDepthOverride(self) -> OptionValue[int]:
+        """The value of the option switch matroxSurfaceNodeDepthOverride"""
         ...
 
     @matroxSurfaceNodeDepthOverride.setter
@@ -31941,6 +32419,7 @@ class Options(_BlipValue):
 
     @property
     def matroxSurfacePoolSizeOverride(self) -> OptionValue[int]:
+        """The value of the option switch matroxSurfacePoolSizeOverride"""
         ...
 
     @matroxSurfacePoolSizeOverride.setter
@@ -31949,6 +32428,7 @@ class Options(_BlipValue):
 
     @property
     def matroxSurfaceReadTimeoutOverride(self) -> OptionValue[int]:
+        """The value of the option switch matroxSurfaceReadTimeoutOverride"""
         ...
 
     @matroxSurfaceReadTimeoutOverride.setter
@@ -31957,6 +32437,7 @@ class Options(_BlipValue):
 
     @property
     def matroxTimebaseCorrectionModeEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch matroxTimebaseCorrectionModeEnabled"""
         ...
 
     @matroxTimebaseCorrectionModeEnabled.setter
@@ -31965,6 +32446,7 @@ class Options(_BlipValue):
 
     @property
     def matroxTimingLoggingVerbosity(self) -> OptionValue[int]:
+        """The value of the option switch matroxTimingLoggingVerbosity"""
         ...
 
     @matroxTimingLoggingVerbosity.setter
@@ -31973,6 +32455,7 @@ class Options(_BlipValue):
 
     @property
     def matroxVITCEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch matroxVITCEnabled"""
         ...
 
     @matroxVITCEnabled.setter
@@ -31981,6 +32464,7 @@ class Options(_BlipValue):
 
     @property
     def matroxVerboseTimingMonitoringEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch matroxVerboseTimingMonitoringEnabled"""
         ...
 
     @matroxVerboseTimingMonitoringEnabled.setter
@@ -31989,6 +32473,7 @@ class Options(_BlipValue):
 
     @property
     def matroxWriteToReadDelayOverride(self) -> OptionValue[int]:
+        """The value of the option switch matroxWriteToReadDelayOverride"""
         ...
 
     @matroxWriteToReadDelayOverride.setter
@@ -31997,6 +32482,7 @@ class Options(_BlipValue):
 
     @property
     def maxAutomationPacketQueueSize(self) -> OptionValue[int]:
+        """The value of the option switch maxAutomationPacketQueueSize"""
         ...
 
     @maxAutomationPacketQueueSize.setter
@@ -32005,6 +32491,7 @@ class Options(_BlipValue):
 
     @property
     def maxCameraSwitchingDelay(self) -> OptionValue[int]:
+        """The value of the option switch maxCameraSwitchingDelay"""
         ...
 
     @maxCameraSwitchingDelay.setter
@@ -32013,6 +32500,7 @@ class Options(_BlipValue):
 
     @property
     def maxContentLightLevel(self) -> OptionValue[int]:
+        """The value of the option switch maxContentLightLevel"""
         ...
 
     @maxContentLightLevel.setter
@@ -32021,6 +32509,7 @@ class Options(_BlipValue):
 
     @property
     def maxFrameAverageLightLevel(self) -> OptionValue[int]:
+        """The value of the option switch maxFrameAverageLightLevel"""
         ...
 
     @maxFrameAverageLightLevel.setter
@@ -32029,6 +32518,7 @@ class Options(_BlipValue):
 
     @property
     def maxHeads(self) -> OptionValue[int]:
+        """The value of the option switch maxHeads"""
         ...
 
     @maxHeads.setter
@@ -32037,6 +32527,7 @@ class Options(_BlipValue):
 
     @property
     def maxMasteringLuminance(self) -> OptionValue[int]:
+        """The value of the option switch maxMasteringLuminance"""
         ...
 
     @maxMasteringLuminance.setter
@@ -32045,6 +32536,7 @@ class Options(_BlipValue):
 
     @property
     def maxTextureHeight(self) -> OptionValue[int]:
+        """The value of the option switch maxTextureHeight"""
         ...
 
     @maxTextureHeight.setter
@@ -32053,6 +32545,7 @@ class Options(_BlipValue):
 
     @property
     def maxTextureWidth(self) -> OptionValue[int]:
+        """The value of the option switch maxTextureWidth"""
         ...
 
     @maxTextureWidth.setter
@@ -32061,6 +32554,7 @@ class Options(_BlipValue):
 
     @property
     def maxVideoAudioDrift(self) -> OptionValue[int]:
+        """The value of the option switch maxVideoAudioDrift"""
         ...
 
     @maxVideoAudioDrift.setter
@@ -32069,6 +32563,7 @@ class Options(_BlipValue):
 
     @property
     def minMasteringLuminance(self) -> OptionValue[int]:
+        """The value of the option switch minMasteringLuminance"""
         ...
 
     @minMasteringLuminance.setter
@@ -32077,6 +32572,7 @@ class Options(_BlipValue):
 
     @property
     def modernFrameStatsMode(self) -> OptionValue[int]:
+        """The value of the option switch modernFrameStatsMode"""
         ...
 
     @modernFrameStatsMode.setter
@@ -32085,6 +32581,7 @@ class Options(_BlipValue):
 
     @property
     def mouseOrbitInvertY(self) -> OptionValue[bool]:
+        """The value of the option switch mouseOrbitInvertY"""
         ...
 
     @mouseOrbitInvertY.setter
@@ -32093,6 +32590,7 @@ class Options(_BlipValue):
 
     @property
     def multicastSACNTTL(self) -> OptionValue[int]:
+        """The value of the option switch multicastSACNTTL"""
         ...
 
     @multicastSACNTTL.setter
@@ -32101,6 +32599,7 @@ class Options(_BlipValue):
 
     @property
     def nDecoders(self) -> OptionValue[int]:
+        """The value of the option switch nDecoders"""
         ...
 
     @nDecoders.setter
@@ -32109,6 +32608,7 @@ class Options(_BlipValue):
 
     @property
     def noSplashScreen(self) -> OptionValue[bool]:
+        """The value of the option switch noSplashScreen"""
         ...
 
     @noSplashScreen.setter
@@ -32117,6 +32617,7 @@ class Options(_BlipValue):
 
     @property
     def noStartupStatus(self) -> OptionValue[bool]:
+        """The value of the option switch noStartupStatus"""
         ...
 
     @noStartupStatus.setter
@@ -32125,6 +32626,7 @@ class Options(_BlipValue):
 
     @property
     def notchAutoPurgeVram(self) -> OptionValue[bool]:
+        """The value of the option switch notchAutoPurgeVram"""
         ...
 
     @notchAutoPurgeVram.setter
@@ -32133,6 +32635,7 @@ class Options(_BlipValue):
 
     @property
     def notchCameraSwitchingResetInstances(self) -> OptionValue[bool]:
+        """The value of the option switch notchCameraSwitchingResetInstances"""
         ...
 
     @notchCameraSwitchingResetInstances.setter
@@ -32141,6 +32644,7 @@ class Options(_BlipValue):
 
     @property
     def notchDisableLiveLoading(self) -> OptionValue[bool]:
+        """The value of the option switch notchDisableLiveLoading"""
         ...
 
     @notchDisableLiveLoading.setter
@@ -32149,6 +32653,7 @@ class Options(_BlipValue):
 
     @property
     def notchLCKeepAlive(self) -> OptionValue[int]:
+        """The value of the option switch notchLCKeepAlive"""
         ...
 
     @notchLCKeepAlive.setter
@@ -32157,6 +32662,7 @@ class Options(_BlipValue):
 
     @property
     def notchLCMinBuffers(self) -> OptionValue[int]:
+        """The value of the option switch notchLCMinBuffers"""
         ...
 
     @notchLCMinBuffers.setter
@@ -32165,6 +32671,7 @@ class Options(_BlipValue):
 
     @property
     def notchLazyLoading(self) -> OptionValue[bool]:
+        """The value of the option switch notchLazyLoading"""
         ...
 
     @notchLazyLoading.setter
@@ -32173,6 +32680,7 @@ class Options(_BlipValue):
 
     @property
     def notchMaxFramerateFraction(self) -> OptionValue[int]:
+        """The value of the option switch notchMaxFramerateFraction"""
         ...
 
     @notchMaxFramerateFraction.setter
@@ -32181,6 +32689,7 @@ class Options(_BlipValue):
 
     @property
     def notchMaxInstances(self) -> OptionValue[int]:
+        """The value of the option switch notchMaxInstances"""
         ...
 
     @notchMaxInstances.setter
@@ -32189,6 +32698,7 @@ class Options(_BlipValue):
 
     @property
     def notchTracingLevel(self) -> OptionValue[int]:
+        """The value of the option switch notchTracingLevel"""
         ...
 
     @notchTracingLevel.setter
@@ -32197,6 +32707,7 @@ class Options(_BlipValue):
 
     @property
     def notchUnloadOutOfOrder(self) -> OptionValue[bool]:
+        """The value of the option switch notchUnloadOutOfOrder"""
         ...
 
     @notchUnloadOutOfOrder.setter
@@ -32205,6 +32716,7 @@ class Options(_BlipValue):
 
     @property
     def notchUseDisguiseClippingPlanes(self) -> OptionValue[bool]:
+        """The value of the option switch notchUseDisguiseClippingPlanes"""
         ...
 
     @notchUseDisguiseClippingPlanes.setter
@@ -32213,6 +32725,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalBackupCapturesEnabled(self) -> OptionValue[bool]:
+        """The value of the option switch omniCalBackupCapturesEnabled"""
         ...
 
     @omniCalBackupCapturesEnabled.setter
@@ -32221,6 +32734,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalCameraDistance(self) -> OptionValue[int]:
+        """The value of the option switch omniCalCameraDistance"""
         ...
 
     @omniCalCameraDistance.setter
@@ -32229,6 +32743,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalCameraTimeout(self) -> OptionValue[int]:
+        """The value of the option switch omniCalCameraTimeout"""
         ...
 
     @omniCalCameraTimeout.setter
@@ -32237,6 +32752,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalEnableBlobDetectionMasks(self) -> OptionValue[bool]:
+        """The value of the option switch omniCalEnableBlobDetectionMasks"""
         ...
 
     @omniCalEnableBlobDetectionMasks.setter
@@ -32245,6 +32761,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalEnableProjectorCalibrationRetry(self) -> OptionValue[bool]:
+        """The value of the option switch omniCalEnableProjectorCalibrationRetry"""
         ...
 
     @omniCalEnableProjectorCalibrationRetry.setter
@@ -32253,6 +32770,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalEnableResumeCaptures(self) -> OptionValue[bool]:
+        """The value of the option switch omniCalEnableResumeCaptures"""
         ...
 
     @omniCalEnableResumeCaptures.setter
@@ -32261,6 +32779,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalIgnoreMeasuredCameraIntrinsics(self) -> OptionValue[bool]:
+        """The value of the option switch omniCalIgnoreMeasuredCameraIntrinsics"""
         ...
 
     @omniCalIgnoreMeasuredCameraIntrinsics.setter
@@ -32269,6 +32788,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalMaxBlobDetectionConcurrency(self) -> OptionValue[int]:
+        """The value of the option switch omniCalMaxBlobDetectionConcurrency"""
         ...
 
     @omniCalMaxBlobDetectionConcurrency.setter
@@ -32277,6 +32797,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalMaxThreadsPng(self) -> OptionValue[int]:
+        """The value of the option switch omniCalMaxThreadsPng"""
         ...
 
     @omniCalMaxThreadsPng.setter
@@ -32285,6 +32806,7 @@ class Options(_BlipValue):
 
     @property
     def omniCalUseProjectorDevicesInSimulation(self) -> OptionValue[bool]:
+        """The value of the option switch omniCalUseProjectorDevicesInSimulation"""
         ...
 
     @omniCalUseProjectorDevicesInSimulation.setter
@@ -32293,6 +32815,7 @@ class Options(_BlipValue):
 
     @property
     def outputColorSpace(self) -> OptionValue[int]:
+        """The value of the option switch outputColorSpace"""
         ...
 
     @outputColorSpace.setter
@@ -32301,6 +32824,7 @@ class Options(_BlipValue):
 
     @property
     def overrideFrameLatency(self) -> OptionValue[int]:
+        """The value of the option switch overrideFrameLatency"""
         ...
 
     @overrideFrameLatency.setter
@@ -32309,6 +32833,7 @@ class Options(_BlipValue):
 
     @property
     def overrideUnpatchedMediaFields(self) -> OptionValue[bool]:
+        """The value of the option switch overrideUnpatchedMediaFields"""
         ...
 
     @overrideUnpatchedMediaFields.setter
@@ -32317,6 +32842,7 @@ class Options(_BlipValue):
 
     @property
     def precompChainDepth(self) -> OptionValue[int]:
+        """The value of the option switch precompChainDepth"""
         ...
 
     @precompChainDepth.setter
@@ -32325,6 +32851,7 @@ class Options(_BlipValue):
 
     @property
     def preserveExpiredGraphs(self) -> OptionValue[bool]:
+        """The value of the option switch preserveExpiredGraphs"""
         ...
 
     @preserveExpiredGraphs.setter
@@ -32333,6 +32860,7 @@ class Options(_BlipValue):
 
     @property
     def profileGPUPoolFromLaunch(self) -> OptionValue[bool]:
+        """The value of the option switch profileGPUPoolFromLaunch"""
         ...
 
     @profileGPUPoolFromLaunch.setter
@@ -32341,6 +32869,7 @@ class Options(_BlipValue):
 
     @property
     def projectSyncTimeout(self) -> OptionValue[int]:
+        """The value of the option switch projectSyncTimeout"""
         ...
 
     @projectSyncTimeout.setter
@@ -32349,6 +32878,7 @@ class Options(_BlipValue):
 
     @property
     def projectorCullVertexCount(self) -> OptionValue[int]:
+        """The value of the option switch projectorCullVertexCount"""
         ...
 
     @projectorCullVertexCount.setter
@@ -32357,6 +32887,7 @@ class Options(_BlipValue):
 
     @property
     def projectorDepthBuffersVisible(self) -> OptionValue[bool]:
+        """The value of the option switch projectorDepthBuffersVisible"""
         ...
 
     @projectorDepthBuffersVisible.setter
@@ -32365,6 +32896,7 @@ class Options(_BlipValue):
 
     @property
     def projectorDeviceMaxActiveTasks(self) -> OptionValue[int]:
+        """The value of the option switch projectorDeviceMaxActiveTasks"""
         ...
 
     @projectorDeviceMaxActiveTasks.setter
@@ -32373,6 +32905,7 @@ class Options(_BlipValue):
 
     @property
     def projectorDeviceThreadPoolSize(self) -> OptionValue[int]:
+        """The value of the option switch projectorDeviceThreadPoolSize"""
         ...
 
     @projectorDeviceThreadPoolSize.setter
@@ -32381,6 +32914,7 @@ class Options(_BlipValue):
 
     @property
     def propSelectionPriority(self) -> OptionValue[int]:
+        """The value of the option switch propSelectionPriority"""
         ...
 
     @propSelectionPriority.setter
@@ -32389,6 +32923,7 @@ class Options(_BlipValue):
 
     @property
     def pythonApiExecutionTimeout(self) -> OptionValue[int]:
+        """The value of the option switch pythonApiExecutionTimeout"""
         ...
 
     @pythonApiExecutionTimeout.setter
@@ -32397,6 +32932,7 @@ class Options(_BlipValue):
 
     @property
     def pythonApiOutputRequestsToProject(self) -> OptionValue[bool]:
+        """The value of the option switch pythonApiOutputRequestsToProject"""
         ...
 
     @pythonApiOutputRequestsToProject.setter
@@ -32405,6 +32941,7 @@ class Options(_BlipValue):
 
     @property
     def renderStreamDebugOverlaySize(self) -> OptionValue[int]:
+        """The value of the option switch renderStreamDebugOverlaySize"""
         ...
 
     @renderStreamDebugOverlaySize.setter
@@ -32413,6 +32950,7 @@ class Options(_BlipValue):
 
     @property
     def renderStreamTransmissionSpeed(self) -> OptionValue[int]:
+        """The value of the option switch renderStreamTransmissionSpeed"""
         ...
 
     @renderStreamTransmissionSpeed.setter
@@ -32421,6 +32959,7 @@ class Options(_BlipValue):
 
     @property
     def renderstreamBufferSize(self) -> OptionValue[int]:
+        """The value of the option switch renderstreamBufferSize"""
         ...
 
     @renderstreamBufferSize.setter
@@ -32429,6 +32968,7 @@ class Options(_BlipValue):
 
     @property
     def renderstreamOutputSyncDelay(self) -> OptionValue[int]:
+        """The value of the option switch renderstreamOutputSyncDelay"""
         ...
 
     @renderstreamOutputSyncDelay.setter
@@ -32437,6 +32977,7 @@ class Options(_BlipValue):
 
     @property
     def reportMainThreadHangMsec(self) -> OptionValue[int]:
+        """The value of the option switch reportMainThreadHangMsec"""
         ...
 
     @reportMainThreadHangMsec.setter
@@ -32445,6 +32986,7 @@ class Options(_BlipValue):
 
     @property
     def restrictGUISizeHD(self) -> OptionValue[bool]:
+        """The value of the option switch restrictGUISizeHD"""
         ...
 
     @restrictGUISizeHD.setter
@@ -32453,6 +32995,7 @@ class Options(_BlipValue):
 
     @property
     def rmaxBufferSize(self) -> OptionValue[int]:
+        """The value of the option switch rmaxBufferSize"""
         ...
 
     @rmaxBufferSize.setter
@@ -32461,6 +33004,7 @@ class Options(_BlipValue):
 
     @property
     def rmaxReceiverPool(self) -> OptionValue[bool]:
+        """The value of the option switch rmaxReceiverPool"""
         ...
 
     @rmaxReceiverPool.setter
@@ -32469,6 +33013,7 @@ class Options(_BlipValue):
 
     @property
     def rmaxUploadBufferCount(self) -> OptionValue[int]:
+        """The value of the option switch rmaxUploadBufferCount"""
         ...
 
     @rmaxUploadBufferCount.setter
@@ -32477,6 +33022,7 @@ class Options(_BlipValue):
 
     @property
     def rmaxUploadTextureCount(self) -> OptionValue[int]:
+        """The value of the option switch rmaxUploadTextureCount"""
         ...
 
     @rmaxUploadTextureCount.setter
@@ -32485,6 +33031,7 @@ class Options(_BlipValue):
 
     @property
     def sectionTestMode(self) -> OptionValue[bool]:
+        """The value of the option switch sectionTestMode"""
         ...
 
     @sectionTestMode.setter
@@ -32493,6 +33040,7 @@ class Options(_BlipValue):
 
     @property
     def sessionStartNodeDiscoveryDelay(self) -> OptionValue[int]:
+        """The value of the option switch sessionStartNodeDiscoveryDelay"""
         ...
 
     @sessionStartNodeDiscoveryDelay.setter
@@ -32501,6 +33049,7 @@ class Options(_BlipValue):
 
     @property
     def sessionSyncTimeout(self) -> OptionValue[int]:
+        """The value of the option switch sessionSyncTimeout"""
         ...
 
     @sessionSyncTimeout.setter
@@ -32509,6 +33058,7 @@ class Options(_BlipValue):
 
     @property
     def setExtensionFeatherScale(self) -> OptionValue[int]:
+        """The value of the option switch setExtensionFeatherScale"""
         ...
 
     @setExtensionFeatherScale.setter
@@ -32517,6 +33067,7 @@ class Options(_BlipValue):
 
     @property
     def showChicagoSettings(self) -> OptionValue[bool]:
+        """The value of the option switch showChicagoSettings"""
         ...
 
     @showChicagoSettings.setter
@@ -32525,6 +33076,7 @@ class Options(_BlipValue):
 
     @property
     def shutdownWatchdogTimeoutSeconds(self) -> OptionValue[int]:
+        """The value of the option switch shutdownWatchdogTimeoutSeconds"""
         ...
 
     @shutdownWatchdogTimeoutSeconds.setter
@@ -32533,6 +33085,7 @@ class Options(_BlipValue):
 
     @property
     def smoothVideoInputFramesDelay(self) -> OptionValue[int]:
+        """The value of the option switch smoothVideoInputFramesDelay"""
         ...
 
     @smoothVideoInputFramesDelay.setter
@@ -32541,6 +33094,7 @@ class Options(_BlipValue):
 
     @property
     def soloMode(self) -> OptionValue[bool]:
+        """The value of the option switch soloMode"""
         ...
 
     @soloMode.setter
@@ -32549,6 +33103,7 @@ class Options(_BlipValue):
 
     @property
     def ssaoMode(self) -> OptionValue[int]:
+        """The value of the option switch ssaoMode"""
         ...
 
     @ssaoMode.setter
@@ -32557,6 +33112,7 @@ class Options(_BlipValue):
 
     @property
     def staleStreamEvictionThreshold(self) -> OptionValue[int]:
+        """The value of the option switch staleStreamEvictionThreshold"""
         ...
 
     @staleStreamEvictionThreshold.setter
@@ -32565,6 +33121,7 @@ class Options(_BlipValue):
 
     @property
     def suppressActorsAtStartup(self) -> OptionValue[bool]:
+        """The value of the option switch suppressActorsAtStartup"""
         ...
 
     @suppressActorsAtStartup.setter
@@ -32573,6 +33130,7 @@ class Options(_BlipValue):
 
     @property
     def telnetConsolePort(self) -> OptionValue[int]:
+        """The value of the option switch telnetConsolePort"""
         ...
 
     @telnetConsolePort.setter
@@ -32581,6 +33139,7 @@ class Options(_BlipValue):
 
     @property
     def timedExitSeconds(self) -> OptionValue[int]:
+        """The value of the option switch timedExitSeconds"""
         ...
 
     @timedExitSeconds.setter
@@ -32589,6 +33148,7 @@ class Options(_BlipValue):
 
     @property
     def trackedPointConfidenceThreshold(self) -> OptionValue[int]:
+        """The value of the option switch trackedPointConfidenceThreshold"""
         ...
 
     @trackedPointConfidenceThreshold.setter
@@ -32597,6 +33157,7 @@ class Options(_BlipValue):
 
     @property
     def trackedPointReceiveTimeout(self) -> OptionValue[int]:
+        """The value of the option switch trackedPointReceiveTimeout"""
         ...
 
     @trackedPointReceiveTimeout.setter
@@ -32605,6 +33166,7 @@ class Options(_BlipValue):
 
     @property
     def trackedPointRemoveFromStageTimeout(self) -> OptionValue[int]:
+        """The value of the option switch trackedPointRemoveFromStageTimeout"""
         ...
 
     @trackedPointRemoveFromStageTimeout.setter
@@ -32613,6 +33175,7 @@ class Options(_BlipValue):
 
     @property
     def undoSpam(self) -> OptionValue[bool]:
+        """The value of the option switch undoSpam"""
         ...
 
     @undoSpam.setter
@@ -32621,6 +33184,7 @@ class Options(_BlipValue):
 
     @property
     def use11On12(self) -> OptionValue[bool]:
+        """The value of the option switch use11On12"""
         ...
 
     @use11On12.setter
@@ -32629,6 +33193,7 @@ class Options(_BlipValue):
 
     @property
     def use128kReadGranularity(self) -> OptionValue[bool]:
+        """The value of the option switch use128kReadGranularity"""
         ...
 
     @use128kReadGranularity.setter
@@ -32637,6 +33202,7 @@ class Options(_BlipValue):
 
     @property
     def use64kReadGranularity(self) -> OptionValue[bool]:
+        """The value of the option switch use64kReadGranularity"""
         ...
 
     @use64kReadGranularity.setter
@@ -32645,6 +33211,7 @@ class Options(_BlipValue):
 
     @property
     def useApplicationWindow(self) -> OptionValue[bool]:
+        """The value of the option switch useApplicationWindow"""
         ...
 
     @useApplicationWindow.setter
@@ -32653,6 +33220,7 @@ class Options(_BlipValue):
 
     @property
     def useApproximateGamma(self) -> OptionValue[bool]:
+        """The value of the option switch useApproximateGamma"""
         ...
 
     @useApproximateGamma.setter
@@ -32661,6 +33229,7 @@ class Options(_BlipValue):
 
     @property
     def useAutomaticProfiling(self) -> OptionValue[int]:
+        """The value of the option switch useAutomaticProfiling"""
         ...
 
     @useAutomaticProfiling.setter
@@ -32669,6 +33238,7 @@ class Options(_BlipValue):
 
     @property
     def useLegacyFrameComputation(self) -> OptionValue[bool]:
+        """The value of the option switch useLegacyFrameComputation"""
         ...
 
     @useLegacyFrameComputation.setter
@@ -32677,6 +33247,7 @@ class Options(_BlipValue):
 
     @property
     def useLegacyGpuPool(self) -> OptionValue[bool]:
+        """The value of the option switch useLegacyGpuPool"""
         ...
 
     @useLegacyGpuPool.setter
@@ -32685,6 +33256,7 @@ class Options(_BlipValue):
 
     @property
     def useLegacySLCRegionTag(self) -> OptionValue[bool]:
+        """The value of the option switch useLegacySLCRegionTag"""
         ...
 
     @useLegacySLCRegionTag.setter
@@ -32693,6 +33265,7 @@ class Options(_BlipValue):
 
     @property
     def useLegacyStreamNames(self) -> OptionValue[bool]:
+        """The value of the option switch useLegacyStreamNames"""
         ...
 
     @useLegacyStreamNames.setter
@@ -32701,6 +33274,7 @@ class Options(_BlipValue):
 
     @property
     def useOldCapsCtrlZoom(self) -> OptionValue[bool]:
+        """The value of the option switch useOldCapsCtrlZoom"""
         ...
 
     @useOldCapsCtrlZoom.setter
@@ -32709,6 +33283,7 @@ class Options(_BlipValue):
 
     @property
     def usePhotoJpegAccurate(self) -> OptionValue[bool]:
+        """The value of the option switch usePhotoJpegAccurate"""
         ...
 
     @usePhotoJpegAccurate.setter
@@ -32717,6 +33292,7 @@ class Options(_BlipValue):
 
     @property
     def verboseDseChangeDetection(self) -> OptionValue[bool]:
+        """The value of the option switch verboseDseChangeDetection"""
         ...
 
     @verboseDseChangeDetection.setter
@@ -32725,6 +33301,7 @@ class Options(_BlipValue):
 
     @property
     def verboseSlcChangeDetection(self) -> OptionValue[bool]:
+        """The value of the option switch verboseSlcChangeDetection"""
         ...
 
     @verboseSlcChangeDetection.setter
@@ -32733,6 +33310,7 @@ class Options(_BlipValue):
 
     @property
     def videoAudioUnderrunTimeout(self) -> OptionValue[int]:
+        """The value of the option switch videoAudioUnderrunTimeout"""
         ...
 
     @videoAudioUnderrunTimeout.setter
@@ -32741,6 +33319,7 @@ class Options(_BlipValue):
 
     @property
     def videoCaptureLockstep(self) -> OptionValue[bool]:
+        """The value of the option switch videoCaptureLockstep"""
         ...
 
     @videoCaptureLockstep.setter
@@ -32749,6 +33328,7 @@ class Options(_BlipValue):
 
     @property
     def videoConcurrentReads(self) -> OptionValue[int]:
+        """The value of the option switch videoConcurrentReads"""
         ...
 
     @videoConcurrentReads.setter
@@ -32757,6 +33337,7 @@ class Options(_BlipValue):
 
     @property
     def videoInCaptureTextures(self) -> OptionValue[int]:
+        """The value of the option switch videoInCaptureTextures"""
         ...
 
     @videoInCaptureTextures.setter
@@ -32765,6 +33346,7 @@ class Options(_BlipValue):
 
     @property
     def videoInUploadTextures(self) -> OptionValue[int]:
+        """The value of the option switch videoInUploadTextures"""
         ...
 
     @videoInUploadTextures.setter
@@ -32773,6 +33355,7 @@ class Options(_BlipValue):
 
     @property
     def voidVfcWarranty(self) -> OptionValue[bool]:
+        """The value of the option switch voidVfcWarranty"""
         ...
 
     @voidVfcWarranty.setter
@@ -33228,7 +33811,9 @@ class OutputOSCExpression(_BlipValue):
 
     @property
     def address(self) -> str:
-        """UserName: Address"""
+        """The address which the OSC event transport should send the message to
+           
+           UserName: Address"""
         ...
 
     @address.setter
@@ -33237,7 +33822,9 @@ class OutputOSCExpression(_BlipValue):
 
     @property
     def description(self) -> str:
-        """UserName: Description"""
+        """The description of the message sent by the OSC event transport
+           
+           UserName: Description"""
         ...
 
     @description.setter
@@ -33246,7 +33833,9 @@ class OutputOSCExpression(_BlipValue):
 
     @property
     def expr(self) -> Expression:
-        """UserName: Expression"""
+        """The expression determining what is sent by the OSC event transport
+           
+           UserName: Expression"""
         ...
 
     @expr.setter
@@ -34972,6 +35561,9 @@ class PopupMenu(Widget):
         ...
 
     def __init__(self, *args, **kwargs) -> None:
+        ...
+
+    def addButton(self, arg0: Button) -> PopupMenu:
         ...
 
     def editItem(self, arg0: str, arg1: str, arg2: Callable) -> PopupMenu:
@@ -39190,6 +39782,7 @@ class Rational(_BlipValue):
 
     @property
     def asDouble(self) -> float:
+        """The value of the Rational as a double"""
         ...
 
     @property
@@ -40882,7 +41475,9 @@ class RenderStreamModuleBase(ProjectionAwareModule):
 
     @property
     def sceneName(self) -> str:
-        """Category: Properties
+        """The name of the current selected scene
+           
+           Category: Properties
            UserName: Scene"""
         ...
 
@@ -40933,7 +41528,7 @@ class RenderStreamModuleConfig(RenderStreamModuleConfigBase):
         ...
 
     def reconfigureWorkload(self) -> None:
-        """Reconfigure the running workload"""
+        """Apply updated workload settings directly to the running stream without requiring a full restart"""
         ...
 
     def startWorkload(self) -> None:
@@ -41470,10 +42065,10 @@ class ResourceManager(_BlipValue):
     def typeChangedResourceAction(self) -> ParamAction[Resource]:
         ...
 
-    def allResources(self, arg0: Type) -> List[Resource]:
+    def allResources(self, type: type[resourceT]) -> List[resourceT]:
         ...
 
-    def anyResourceChangedAction(self, arg0: Type) -> ParamAction[Resource]:
+    def anyResourceChangedAction(self, type: type[resourceT]) -> ParamAction[Resource]:
         ...
 
     def checkForCorruption(self) -> None:
@@ -41485,13 +42080,13 @@ class ResourceManager(_BlipValue):
     def exists(self, arg0: Path) -> bool:
         ...
 
-    def getMostRecentUserVisibleResourceOfType(self, arg0: Type) -> Resource:
+    def getMostRecentUserVisibleResourceOfType(self, type: type[resourceT]) -> resourceT:
         ...
 
-    def load(self, arg0: Path, arg1: Type=Resource) -> arg1:
+    def load(self, path: Path, type: type[resourceT] = Resource) -> resourceT:
         ...
 
-    def loadOrCreate(self, arg0: Path, arg1: Type) -> Resource:
+    def loadOrCreate(self, path: Path, type: type[resourceT]) -> resourceT:
         ...
 
     def remove(self, arg0: Path) -> None:
@@ -42232,7 +42827,9 @@ class ST2110Details(_BlipValue):
 
     @property
     def bitdepth(self) -> int:
-        """Options: {0: 'B8', 1: 'B10', 2: 'B12', 3: 'B16', 4: 'B16f'}
+        """The bit depth of the ST2110 stream
+           
+           Options: {0: 'B8', 1: 'B10', 2: 'B12', 3: 'B16', 4: 'B16f'}
            UserName: Bit depth"""
         ...
 
@@ -42258,7 +42855,9 @@ class ST2110Details(_BlipValue):
 
     @property
     def multicastDst(self) -> IPAddress:
-        """UserName: Multicast Address"""
+        """The multicast IP address of the destination receiving the ST2110 stream
+           
+           UserName: Multicast Address"""
         ...
 
     @multicastDst.setter
@@ -42267,7 +42866,9 @@ class ST2110Details(_BlipValue):
 
     @property
     def multicastSrc(self) -> IPAddress:
-        """UserName: Source Address Filter"""
+        """The multicast IP address filter for the source of the ST2110 stream
+           
+           UserName: Source Address Filter"""
         ...
 
     @multicastSrc.setter
@@ -42276,7 +42877,9 @@ class ST2110Details(_BlipValue):
 
     @property
     def port(self) -> int:
-        """UserName: Port"""
+        """The port the ST2110 stream is being received at
+           
+           UserName: Port"""
         ...
 
     @port.setter
@@ -42285,7 +42888,9 @@ class ST2110Details(_BlipValue):
 
     @property
     def subsample(self) -> int:
-        """Options: {0: 'S422', 1: 'S444', 2: 'S420', 3: 'RGB', 4: 'RGBA', 5: 'S422_A'}
+        """Chroma subsampling scheme for the ST2110 stream
+           
+           Options: {0: 'S422', 1: 'S444', 2: 'S420', 3: 'RGB', 4: 'RGBA', 5: 'S422_A'}
            UserName: Sub-sample"""
         ...
 
@@ -48564,14 +49169,6 @@ class SuperTrack(Resource):
         ...
 
     @property
-    def notes(self) -> TimeSequence[str]:
-        ...
-
-    @notes.setter
-    def notes(self, value: TimeSequence[str]) -> None:
-        ...
-
-    @property
     def quant(self) -> int:
         """Options: {0: '0', 1: '1', 2: '4'}"""
         ...
@@ -48631,12 +49228,6 @@ return: Whether the superlayer is found in the track"""
     def extractLayerFromGroup(self, arg0: SuperLayer) -> None:
         ...
 
-    def findBeatOfLastNote(self, arg0: float) -> float:
-        ...
-
-    def findBeatOfNextNote(self, arg0: float) -> float:
-        ...
-
     def findLayerByName(self, arg0: str) -> Layer:
         ...
 
@@ -48673,9 +49264,6 @@ return: Whether the superlayer is found in the track"""
     def nLayers(self) -> int:
         ...
 
-    def noteAtBeat(self, arg0: float) -> str:
-        ...
-
     def removeArrow(self, arg0: Arrow) -> None:
         ...
 
@@ -48683,9 +49271,6 @@ return: Whether the superlayer is found in the track"""
         ...
 
     def removeLayer(self, arg0: SuperLayer) -> int:
-        ...
-
-    def setNoteAtBeat(self, arg0: float, arg1: str) -> None:
         ...
 
     def splitLayersAtBeat(self, arg0: List[SuperLayer], arg1: float) -> List[SuperLayer]:
@@ -48877,6 +49462,33 @@ class Table(Resource):
     def item(self, arg0: int, arg1: int) -> str:
         ...
 
+class Tag(_BlipValue):
+    null: Self
+    _classInfo: 'ClassInfo'
+
+    CUE: Final = 1
+    MIDI: Final = 2
+    TC: Final = 0
+
+    @property
+    def text(self) -> str:
+        ...
+
+    @text.setter
+    def text(self, value: str) -> None:
+        ...
+
+    @property
+    def type(self) -> int:
+        ...
+
+    @type.setter
+    def type(self, value: int) -> None:
+        ...
+
+    def __init__(self, arg0: int, arg1: str) -> None:
+        ...
+
 class Target2Module(Module):
     null: Self
     _classInfo: 'ClassInfo'
@@ -49037,6 +49649,7 @@ class TaskStatus(_BlipValue):
 
     @property
     def info(self) -> str:
+        """Information string for error or general reporting"""
         ...
 
     @info.setter
@@ -49045,6 +49658,7 @@ class TaskStatus(_BlipValue):
 
     @property
     def name(self) -> str:
+        """The name of the task"""
         ...
 
     @name.setter
@@ -49053,6 +49667,7 @@ class TaskStatus(_BlipValue):
 
     @property
     def progress(self) -> float:
+        """The progress towards completion of the task, from 0 to 1"""
         ...
 
     @progress.setter
@@ -49061,6 +49676,9 @@ class TaskStatus(_BlipValue):
 
     @property
     def reason(self) -> int:
+        """The reason the task has completed
+           
+           Options: {0: 'Unknown', 1: 'Success', 2: 'Failed', 3: 'Cancelled'}"""
         ...
 
     @reason.setter
@@ -49069,6 +49687,9 @@ class TaskStatus(_BlipValue):
 
     @property
     def state(self) -> int:
+        """The current state of the task
+           
+           Options: {0: 'Queued', 1: 'Running', 2: 'Completed'}"""
         ...
 
     @state.setter
@@ -49077,6 +49698,7 @@ class TaskStatus(_BlipValue):
 
     @property
     def type(self) -> str:
+        """The type of the task"""
         ...
 
     @type.setter
@@ -49085,6 +49707,7 @@ class TaskStatus(_BlipValue):
 
     @property
     def uid(self) -> str:
+        """Unique identifier for the task"""
         ...
 
     @uid.setter
@@ -49898,6 +50521,7 @@ class TextureParameterAssigner(_BlipValue):
 
     @property
     def assigner(self) -> ClusterAssigner:
+        """The assigner to use to assign the streams for this parameter. If None, use the MultiChannelClusterAssigner's default assigner."""
         ...
 
     @assigner.setter
@@ -49906,6 +50530,7 @@ class TextureParameterAssigner(_BlipValue):
 
     @property
     def controller(self) -> Machine:
+        """The machine streaming the texture parameter (None for cluster controller)"""
         ...
 
     @controller.setter
@@ -49914,6 +50539,7 @@ class TextureParameterAssigner(_BlipValue):
 
     @property
     def parameterKey(self) -> str:
+        """The channel name created by the texture parameter"""
         ...
 
     @parameterKey.setter
@@ -50729,39 +51355,19 @@ class Track(SuperTrack):
     __username__ = 'Track'
 
     @property
+    def cues(self) -> TimeSequence[Cue]:
+        ...
+
+    @cues.setter
+    def cues(self, value: TimeSequence[Cue]) -> None:
+        ...
+
+    @property
     def defaultTransitionInfo(self) -> TrackTransitionInfo:
         ...
 
     @defaultTransitionInfo.setter
     def defaultTransitionInfo(self, value: TrackTransitionInfo) -> None:
-        ...
-
-    @property
-    def nSections(self) -> int:
-        ...
-
-    @property
-    def sectionTransitions(self) -> List[TrackTransitionInfo]:
-        ...
-
-    @sectionTransitions.setter
-    def sectionTransitions(self, value: List[TrackTransitionInfo]) -> None:
-        ...
-
-    @property
-    def sections(self) -> TimeSequence[str]:
-        ...
-
-    @sections.setter
-    def sections(self, value: TimeSequence[str]) -> None:
-        ...
-
-    @property
-    def tags(self) -> TimeSequence[str]:
-        ...
-
-    @tags.setter
-    def tags(self, value: TimeSequence[str]) -> None:
         ...
 
     @property
@@ -50786,10 +51392,16 @@ class Track(SuperTrack):
     def adjustCurrentTimecodeTag(self, arg0: float, arg1: int) -> None:
         ...
 
+    def beatOfCue(self, arg0: Cue) -> float:
+        ...
+
     def beatToGlobalTime(self, arg0: float, arg1: int, arg2: bool) -> float:
         ...
 
     def beatToSection(self, arg0: float) -> int:
+        ...
+
+    def beatToSectionCue(self, arg0: float) -> int:
         ...
 
     def contains(self, arg0: SuperLayer, arg1: bool=True) -> bool:
@@ -50801,13 +51413,25 @@ class Track(SuperTrack):
 return: Whether the superlayer is found in the track"""
         ...
 
+    def cueAtBeat(self, arg0: float) -> Cue:
+        ...
+
+    def cueBeats(self) -> List[float]:
+        ...
+
     def distanceToSection(self, arg0: float, arg1: int, arg2: int) -> float:
+        ...
+
+    def findBeatOfLastNote(self, arg0: float) -> float:
         ...
 
     def findBeatOfLastSection(self, arg0: float) -> float:
         ...
 
     def findBeatOfLastTag(self, arg0: float) -> float:
+        ...
+
+    def findBeatOfNextNote(self, arg0: float) -> float:
         ...
 
     def findBeatOfNextSection(self, arg0: float) -> float:
@@ -50826,10 +51450,34 @@ return: Whether the superlayer is found in the track"""
         """Access layers by a (hopefully) unique name"""
         ...
 
-    def noteTagSectionBeats(self) -> List[float]:
+    def mergeSectionAtBeat(self, arg0: float) -> None:
+        ...
+
+    def nSections(self) -> int:
+        ...
+
+    def noteAtBeat(self, arg0: float) -> str:
         ...
 
     def readCueTable(self) -> None:
+        ...
+
+    def removeNoteAtBeat(self, arg0: float) -> None:
+        ...
+
+    def removeNotes(self, arg0: float, arg1: float) -> None:
+        ...
+
+    def removeTagAtBeat(self, arg0: float, arg1: int) -> None:
+        ...
+
+    def removeTags(self, arg0: float, arg1: float) -> None:
+        ...
+
+    def sectionAtBeat(self, arg0: float) -> bool:
+        ...
+
+    def sectionCueToBeat(self, arg0: int) -> float:
         ...
 
     def sectionLengthBeats(self, arg0: int) -> float:
@@ -50838,16 +51486,22 @@ return: Whether the superlayer is found in the track"""
     def sectionToBeat(self, arg0: int) -> float:
         ...
 
-    def setTagAtBeat(self, arg0: float, arg1: str) -> None:
+    def setNoteAtBeat(self, arg0: float, arg1: str) -> None:
         ...
 
-    def splitSectionAtBeat(self, arg0: float, arg1: TrackTransitionInfo=TrackTransitionInfo()) -> None:
+    def setTagAtBeat(self, arg0: float, arg1: Tag) -> None:
+        ...
+
+    def splitSectionAtBeat(self, arg0: float=TrackTransitionInfo()) -> None:
         ...
 
     def tLastBeatInSection(self, arg0: float) -> float:
         ...
 
-    def tagAtBeat(self, arg0: float) -> str:
+    def tagAtBeat(self, arg0: float, arg1: int) -> Tag:
+        ...
+
+    def tagsAtBeat(self, arg0: float) -> List[Tag]:
         ...
 
     def transitionInfoAtBeat(self, arg0: float) -> TrackTransitionInfo:
@@ -50876,12 +51530,12 @@ class TrackJumpModule(Module):
     __username__ = 'TrackJumpModule'
 
     @property
-    def iSection(self) -> int:
-        """UserName: Section"""
+    def cue(self) -> Cue:
+        """UserName: Cue"""
         ...
 
-    @iSection.setter
-    def iSection(self, value: int) -> None:
+    @cue.setter
+    def cue(self, value: Cue) -> None:
         ...
 
     @property
@@ -51108,11 +51762,8 @@ class TrackUtils(_BlipValue):
     null: Self
     _classInfo: 'ClassInfo'
 
-    CUE: Final = 2
-    MIDI: Final = 1
-    TC: Final = 0
     sanitiseTagText: Callable
-    tagTextAlreadyExists: Callable
+    tagAlreadyExists: Callable
 
 class TrackedFixedPoint(_BlipValue):
     null: Self
@@ -54428,7 +55079,9 @@ class Vec(_BlipValue):
 
     @property
     def x(self) -> float:
-        """UserName: X"""
+        """The x component of the vector.
+           
+           UserName: X"""
         ...
 
     @x.setter
@@ -54437,7 +55090,9 @@ class Vec(_BlipValue):
 
     @property
     def y(self) -> float:
-        """UserName: Y"""
+        """The y component of the vector.
+           
+           UserName: Y"""
         ...
 
     @y.setter
@@ -54446,7 +55101,9 @@ class Vec(_BlipValue):
 
     @property
     def z(self) -> float:
-        """UserName: Z"""
+        """The z component of the vector.
+           
+           UserName: Z"""
         ...
 
     @z.setter
@@ -57227,7 +57884,10 @@ class WebModule(Module):
 
     @property
     def Name_1(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[Name 1](x)
+           
+           Category: Custom Parameters
            UserName: Name 1"""
         ...
 
@@ -57237,7 +57897,10 @@ class WebModule(Module):
 
     @property
     def Name_2(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[Name 2](x)
+           
+           Category: Custom Parameters
            UserName: Name 2"""
         ...
 
@@ -57247,7 +57910,10 @@ class WebModule(Module):
 
     @property
     def Name_3(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[Name 3](x)
+           
+           Category: Custom Parameters
            UserName: Name 3"""
         ...
 
@@ -57257,7 +57923,10 @@ class WebModule(Module):
 
     @property
     def Name_4(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[Name 4](x)
+           
+           Category: Custom Parameters
            UserName: Name 4"""
         ...
 
@@ -57267,7 +57936,10 @@ class WebModule(Module):
 
     @property
     def Name_5(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[Name 5](x)
+           
+           Category: Custom Parameters
            UserName: Name 5"""
         ...
 
@@ -57277,7 +57949,10 @@ class WebModule(Module):
 
     @property
     def Name_6(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[Name 6](x)
+           
+           Category: Custom Parameters
            UserName: Name 6"""
         ...
 
@@ -57287,7 +57962,10 @@ class WebModule(Module):
 
     @property
     def Name_7(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[Name 7](x)
+           
+           Category: Custom Parameters
            UserName: Name 7"""
         ...
 
@@ -57297,7 +57975,10 @@ class WebModule(Module):
 
     @property
     def Name_8(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[Name 8](x)
+           
+           Category: Custom Parameters
            UserName: Name 8"""
         ...
 
@@ -57307,7 +57988,9 @@ class WebModule(Module):
 
     @property
     def String_1(self) -> str:
-        """Category: Custom Parameters
+        """A string value passed into the function String Name 1 each frame
+           
+           Category: Custom Parameters
            UserName: String 1"""
         ...
 
@@ -57317,7 +58000,9 @@ class WebModule(Module):
 
     @property
     def String_2(self) -> str:
-        """Category: Custom Parameters
+        """A string value passed into the function String Name 2 each frame
+           
+           Category: Custom Parameters
            UserName: String 2"""
         ...
 
@@ -57327,7 +58012,9 @@ class WebModule(Module):
 
     @property
     def String_3(self) -> str:
-        """Category: Custom Parameters
+        """A string value passed into the function String Name 3 each frame
+           
+           Category: Custom Parameters
            UserName: String 3"""
         ...
 
@@ -57337,7 +58024,9 @@ class WebModule(Module):
 
     @property
     def String_4(self) -> str:
-        """Category: Custom Parameters
+        """A string value passed into the function String Name 4 each frame
+           
+           Category: Custom Parameters
            UserName: String 4"""
         ...
 
@@ -57347,7 +58036,9 @@ class WebModule(Module):
 
     @property
     def String_5(self) -> str:
-        """Category: Custom Parameters
+        """A string value passed into the function String Name 5 each frame
+           
+           Category: Custom Parameters
            UserName: String 5"""
         ...
 
@@ -57357,7 +58048,9 @@ class WebModule(Module):
 
     @property
     def String_6(self) -> str:
-        """Category: Custom Parameters
+        """A string value passed into the function String Name 6 each frame
+           
+           Category: Custom Parameters
            UserName: String 6"""
         ...
 
@@ -57367,7 +58060,9 @@ class WebModule(Module):
 
     @property
     def String_7(self) -> str:
-        """Category: Custom Parameters
+        """A string value passed into the function String Name 7 each frame
+           
+           Category: Custom Parameters
            UserName: String 7"""
         ...
 
@@ -57377,7 +58072,9 @@ class WebModule(Module):
 
     @property
     def String_8(self) -> str:
-        """Category: Custom Parameters
+        """A string value passed into the function String Name 8 each frame
+           
+           Category: Custom Parameters
            UserName: String 8"""
         ...
 
@@ -57387,7 +58084,10 @@ class WebModule(Module):
 
     @property
     def String_Name_1(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[String Name 1](x)
+           
+           Category: Custom Parameters
            UserName: String Name 1"""
         ...
 
@@ -57397,7 +58097,10 @@ class WebModule(Module):
 
     @property
     def String_Name_2(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[String Name 2](x)
+           
+           Category: Custom Parameters
            UserName: String Name 2"""
         ...
 
@@ -57407,7 +58110,10 @@ class WebModule(Module):
 
     @property
     def String_Name_3(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[String Name 3](x)
+           
+           Category: Custom Parameters
            UserName: String Name 3"""
         ...
 
@@ -57417,7 +58123,10 @@ class WebModule(Module):
 
     @property
     def String_Name_4(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[String Name 4](x)
+           
+           Category: Custom Parameters
            UserName: String Name 4"""
         ...
 
@@ -57427,7 +58136,10 @@ class WebModule(Module):
 
     @property
     def String_Name_5(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[String Name 5](x)
+           
+           Category: Custom Parameters
            UserName: String Name 5"""
         ...
 
@@ -57437,7 +58149,10 @@ class WebModule(Module):
 
     @property
     def String_Name_6(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[String Name 6](x)
+           
+           Category: Custom Parameters
            UserName: String Name 6"""
         ...
 
@@ -57447,7 +58162,10 @@ class WebModule(Module):
 
     @property
     def String_Name_7(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[String Name 7](x)
+           
+           Category: Custom Parameters
            UserName: String Name 7"""
         ...
 
@@ -57457,7 +58175,10 @@ class WebModule(Module):
 
     @property
     def String_Name_8(self) -> str:
-        """Category: Custom Parameters
+        """The name of a JavaScript function to call in the browser every frame.
+            The function name in JavaScript will be d3.[String Name 8](x)
+           
+           Category: Custom Parameters
            UserName: String Name 8"""
         ...
 
@@ -57477,7 +58198,9 @@ class WebModule(Module):
 
     @property
     def Value_1(self) -> float:
-        """Category: Custom Parameters
+        """A float value passed into the function Name 1 each frame
+           
+           Category: Custom Parameters
            UserName: Value 1"""
         ...
 
@@ -57487,7 +58210,9 @@ class WebModule(Module):
 
     @property
     def Value_2(self) -> float:
-        """Category: Custom Parameters
+        """A float value passed into the function Name 2 each frame
+           
+           Category: Custom Parameters
            UserName: Value 2"""
         ...
 
@@ -57497,7 +58222,9 @@ class WebModule(Module):
 
     @property
     def Value_3(self) -> float:
-        """Category: Custom Parameters
+        """A float value passed into the function Name 3 each frame
+           
+           Category: Custom Parameters
            UserName: Value 3"""
         ...
 
@@ -57507,7 +58234,9 @@ class WebModule(Module):
 
     @property
     def Value_4(self) -> float:
-        """Category: Custom Parameters
+        """A float value passed into the function Name 4 each frame
+           
+           Category: Custom Parameters
            UserName: Value 4"""
         ...
 
@@ -57517,7 +58246,9 @@ class WebModule(Module):
 
     @property
     def Value_5(self) -> float:
-        """Category: Custom Parameters
+        """A float value passed into the function Name 5 each frame
+           
+           Category: Custom Parameters
            UserName: Value 5"""
         ...
 
@@ -57527,7 +58258,9 @@ class WebModule(Module):
 
     @property
     def Value_6(self) -> float:
-        """Category: Custom Parameters
+        """A float value passed into the function Name 6 each frame
+           
+           Category: Custom Parameters
            UserName: Value 6"""
         ...
 
@@ -57537,7 +58270,9 @@ class WebModule(Module):
 
     @property
     def Value_7(self) -> float:
-        """Category: Custom Parameters
+        """A float value passed into the function Name 7 each frame
+           
+           Category: Custom Parameters
            UserName: Value 7"""
         ...
 
@@ -57547,7 +58282,9 @@ class WebModule(Module):
 
     @property
     def Value_8(self) -> float:
-        """Category: Custom Parameters
+        """A float value passed into the function Name 8 each frame
+           
+           Category: Custom Parameters
            UserName: Value 8"""
         ...
 
