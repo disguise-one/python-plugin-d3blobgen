@@ -5,7 +5,6 @@ class _BlipValue(object):
     ...
 
 # TypeVars
-resourceT = TypeVar('resourceT', bound='Resource')
 SubsystemT = TypeVar('SubsystemT', bound='Subsystem')
 
 class Upgrade[T](_BlipValue):
@@ -12721,6 +12720,9 @@ class DmxPatch(ControlPatch):
     def getNaturalValue(self, arg0: SockpuppetProperty, arg1: Dmx) -> ReflectionValue:
         ...
 
+    def setChannel(self, arg0: SockpuppetProperty, arg1: int) -> None:
+        ...
+
 class DmxPatchSet(Resource):
     null: Self
     _classInfo: 'ClassInfo'
@@ -20141,6 +20143,31 @@ class IgnoreTimecodeModule(Module):
     def __init__(self) -> None:
         ...
 
+class ImageCaptureProcess(FastCaptureProcess):
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'ImageCaptureProcess'
+
+    @property
+    def getDebugWriteFolder(self) -> str:
+        ...
+
+    @property
+    def imageSourceDirectory(self) -> str:
+        ...
+
+    @imageSourceDirectory.setter
+    def imageSourceDirectory(self, value: str) -> None:
+        ...
+
+    @property
+    def targetDisplays(self) -> List[Display]:
+        ...
+
+    @targetDisplays.setter
+    def targetDisplays(self, value: List[Display]) -> None:
+        ...
+
 class ImageInfo(ResolutionInfo):
     null: Self
     _classInfo: 'ClassInfo'
@@ -20807,9 +20834,9 @@ class KeySequence(KeyContainer):
 
 # !!!!!! Error generating stub for property 'keys'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 458, in _write
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -24386,9 +24413,9 @@ class Mat(_BlipValue):
 
 # !!!!!! Error generating stub for property 'coefficient'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 458, in _write
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -25586,9 +25613,9 @@ class MidiControlSet(Resource):
 
 # !!!!!! Error generating stub for property 'objects'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 458, in _write
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -25686,9 +25713,9 @@ class MidiDevice(Device):
 
 # !!!!!! Error generating stub for property 'controlSets'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 458, in _write
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -42065,10 +42092,10 @@ class ResourceManager(_BlipValue):
     def typeChangedResourceAction(self) -> ParamAction[Resource]:
         ...
 
-    def allResources(self, type: type[resourceT]) -> List[resourceT]:
+    def allResources(self, arg0: Type) -> List[Resource]:
         ...
 
-    def anyResourceChangedAction(self, type: type[resourceT]) -> ParamAction[Resource]:
+    def anyResourceChangedAction(self, arg0: Type) -> ParamAction[Resource]:
         ...
 
     def checkForCorruption(self) -> None:
@@ -42080,13 +42107,13 @@ class ResourceManager(_BlipValue):
     def exists(self, arg0: Path) -> bool:
         ...
 
-    def getMostRecentUserVisibleResourceOfType(self, type: type[resourceT]) -> resourceT:
+    def getMostRecentUserVisibleResourceOfType(self, arg0: Type) -> Resource:
         ...
 
-    def load(self, path: Path, type: type[resourceT] = Resource) -> resourceT:
+    def load(self, arg0: Path, arg1: Type=Resource) -> Resource:
         ...
 
-    def loadOrCreate(self, path: Path, type: type[resourceT]) -> resourceT:
+    def loadOrCreate(self, arg0: Path, arg1: Type) -> Resource:
         ...
 
     def remove(self, arg0: Path) -> None:
@@ -47270,9 +47297,9 @@ class Stage(Object):
 
 # !!!!!! Error generating stub for property 'displays'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 458, in _write
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -51492,7 +51519,7 @@ return: Whether the superlayer is found in the track"""
     def setTagAtBeat(self, arg0: float, arg1: Tag) -> None:
         ...
 
-    def splitSectionAtBeat(self, arg0: float=TrackTransitionInfo()) -> None:
+    def splitSectionAtBeat(self, arg0: float, arg1: TrackTransitionInfo=TrackTransitionInfo()) -> None:
         ...
 
     def tLastBeatInSection(self, arg0: float) -> float:
@@ -54573,9 +54600,9 @@ class ValueBox(Widget):
 
 # !!!!!! Error generating stub for property 'property_'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 458, in _write
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 259, in _writeProp
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 259, in _writeProp
 #    prop = self.cls._classInfo.property_(n) # type: d3.PropertyInfo
 #RuntimeError: Failed to find Property in class ValueBox or base classes! Property name = property_.
 
@@ -58468,9 +58495,9 @@ class Widget(Resource):
 
 # !!!!!! Error generating stub for property 'children'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 458, in _write
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_2\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
