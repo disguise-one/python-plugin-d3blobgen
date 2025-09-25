@@ -5,6 +5,7 @@ class _BlipValue(object):
     ...
 
 # TypeVars
+resourceT = TypeVar('resourceT', bound='Resource')
 SubsystemT = TypeVar('SubsystemT', bound='Subsystem')
 
 class Upgrade[T](_BlipValue):
@@ -7597,7 +7598,10 @@ class Colour(_BlipValue):
 
     @property
     def a(self) -> float:
-        """UserName: A"""
+        """The alpha (transparency) component of the colour.
+           Between 0-1, 0 is fully transparent, 1 is fully opaque.
+           
+           UserName: A"""
         ...
 
     @a.setter
@@ -7606,7 +7610,10 @@ class Colour(_BlipValue):
 
     @property
     def b(self) -> float:
-        """UserName: B"""
+        """The blue component of the colour.
+           Between 0-1 if an sRGB value, may be outside this range otherwise.
+           
+           UserName: B"""
         ...
 
     @b.setter
@@ -7615,7 +7622,10 @@ class Colour(_BlipValue):
 
     @property
     def g(self) -> float:
-        """UserName: G"""
+        """The green component of the colour.
+           Between 0-1 if an sRGB value, may be outside this range otherwise.
+           
+           UserName: G"""
         ...
 
     @g.setter
@@ -7624,7 +7634,10 @@ class Colour(_BlipValue):
 
     @property
     def r(self) -> float:
-        """UserName: R"""
+        """The red component of the colour.
+           Between 0-1 if an sRGB value, may be outside this range otherwise.
+           
+           UserName: R"""
         ...
 
     @r.setter
@@ -9746,6 +9759,86 @@ class D3NetManagerSystem(Subsystem):
     def __init__(self) -> None:
         ...
 
+class D3Nmos(Resource):
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'D3Nmos'
+
+    @property
+    def networkAdapter(self) -> str:
+        """The name of the network adapter the nmos node should use. This will affect the ip address it gives the registry and advertises it's APIs on. Default is the user selected network in d3Manager
+           
+           Category: Node
+           UserName: Chosen Network Adapter"""
+        ...
+
+    @networkAdapter.setter
+    def networkAdapter(self, value: str) -> None:
+        ...
+
+    @property
+    def nmosDisplayChangePort(self) -> int:
+        """The port number Designer will use to send the NMOS Node updates (default 3207)
+           
+           Category: Node
+           UserName: Display Change Port Number"""
+        ...
+
+    @nmosDisplayChangePort.setter
+    def nmosDisplayChangePort(self, value: int) -> None:
+        ...
+
+    @property
+    def nmosLoggingEnable(self) -> bool:
+        """Switch on additional NMOS logging
+           
+           Category: Debug
+           UserName: Enable Logging"""
+        ...
+
+    @nmosLoggingEnable.setter
+    def nmosLoggingEnable(self, value: bool) -> None:
+        ...
+
+    @property
+    def nmosRegistryDomain(self) -> str:
+        """Network Domain the NMOS registry is running on
+           
+           Category: Registry
+           UserName: Registry Network Domain"""
+        ...
+
+    @nmosRegistryDomain.setter
+    def nmosRegistryDomain(self, value: str) -> None:
+        ...
+
+    @property
+    def nmosRegistryIPAddress(self) -> str:
+        """IP Address of the NMOS registry on the network
+           
+           Category: Registry
+           UserName: Registry IP Address"""
+        ...
+
+    @nmosRegistryIPAddress.setter
+    def nmosRegistryIPAddress(self, value: str) -> None:
+        ...
+
+    @property
+    def nmosRegistryPort(self) -> int:
+        """Port Number of the NMOS registry's registration API
+           
+           Category: Registry
+           UserName: Registration Port Number"""
+        ...
+
+    @nmosRegistryPort.setter
+    def nmosRegistryPort(self, value: int) -> None:
+        ...
+
+    def __init__(self) -> None:
+        ...
+
 class D3SSIAxis(Resource):
     null: Self
     _classInfo: 'ClassInfo'
@@ -9841,6 +9934,10 @@ class D3State(Resource):
 
     @commit_mode.setter
     def commit_mode(self, value: int) -> None:
+        ...
+
+    @property
+    def d3Nmos(self) -> D3Nmos:
         ...
 
     @property
@@ -11556,6 +11653,38 @@ class DisplayBlobSettings(_BlipValue):
 
     @include.setter
     def include(self, value: bool) -> None:
+        ...
+
+class DisplayImageSourceMapping(Resource):
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'DisplayImageSourceMapping'
+
+    @property
+    def display(self) -> Display:
+        ...
+
+    @display.setter
+    def display(self, value: Display) -> None:
+        ...
+
+    @property
+    def imageSourceDirectory(self) -> str:
+        ...
+
+    @imageSourceDirectory.setter
+    def imageSourceDirectory(self, value: str) -> None:
+        ...
+
+    @property
+    def isTargetDisplay(self) -> bool:
+        ...
+
+    @isTargetDisplay.setter
+    def isTargetDisplay(self, value: bool) -> None:
+        ...
+
+    def __init__(self) -> None:
         ...
 
 class DisplayIndirection(ForwardingDisplay):
@@ -16920,6 +17049,10 @@ class Field(Widget):
         ...
 
     @property
+    def hasMetafield(self) -> bool:
+        ...
+
+    @property
     def openOptionsOverrideAction(self) -> Action:
         ...
 
@@ -17133,6 +17266,9 @@ class FieldSequence(Resource):
         ...
 
     def externallyControlled(self) -> bool:
+        ...
+
+    def getSequencedValue(self, arg0: float) -> SequencedValue:
         ...
 
     def notifyEdit(self) -> None:
@@ -20149,15 +20285,19 @@ class ImageCaptureProcess(FastCaptureProcess):
     __username__ = 'ImageCaptureProcess'
 
     @property
-    def getDebugWriteFolder(self) -> str:
+    def defaultImageDirectory(self) -> Path:
         ...
 
     @property
-    def imageSourceDirectory(self) -> str:
+    def displayImageMappings(self) -> List[DisplayImageSourceMapping]:
         ...
 
-    @imageSourceDirectory.setter
-    def imageSourceDirectory(self, value: str) -> None:
+    @displayImageMappings.setter
+    def displayImageMappings(self, value: List[DisplayImageSourceMapping]) -> None:
+        ...
+
+    @property
+    def getDebugWriteFolder(self) -> str:
         ...
 
     @property
@@ -20445,7 +20585,9 @@ class Int2(_BlipValue):
 
     @property
     def x(self) -> int:
-        """UserName: X"""
+        """The x component of the vector.
+           
+           UserName: X"""
         ...
 
     @x.setter
@@ -20454,7 +20596,9 @@ class Int2(_BlipValue):
 
     @property
     def y(self) -> int:
-        """UserName: Y"""
+        """The y component of the vector.
+           
+           UserName: Y"""
         ...
 
     @y.setter
@@ -22912,6 +23056,7 @@ class LogicalVideoInDevice(LogicalDevice):
 
     @property
     def cropRectangle(self) -> Rect:
+        """The crop rectangle of the video input device in UV space (between 0-1)."""
         ...
 
     @cropRectangle.setter
@@ -22931,7 +23076,9 @@ class LogicalVideoInDevice(LogicalDevice):
 
     @property
     def deinterlaceMethod(self) -> int:
-        """Options: {0: 'Discard even', 1: 'Discard odd', 2: 'Bob - Interpolate', 3: 'Bob - Duplicate', 4: 'Weave', 5: 'Weave & Interpolate', 6: 'Weave on odd', 7: 'Weave on odd & Interpolate', 8: 'Weave on even', 9: 'Weave on even & Interpolate', 10: 'Weston 3 Field'}
+        """The deinterlace method used by the video input device.
+           
+           Options: {0: 'Discard even', 1: 'Discard odd', 2: 'Bob - Interpolate', 3: 'Bob - Duplicate', 4: 'Weave', 5: 'Weave & Interpolate', 6: 'Weave on odd', 7: 'Weave on odd & Interpolate', 8: 'Weave on even', 9: 'Weave on even & Interpolate', 10: 'Weston 3 Field'}
            UserName: Deinterlace method"""
         ...
 
@@ -22941,6 +23088,7 @@ class LogicalVideoInDevice(LogicalDevice):
 
     @property
     def interlaced(self) -> int:
+        """Interlaced mode of the video input device. Off = progressive, On = interlaced."""
         ...
 
     @interlaced.setter
@@ -22976,6 +23124,7 @@ class LogicalVideoInDevice(LogicalDevice):
 
     @property
     def pixelFormat(self) -> str:
+        """Pixel format of the video input device."""
         ...
 
     @pixelFormat.setter
@@ -22984,6 +23133,7 @@ class LogicalVideoInDevice(LogicalDevice):
 
     @property
     def placeholder(self) -> DxTexture:
+        """The placeholder texture used by the device."""
         ...
 
     @placeholder.setter
@@ -23001,6 +23151,7 @@ class LogicalVideoInDevice(LogicalDevice):
 
     @property
     def resolution(self) -> Vec2:
+        """Resolution of the video input device in pixels."""
         ...
 
     @resolution.setter
@@ -23014,6 +23165,9 @@ class LogicalVideoInDevice(LogicalDevice):
         ...
 
     def getResolution(self) -> Vec2:
+        ...
+
+    def getVideoInTexture(self) -> VideoInTexture:
         ...
 
     def setFormat(self, arg0: Vec2, arg1: bool, arg2: str) -> None:
@@ -23481,6 +23635,7 @@ class Machine(Resource):
     Gx_2: Final = 9
     Gx_2c: Final = 12
     Gx_3: Final = 18
+    Gx_3Plus: Final = 28
     Matrox: Final = 1
     MobileEditor: Final = 5
     NET_MODE_DHCP: Final = 1
@@ -23704,7 +23859,7 @@ class Machine(Resource):
 
     @property
     def machineType(self) -> int:
-        """Options: {0: 'Designer', 1: 'V2.5', 2: '4x2pro', 3: '4x4pro', 4: '2x2plus', 5: '4x4pro (No VFC)', 6: 'Node', 7: '2x4pro', 8: 'gx 1', 9: 'gx 2', 10: 'solo', 11: 'vx 4', 12: 'gx 2c', 13: 'rx', 14: 'rx II', 15: 'vx 1', 16: 'vx 2', 17: 'vx 4+', 18: 'gx 3', 19: 'vx 4n', 20: 'ex 3', 21: 'vx 2+', 22: 'vx 3', 23: 'Custom RenderNode', 24: 'rx III', 25: 'ex 2', 26: 'ex 2c', 27: 'ex 3+'}
+        """Options: {0: 'Designer', 1: 'V2.5', 2: '4x2pro', 3: '4x4pro', 4: '2x2plus', 5: '4x4pro (No VFC)', 6: 'Node', 7: '2x4pro', 8: 'gx 1', 9: 'gx 2', 10: 'solo', 11: 'vx 4', 12: 'gx 2c', 13: 'rx', 14: 'rx II', 15: 'vx 1', 16: 'vx 2', 17: 'vx 4+', 18: 'gx 3', 19: 'vx 4n', 20: 'ex 3', 21: 'vx 2+', 22: 'vx 3', 23: 'Custom RenderNode', 24: 'rx III', 25: 'ex 2', 26: 'ex 2c', 27: 'ex 3+', 28: 'gx 3+'}
            Category: Understudy Targets"""
         ...
 
@@ -31590,6 +31745,15 @@ class Options(_BlipValue):
         ...
 
     @property
+    def enableOutOfBandNMOS(self) -> OptionValue[bool]:
+        """The value of the option switch enableOutOfBandNMOS"""
+        ...
+
+    @enableOutOfBandNMOS.setter
+    def enableOutOfBandNMOS(self, value: OptionValue[bool]) -> None:
+        ...
+
+    @property
     def enablePerAxisScreenPositionLockout(self) -> OptionValue[bool]:
         """The value of the option switch enablePerAxisScreenPositionLockout"""
         ...
@@ -35265,6 +35429,7 @@ class PlayMode(_BlipValue):
 
     @property
     def state(self) -> int:
+        """Play mode of the PlayHead. An enum of the list [Play, PlaySection, LoopSection, Stop, HoldSection, HoldEnd]."""
         ...
 
     @overload
@@ -42092,10 +42257,10 @@ class ResourceManager(_BlipValue):
     def typeChangedResourceAction(self) -> ParamAction[Resource]:
         ...
 
-    def allResources(self, arg0: Type) -> List[Resource]:
+    def allResources(self, type: type[resourceT]) -> List[resourceT]:
         ...
 
-    def anyResourceChangedAction(self, arg0: Type) -> ParamAction[Resource]:
+    def anyResourceChangedAction(self, type: type[resourceT]) -> ParamAction[Resource]:
         ...
 
     def checkForCorruption(self) -> None:
@@ -42107,13 +42272,13 @@ class ResourceManager(_BlipValue):
     def exists(self, arg0: Path) -> bool:
         ...
 
-    def getMostRecentUserVisibleResourceOfType(self, arg0: Type) -> Resource:
+    def getMostRecentUserVisibleResourceOfType(self, type: type[resourceT]) -> resourceT:
         ...
 
-    def load(self, arg0: Path, arg1: Type=Resource) -> Resource:
+    def load(self, path: Path, type: type[resourceT]=Resource) -> resourceT:
         ...
 
-    def loadOrCreate(self, arg0: Path, arg1: Type) -> Resource:
+    def loadOrCreate(self, path: Path, type: type[resourceT]) -> resourceT:
         ...
 
     def remove(self, arg0: Path) -> None:
@@ -44320,6 +44485,42 @@ class SequencedIndirectionController(IndirectionController):
     def __init__(self) -> None:
         ...
 
+class SequencedValue(_BlipValue):
+    null: Self
+    _classInfo: 'ClassInfo'
+
+    @property
+    def nextKey(self) -> Key:
+        ...
+
+    @nextKey.setter
+    def nextKey(self, value: Key) -> None:
+        ...
+
+    @property
+    def prevKey(self) -> Key:
+        ...
+
+    @prevKey.setter
+    def prevKey(self, value: Key) -> None:
+        ...
+
+    @property
+    def value(self) -> ReflectionValue:
+        ...
+
+    @value.setter
+    def value(self, value: ReflectionValue) -> None:
+        ...
+
+    @overload
+    def __init__(self) -> None:
+        ...
+
+    @overload
+    def __init__(self, arg0: SequencedValue) -> None:
+        ...
+
 class SerialCommand(Resource):
     null: Self
     _classInfo: 'ClassInfo'
@@ -46104,6 +46305,9 @@ class SockpuppetPersonality(Resource):
         ...
 
     def addProperty(self, arg0: str, arg1: str, arg2: str) -> SockpuppetProperty:
+        ...
+
+    def findProperty(self, arg0: str) -> SockpuppetProperty:
         ...
 
     def isSameAs(self, arg0: SockpuppetPersonality) -> bool:
@@ -53351,14 +53555,15 @@ class TwoPoint5DModule(Module):
         ...
 
     @property
-    def syncToTimeline(self) -> bool:
-        """Locks the playback of layers in each plate's layer stack to the track's timeline
+    def mode(self) -> int:
+        """Locks the playback of the 2.5D scene to the track's timeline
            
-           UserName: Sync to timeline"""
+           Options: {0: 'Locked', 1: 'Normal'}
+           UserName: Mode"""
         ...
 
-    @syncToTimeline.setter
-    def syncToTimeline(self, value: bool) -> None:
+    @mode.setter
+    def mode(self, value: int) -> None:
         ...
 
 class TwoPoint5DPlate(Display):
@@ -55952,6 +56157,10 @@ class VideoClip(Resource):
         ...
 
     @property
+    def enabledVersion(self) -> str:
+        ...
+
+    @property
     def end(self) -> int:
         """End frame index of the video clip. Use this to trim frames from the end of the clip
            
@@ -56019,6 +56228,10 @@ class VideoClip(Resource):
 
     @frame_blending.setter
     def frame_blending(self, value: int) -> None:
+        ...
+
+    @property
+    def hasAudio(self) -> bool:
         ...
 
     @property
@@ -56111,6 +56324,10 @@ class VideoClip(Resource):
 
     @prefetchOptions.setter
     def prefetchOptions(self, value: PrefetchLookaheads) -> None:
+        ...
+
+    @property
+    def proxyInfo(self) -> str:
         ...
 
     @property
@@ -56710,7 +56927,12 @@ class VideoInTexture(PreCompTexture):
     __username__ = 'VideoInTexture'
 
     @property
+    def playHead(self) -> PlayHead:
+        ...
+
+    @property
     def videoIn(self) -> LogicalVideoInDevice:
+        """The LogicalVideoInDevice associated with this texture."""
         ...
 
     @videoIn.setter
@@ -57642,6 +57864,7 @@ class WebBookmark(Resource):
 
     @property
     def URL(self) -> str:
+        """The URL of the web bookmark"""
         ...
 
     @URL.setter
@@ -57650,7 +57873,9 @@ class WebBookmark(Resource):
 
     @property
     def audio(self) -> bool:
-        """UserName: Audio"""
+        """When true the web browser should play audio when loading this web bookmark, otherwise it will be muted
+           
+           UserName: Audio"""
         ...
 
     @audio.setter
@@ -57659,7 +57884,9 @@ class WebBookmark(Resource):
 
     @property
     def zoom(self) -> float:
-        """UserName: Zoom"""
+        """The zoom level of the web browser when loading this bookmark. 1 = 100%.
+           
+           UserName: Zoom"""
         ...
 
     @zoom.setter
@@ -57727,6 +57954,7 @@ class WebCommand(Resource):
 
     @property
     def commitTime(self) -> float:
+        """The time at which this command should be executed. This is in network time (os.timer.frameTime()) so that browsers are kept in sync."""
         ...
 
     @commitTime.setter
@@ -57743,6 +57971,7 @@ class WebCommandJavascript(WebCommand):
 
     @property
     def JavaScript(self) -> str:
+        """A string containing JavaScript to be executed in a WebBrowser."""
         ...
 
     @JavaScript.setter
@@ -57815,6 +58044,7 @@ class WebCommandMouse(WebCommand):
 
     @property
     def Normal_Pos(self) -> Vec2:
+        """Sets the mouse cursor position event to send. This position is normalized where position (0, 0) is top left and position (1, 1) is bottom right. Setting this to a negative number will not send this event."""
         ...
 
     @Normal_Pos.setter
@@ -57823,6 +58053,7 @@ class WebCommandMouse(WebCommand):
 
     @property
     def pressed_left(self) -> int:
+        """A left button pressed event. Set to any non-zero value to trigger event."""
         ...
 
     @pressed_left.setter
@@ -57831,6 +58062,7 @@ class WebCommandMouse(WebCommand):
 
     @property
     def pressed_middle(self) -> int:
+        """A middle mouse button pressed event. Set to any non-zero value to trigger event."""
         ...
 
     @pressed_middle.setter
@@ -57839,6 +58071,7 @@ class WebCommandMouse(WebCommand):
 
     @property
     def pressed_right(self) -> int:
+        """A right mouse button pressed event. Set to any non-zero value to trigger event."""
         ...
 
     @pressed_right.setter
@@ -57847,6 +58080,7 @@ class WebCommandMouse(WebCommand):
 
     @property
     def released_left(self) -> int:
+        """A left mouse button released event. Set to any non-zero value to trigger event."""
         ...
 
     @released_left.setter
@@ -57855,6 +58089,7 @@ class WebCommandMouse(WebCommand):
 
     @property
     def released_middle(self) -> int:
+        """A middle mouse button released event. Set to any non-zero value to trigger event."""
         ...
 
     @released_middle.setter
@@ -57863,6 +58098,7 @@ class WebCommandMouse(WebCommand):
 
     @property
     def released_right(self) -> int:
+        """A right mouse button released event. Set to any non-zero value to trigger event."""
         ...
 
     @released_right.setter
@@ -57871,6 +58107,7 @@ class WebCommandMouse(WebCommand):
 
     @property
     def scroll_wheel(self) -> int:
+        """Sets a mouse scroll wheel value to send. Positive values scroll up, negative scroll down and zero does not send the event."""
         ...
 
     @scroll_wheel.setter
@@ -57887,10 +58124,22 @@ class WebCommandNavigate(WebCommand):
 
     @property
     def NavCmd(self) -> int:
+        """The type of navigation to perform
+           
+           Options: {0: 'NAVIGATE_RELOAD', 1: 'NAVIGATE_LOADURL'}"""
         ...
 
     @NavCmd.setter
     def NavCmd(self, value: int) -> None:
+        ...
+
+    @property
+    def url(self) -> str:
+        """The URL the WebBrowser should navigate to in Load URL mode"""
+        ...
+
+    @url.setter
+    def url(self, value: str) -> None:
         ...
 
     def __init__(self) -> None:
@@ -57903,6 +58152,7 @@ class WebModule(Module):
 
     @property
     def Command(self) -> WebCommand:
+        """The currently selected command to send to the web browser."""
         ...
 
     @Command.setter
@@ -58215,7 +58465,9 @@ class WebModule(Module):
 
     @property
     def Universes(self) -> str:
-        """Category: DMX Parameters
+        """A comma separated list of DMX universes. Universes specified here will pass DMX data through to the browser.
+           
+           Category: DMX Parameters
            UserName: Universes (1-based)"""
         ...
 
@@ -58321,7 +58573,9 @@ class WebModule(Module):
 
     @property
     def bookmark(self) -> WebBookmark:
-        """UserName: Bookmark"""
+        """The currently loaded web bookmark.
+           
+           UserName: Bookmark"""
         ...
 
     @bookmark.setter
@@ -58330,7 +58584,9 @@ class WebModule(Module):
 
     @property
     def fade_up_time(self) -> float:
-        """UserName: Fade up time"""
+        """The time it takes for the web module to fade up from a completely transparent state.
+           
+           UserName: Fade up time"""
         ...
 
     @fade_up_time.setter
@@ -58352,7 +58608,9 @@ class WebModule(Module):
 
     @property
     def height(self) -> int:
-        """Category: Size
+        """The height of the web view in pixels.
+           
+           Category: Size
            UserName: Height"""
         ...
 
@@ -58362,7 +58620,9 @@ class WebModule(Module):
 
     @property
     def size_mode(self) -> int:
-        """Options: {0: 'Match Mapping', 1: 'Custom'}
+        """The sizing mode of the web view.
+           
+           Options: {0: 'Match Mapping', 1: 'Custom'}
            Category: Size
            UserName: Size mode"""
         ...
@@ -58373,7 +58633,9 @@ class WebModule(Module):
 
     @property
     def width(self) -> int:
-        """Category: Size
+        """The width of the web view in pixels.
+           
+           Category: Size
            UserName: Width"""
         ...
 
