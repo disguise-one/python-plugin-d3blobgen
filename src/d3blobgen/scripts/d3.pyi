@@ -20308,6 +20308,9 @@ class ImageCaptureProcess(FastCaptureProcess):
     def targetDisplays(self, value: List[Display]) -> None:
         ...
 
+    def clearTextureCache(self) -> None:
+        ...
+
 class ImageInfo(ResolutionInfo):
     null: Self
     _classInfo: 'ClassInfo'
