@@ -9,10 +9,12 @@ resourceT = TypeVar('resourceT', bound='Resource')
 SubsystemT = TypeVar('SubsystemT', bound='Subsystem')
 
 class Upgrade[T](_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Array2[T](_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29,15 +31,18 @@ class Array2[T](_BlipValue):
         ...
 
 class StatefulCatchupGroup[Type1, Type2](CatchupGroup):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MapSupport[Type1, Type2](_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class unique_ptr[T](_BlipValue):
-    """Reflection of the std::unique_ptr class from the C++ standard library"""
+    """Reflection of the std::unique_ptr class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -46,10 +51,12 @@ class unique_ptr[T](_BlipValue):
         ...
 
 class AxisAngle[Type1, Type2](_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class TimeSequence[T](_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -84,6 +91,7 @@ class TimeSequence[T](_BlipValue):
         ...
 
 class TCallArgs[T](_BlipValue, Sequence[T]):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -99,6 +107,7 @@ class TCallArgs[T](_BlipValue, Sequence[T]):
         ...
 
 class ParamAction[T](_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -133,6 +142,7 @@ class ParamAction[T](_BlipValue):
         ...
 
 class MonitorCollection[T](_BlipValue):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -163,6 +173,7 @@ class MonitorCollection[T](_BlipValue):
         ...
 
 class RI[T](_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -189,6 +200,7 @@ class RI[T](_BlipValue):
         ...
 
 class ReturnParamAction[Type1, Type2](_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -199,7 +211,8 @@ class ReturnParamAction[Type1, Type2](_BlipValue):
         ...
 
 class map[Type1, Type2](_BlipValue, Dict[Type1, Type2]):
-    """Reflection of the std::map class from the C++ standard library"""
+    """Reflection of the std::map class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -218,10 +231,12 @@ class map[Type1, Type2](_BlipValue, Dict[Type1, Type2]):
         ...
 
 class TimeValue[T](_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MapTable[Type1, Type2](_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -229,6 +244,7 @@ class MapTable[Type1, Type2](_BlipValue):
         ...
 
 class HashTable[T](_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -256,7 +272,8 @@ class HashTable[T](_BlipValue):
         ...
 
 class optional[T](_BlipValue):
-    """Reflection of the std::optional class from the C++ standard library"""
+    """Reflection of the std::optional class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -301,6 +318,7 @@ class optional[T](_BlipValue):
         ...
 
 class FuzzySearchItem[T](_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -337,7 +355,8 @@ class FuzzySearchItem[T](_BlipValue):
         ...
 
 class vector[T](_BlipValue, List[T]):
-    """Reflection of the std::vector class from the C++ standard library"""
+    """Reflection of the std::vector class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -383,11 +402,13 @@ class vector[T](_BlipValue, List[T]):
         ...
 
 class _Ptr_base[T](_BlipValue):
-    """Reflection of the std::_Ptr_base class from the C++ standard library"""
+    """Reflection of the std::_Ptr_base class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class OptionValue[T](_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -395,7 +416,8 @@ class OptionValue[T](_BlipValue):
         ...
 
 class unordered_map[Type1, Type2](_BlipValue, Dict[Type1, Type2]):
-    """Reflection of the std::unordered_map class from the C++ standard library"""
+    """Reflection of the std::unordered_map class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -414,6 +436,7 @@ class unordered_map[Type1, Type2](_BlipValue, Dict[Type1, Type2]):
         ...
 
 class APIEventTransport(EventTransport):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'APIEventTransport'
@@ -422,6 +445,7 @@ class APIEventTransport(EventTransport):
         ...
 
 class AcesInputTransformBox(AcesTransformBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AcesInputTransformBox'
@@ -432,6 +456,7 @@ class AcesInputTransformBox(AcesTransformBox):
         ...
 
 class AcesInputTransformParameters(_BlipValue):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -481,6 +506,7 @@ class AcesInputTransformParameters(_BlipValue):
         ...
 
 class AcesInputTransformSelector(AcesTransformSelector):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AcesInputTransformSelector'
@@ -489,6 +515,7 @@ class AcesInputTransformSelector(AcesTransformSelector):
         ...
 
 class AcesOutputTransformBox(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AcesOutputTransformBox'
@@ -497,6 +524,7 @@ class AcesOutputTransformBox(ValueBox):
         ...
 
 class AcesOutputTransformParameters(_BlipValue):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -546,11 +574,13 @@ class AcesOutputTransformParameters(_BlipValue):
         ...
 
 class AcesOutputTransformSelector(AcesTransformSelector):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AcesOutputTransformSelector'
 
 class AcesTransformBox(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AcesTransformBox'
@@ -559,6 +589,7 @@ class AcesTransformBox(ValueBox):
         ...
 
 class AcesTransformSelector(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AcesTransformSelector'
@@ -567,6 +598,7 @@ class AcesTransformSelector(Widget):
         ...
 
 class Action(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -601,6 +633,7 @@ class Action(_BlipValue):
         ...
 
 class ActionInfo(ReflectionAttributeContainer):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -612,6 +645,7 @@ class ActionInfo(ReflectionAttributeContainer):
         ...
 
 class ActiveEditorManager(Resource):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ActiveEditorManager'
@@ -623,6 +657,7 @@ class ActiveEditorManager(Resource):
         ...
 
 class ActiveIPVideoInGroup(Resource):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ActiveIPVideoInGroup'
@@ -642,6 +677,7 @@ class ActiveIPVideoInGroup(Resource):
         ...
 
 class ActiveScreenRegion(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ActiveScreenRegion'
@@ -666,10 +702,12 @@ class ActiveScreenRegion(Resource):
         ...
 
 class ActiveStreams(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ActiveWorkload(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -677,10 +715,12 @@ class ActiveWorkload(_BlipValue):
         ...
 
 class ActivityMonitor(_BlipValue):
+    """Categories: ['Monitoring', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class AgileCamera(CameraDevice):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AgileCamera'
@@ -774,14 +814,17 @@ class AgileCamera(CameraDevice):
         ...
 
 class AlertNotificationSystem(Subsystem):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
     class RemoteMessageState(_BlipValue):
+        """Category: D3Net"""
         null: Self
         _classInfo: 'ClassInfo'
 
     class AlertsAndNotifications(_BlipValue):
+        """Category: D3Net"""
         null: Self
         _classInfo: 'ClassInfo'
 
@@ -804,6 +847,7 @@ class AlertNotificationSystem(Subsystem):
         ...
 
 class AlignmentCoordinate(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AlignmentCoordinate'
@@ -825,6 +869,7 @@ class AlignmentCoordinate(Resource):
         ...
 
 class AlignmentData(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AlignmentData'
@@ -931,6 +976,7 @@ class AlignmentData(Resource):
         ...
 
 class AlignmentDataPose(AlignmentData):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AlignmentDataPose'
@@ -959,6 +1005,7 @@ class AlignmentDataPose(AlignmentData):
         ...
 
 class AlignmentPair(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AlignmentPair'
@@ -967,6 +1014,7 @@ class AlignmentPair(Resource):
         ...
 
 class AlignmentPoint(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AlignmentPoint'
@@ -1018,6 +1066,7 @@ class AlignmentPoint(Resource):
         ...
 
 class AlignmentPointToCoordinates(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AlignmentPointToCoordinates'
@@ -1040,6 +1089,7 @@ class AlignmentPointToCoordinates(Resource):
         ...
 
 class AllowNullAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1052,6 +1102,7 @@ class AllowNullAttribute(ReflectionAttributeT):
         ...
 
 class AnalogWayOPS300(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AnalogWayOPS300'
@@ -1078,6 +1129,7 @@ class AnalogWayOPS300(DVIMatrix):
         ...
 
 class AnimateCamera(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AnimateCameraControl'
@@ -1171,6 +1223,7 @@ class AnimateCamera(Module):
         ...
 
 class AnimateCamera2(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AnimateCameraPreset'
@@ -1209,6 +1262,7 @@ class AnimateCamera2(Module):
         ...
 
 class AnimationAxisSettings(Resource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FrameOfReference'
@@ -1358,6 +1412,7 @@ class AnimationAxisSettings(Resource):
         ...
 
 class AnimationModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AnimationModule'
@@ -1366,6 +1421,7 @@ class AnimationModule(Module):
         ...
 
 class AnyKeyManipulatorSelector(ManipulatorSelector):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1373,6 +1429,7 @@ class AnyKeyManipulatorSelector(ManipulatorSelector):
         ...
 
 class App(Resource):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'App'
@@ -1381,6 +1438,7 @@ class App(Resource):
         ...
 
 class ArrayBox(ValueBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ArrayBox'
@@ -1511,6 +1569,7 @@ class ArrayBox(ValueBox):
         ...
 
 class ArrayBoxProperty(ValueBoxProperty):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1523,6 +1582,7 @@ class ArrayBoxProperty(ValueBoxProperty):
         ...
 
 class Arrow(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Arrow'
@@ -1564,6 +1624,7 @@ class Arrow(Resource):
         ...
 
 class ArrowSourceData(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1584,6 +1645,7 @@ class ArrowSourceData(_BlipValue):
         ...
 
 class ArtNetDmxUniverseState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1595,6 +1657,7 @@ class ArtNetDmxUniverseState(IDataState):
         ...
 
 class ArtNetSystem(Subsystem):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1602,6 +1665,7 @@ class ArtNetSystem(Subsystem):
         ...
 
 class AssetData(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1662,6 +1726,7 @@ class AssetData(_BlipValue):
         ...
 
 class AssetInfo(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1674,14 +1739,17 @@ class AssetInfo(_BlipValue):
         ...
 
 class AssetLauncher(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class AssistantEventLogger(_BlipValue):
+    """Categories: ['Internal', 'Monitoring']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class AsyncBlobDetectorHelper(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1721,6 +1789,7 @@ class AsyncBlobDetectorHelper(_BlipValue):
         ...
 
 class AudioAnalyser(Device):
+    """Categories: ['Audio', 'Devices']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioAnalyser'
@@ -1738,6 +1807,7 @@ class AudioAnalyser(Device):
         ...
 
 class AudioFile(Resource):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioFile'
@@ -1759,6 +1829,7 @@ class AudioFile(Resource):
         ...
 
 class AudioFileHeader(Resource):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioFileHeader'
@@ -1809,10 +1880,12 @@ class AudioFileHeader(Resource):
         ...
 
 class AudioFilePlayer(AudioPlayer):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class AudioHardwareIdentifier(HardwareIdentifier):
+    """Categories: ['Audio', 'D3Net', 'Devices']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioHardwareIdentifier'
@@ -1854,6 +1927,7 @@ class AudioHardwareIdentifier(HardwareIdentifier):
         ...
 
 class AudioInfo(MediaInfo):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -1904,6 +1978,7 @@ class AudioInfo(MediaInfo):
         ...
 
 class AudioLine(Resource):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioLine'
@@ -1951,6 +2026,7 @@ class AudioLine(Resource):
         ...
 
 class AudioLink(Resource):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioLink'
@@ -2000,6 +2076,7 @@ class AudioLink(Resource):
         ...
 
 class AudioModule(Module):
+    """Categories: ['Audio', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioModule'
@@ -2087,6 +2164,7 @@ class AudioModule(Module):
         ...
 
 class AudioOutDevice(Resource):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioOutDevice'
@@ -2095,6 +2173,7 @@ class AudioOutDevice(Resource):
         ...
 
 class AudioOutDeviceMap(DeviceMap):
+    """Categories: ['D3Net', 'Audio']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioOutDeviceMap'
@@ -2103,6 +2182,7 @@ class AudioOutDeviceMap(DeviceMap):
         ...
 
 class AudioOutDeviceMap2(Resource):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioOutDeviceMap2'
@@ -2148,6 +2228,7 @@ class AudioOutDeviceMap2(Resource):
         ...
 
 class AudioOutputs(Resource):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioOutputs'
@@ -2164,18 +2245,22 @@ class AudioOutputs(Resource):
         ...
 
 class AudioPlayer(_BlipValue):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class AudioPlayerThread(Thread):
+    """Categories: ['Audio', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class AudioPlayer_Impl(_BlipValue):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class AudioSystem(Subsystem):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -2186,11 +2271,13 @@ class AudioSystem(Subsystem):
         ...
 
 class AudioTrack(Resource):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioTrack'
 
     class Marker(_BlipValue):
+        """Category: Audio"""
         null: Self
         _classInfo: 'ClassInfo'
     
@@ -2211,6 +2298,7 @@ class AudioTrack(Resource):
             ...
 
     class OldMarker(_BlipValue):
+        """Categories: ['Audio', 'Derogated']"""
         null: Self
         _classInfo: 'ClassInfo'
     
@@ -2282,10 +2370,12 @@ class AudioTrack(Resource):
         ...
 
 class AudioWaveform(_BlipValue):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class AutoFilter3Monitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AutoFilter3Monitor'
@@ -2294,13 +2384,15 @@ class AutoFilter3Monitor(MetricMonitor):
         ...
 
 class AutoProfiler(Subsystem):
+    """Categories: ['Internal', 'Monitoring']"""
     null: Self
     _classInfo: 'ClassInfo'
 
     def __init__(self) -> None:
         ...
 
-class AutoSoftEdgeMaterial(ProjectorViewMaterial):
+class AutoSoftEdgeMaterial(ScreenMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -2308,6 +2400,7 @@ class AutoSoftEdgeMaterial(ProjectorViewMaterial):
         ...
 
 class AutoSoftEdgeProfile(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AutoSoftEdgeProfile'
@@ -2394,6 +2487,7 @@ class AutoSoftEdgeProfile(Resource):
         ...
 
 class AutomaticSetList(SetList):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AutomaticSetList'
@@ -2402,6 +2496,7 @@ class AutomaticSetList(SetList):
         ...
 
 class AutomationAxisValue(Resource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AutomationAxisValue'
@@ -2439,6 +2534,7 @@ class AutomationAxisValue(Resource):
         ...
 
 class AverageMipmappedMaskTexture(MipmappedMaskTexture):
+    """Categories: ['Track and Sequencing', 'Renderer', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AverageMipmappedMaskTexture'
@@ -2447,6 +2543,7 @@ class AverageMipmappedMaskTexture(MipmappedMaskTexture):
         ...
 
 class AxisCameraTrackingSource(CameraTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AxisCameraTrackingSource'
@@ -2637,6 +2734,7 @@ class AxisCameraTrackingSource(CameraTrackingSource):
         ...
 
 class AxisObjectTrackingSource(ObjectTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AxisObjectTrackingSource'
@@ -2699,6 +2797,7 @@ class AxisObjectTrackingSource(ObjectTrackingSource):
         ...
 
 class BandwidthEstimationResult(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -2719,6 +2818,7 @@ class BandwidthEstimationResult(_BlipValue):
         ...
 
 class BarWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BarWidget'
@@ -2884,6 +2984,7 @@ class BarWidget(Widget):
         ...
 
 class BarcoEncore(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BarcoEncore'
@@ -2910,6 +3011,7 @@ class BarcoEncore(DVIMatrix):
         ...
 
 class BarcoMatrixPro(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BarcoMatrixPro'
@@ -2949,11 +3051,13 @@ class BarcoMatrixPro(DVIMatrix):
         ...
 
 class BarcoProjectorDevice(ProjectorDevice):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BarcoProjectorDevice'
 
 class BatteryMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BatteryMonitor'
@@ -2961,6 +3065,7 @@ class BatteryMonitor(MetricMonitor):
     hasBattery: Callable
 
 class BeamQuadShaderMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -2968,6 +3073,7 @@ class BeamQuadShaderMaterial(DxMaterial):
         ...
 
 class BeamShaderMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -2975,6 +3081,7 @@ class BeamShaderMaterial(DxMaterial):
         ...
 
 class BitmapModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BitmapModule'
@@ -3104,6 +3211,7 @@ class BitmapModule(ProjectionAwareModule):
         ...
 
 class BitmapMoveModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BitmapMoveModule'
@@ -3210,6 +3318,7 @@ class BitmapMoveModule(Module):
         ...
 
 class BlackMagicVideoHubMatrix(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BlackMagicVideoHubMatrix'
@@ -3236,10 +3345,12 @@ class BlackMagicVideoHubMatrix(DVIMatrix):
         ...
 
 class BlankState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Blip(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3263,6 +3374,7 @@ class Blip(_BlipValue):
         ...
 
 class Blob(_BlipValue):
+    """Categories: ['Calibration', 'Omnical']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3315,6 +3427,7 @@ class Blob(_BlipValue):
         ...
 
 class BlobCaptureProcess(FastCaptureProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BlobCaptureProcess'
@@ -3383,6 +3496,7 @@ class BlobCaptureProcess(FastCaptureProcess):
         ...
 
 class BlobDetectionSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3427,6 +3541,7 @@ class BlobDetectionSettings(_BlipValue):
         ...
 
 class BlobObservationCount(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3458,6 +3573,7 @@ class BlobObservationCount(_BlipValue):
         ...
 
 class BlobSettings(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3465,6 +3581,7 @@ class BlobSettings(_BlipValue):
         ...
 
 class BlueFishSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3472,10 +3589,12 @@ class BlueFishSystem(Subsystem):
         ...
 
 class BluefishIn(BufferedVideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class BlurModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BlurModule'
@@ -3522,10 +3641,12 @@ class BlurModule(ProjectionAwareModule):
         ...
 
 class BufferedVideoIn(VideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class BugsModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'BugsModule'
@@ -3583,6 +3704,7 @@ class BugsModule(Module):
         ...
 
 class Button(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Button'
@@ -3648,6 +3770,7 @@ class Button(Widget):
         ...
 
 class CDL(Resource):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CDL'
@@ -3725,6 +3848,7 @@ class CDL(Resource):
         ...
 
 class CDLContainer(Resource):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CDLContainer'
@@ -3733,6 +3857,7 @@ class CDLContainer(Resource):
         ...
 
 class CDLModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CDLModule'
@@ -3761,6 +3886,7 @@ class CDLModule(ProjectionAwareModule):
         ...
 
 class CITPDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CITPDevice'
@@ -3783,6 +3909,7 @@ class CITPDevice(Device):
         ...
 
 class CITPLibrary(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3793,14 +3920,17 @@ class CITPLibrary(_BlipValue):
         ...
 
 class CITPServer(Thread):
+    """Categories: ['App', 'Devices', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CITPService(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CITPSubsystem(Subsystem):
+    """Categories: ['Devices', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3811,6 +3941,7 @@ class CITPSubsystem(Subsystem):
         ...
 
 class CPSAutomation(UdpReceiverDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CPSDriver'
@@ -3819,6 +3950,7 @@ class CPSAutomation(UdpReceiverDriver):
         ...
 
 class CPUMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CPUMonitor'
@@ -3827,10 +3959,12 @@ class CPUMonitor(MetricMonitor):
         ...
 
 class CachedStatusSharer(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CalibratedPoint(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CalibratedPoint'
@@ -3879,10 +4013,12 @@ class CalibratedPoint(Resource):
         ...
 
 class CalibratedReferencePoint(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CalibrationLutMapping(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CalibrationLutMapping'
@@ -3934,14 +4070,17 @@ class CalibrationLutMapping(Resource):
         ...
 
 class CalibrationLutMappingOld(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CalibrationProjectorSettings(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CalibrationResultsData(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -3973,6 +4112,7 @@ class CalibrationResultsData(_BlipValue):
         ...
 
 class CalibrationSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -4025,6 +4165,7 @@ class CalibrationSettings(_BlipValue):
         ...
 
 class CalibratorFactory(CalibratorSystem):
+    """Categories: ['Calibration', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -4032,6 +4173,7 @@ class CalibratorFactory(CalibratorSystem):
         ...
 
 class CalibratorSystem(Subsystem):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -4057,6 +4199,7 @@ class CalibratorSystem(Subsystem):
         ...
 
 class CamCaps(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -4065,6 +4208,7 @@ class CamCaps(_BlipValue):
         ...
 
 class CamCapturePaths(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -4077,6 +4221,7 @@ class CamCapturePaths(_BlipValue):
         ...
 
 class CamParams(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -4165,6 +4310,7 @@ class CamParams(_BlipValue):
         ...
 
 class Camera(SlcAwareDisplay):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Camera'
@@ -4587,6 +4733,7 @@ class Camera(SlcAwareDisplay):
         ...
 
 class CameraAutoFocus(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraAutoFocus'
@@ -4605,6 +4752,7 @@ class CameraAutoFocus(CameraCommand):
         ...
 
 class CameraBlack(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraBlack'
@@ -4622,6 +4770,7 @@ class CameraBlack(CameraCommand):
         ...
 
 class CameraBlueGain(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraBlueGain'
@@ -4639,6 +4788,7 @@ class CameraBlueGain(CameraCommand):
         ...
 
 class CameraBookmark(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraBookmark'
@@ -4710,6 +4860,7 @@ class CameraBookmark(Resource):
         ...
 
 class CameraBookmarkState(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraBookmarkState'
@@ -4725,6 +4876,7 @@ class CameraBookmarkState(Resource):
         ...
 
 class CameraCalibration(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraCalibration'
@@ -4851,6 +5003,7 @@ class CameraCalibration(Resource):
         ...
 
 class CameraCalibrationObservation(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraCalibrationObservation'
@@ -4993,6 +5146,7 @@ class CameraCalibrationObservation(Resource):
         ...
 
 class CameraCalibrationSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5117,6 +5271,7 @@ class CameraCalibrationSettings(_BlipValue):
         ...
 
 class CameraCalibrationSystem(Subsystem):
+    """Categories: ['Calibration', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5174,6 +5329,7 @@ class CameraCalibrationSystem(Subsystem):
         ...
 
 class CameraCommand(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraCommand'
@@ -5182,6 +5338,7 @@ class CameraCommand(Resource):
         ...
 
 class CameraCommunication(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5212,6 +5369,7 @@ class CameraCommunication(_BlipValue):
         ...
 
 class CameraConfig(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraConfig'
@@ -5293,6 +5451,7 @@ class CameraConfig(CameraCommand):
         ...
 
 class CameraControlModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraControlModule'
@@ -5322,6 +5481,7 @@ class CameraControlModule(Module):
         ...
 
 class CameraCutControl(IndirectionControl):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraCutControl'
@@ -5338,6 +5498,7 @@ class CameraCutControl(IndirectionControl):
         ...
 
 class CameraDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraDevice'
@@ -5346,6 +5507,7 @@ class CameraDevice(Device):
         ...
 
 class CameraExposureMode(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraExposureMode'
@@ -5364,6 +5526,7 @@ class CameraExposureMode(CameraCommand):
         ...
 
 class CameraFocus(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraFocus'
@@ -5381,6 +5544,7 @@ class CameraFocus(CameraCommand):
         ...
 
 class CameraGain(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraGain'
@@ -5398,6 +5562,7 @@ class CameraGain(CameraCommand):
         ...
 
 class CameraGammaMode(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraGammaMode'
@@ -5416,6 +5581,7 @@ class CameraGammaMode(CameraCommand):
         ...
 
 class CameraGoToPreset(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraGoToPreset'
@@ -5433,6 +5599,7 @@ class CameraGoToPreset(CameraCommand):
         ...
 
 class CameraImageMirrorMode(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraImageMirrorMode'
@@ -5451,6 +5618,7 @@ class CameraImageMirrorMode(CameraCommand):
         ...
 
 class CameraIris(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraIris'
@@ -5468,6 +5636,7 @@ class CameraIris(CameraCommand):
         ...
 
 class CameraMats(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5487,6 +5656,7 @@ class CameraMats(_BlipValue):
         ...
 
 class CameraNamePair(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5510,6 +5680,7 @@ class CameraNamePair(_BlipValue):
         ...
 
 class CameraNightMode(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraNightMode'
@@ -5528,6 +5699,7 @@ class CameraNightMode(CameraCommand):
         ...
 
 class CameraObject(Object):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraObject'
@@ -5578,6 +5750,7 @@ class CameraObject(Object):
         ...
 
 class CameraObservationPoint(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5610,6 +5783,7 @@ class CameraObservationPoint(_BlipValue):
         ...
 
 class CameraOld(Object):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraOld'
@@ -5618,6 +5792,7 @@ class CameraOld(Object):
         ...
 
 class CameraOnOff(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraOnOff'
@@ -5636,6 +5811,7 @@ class CameraOnOff(CameraCommand):
         ...
 
 class CameraPanTilt(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraPanTilt'
@@ -5662,6 +5838,7 @@ class CameraPanTilt(CameraCommand):
         ...
 
 class CameraPlate(Projection):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraPlate'
@@ -5705,6 +5882,7 @@ class CameraPlate(Projection):
         ...
 
 class CameraPose(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5738,6 +5916,7 @@ class CameraPose(_BlipValue):
         ...
 
 class CameraPoseInfo(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5754,6 +5933,7 @@ class CameraPoseInfo(_BlipValue):
         ...
 
 class CameraPosition(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraPosition'
@@ -5855,6 +6035,7 @@ class CameraPosition(Resource):
         ...
 
 class CameraRecallPreset(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraRecallPreset'
@@ -5897,6 +6078,7 @@ class CameraRecallPreset(CameraCommand):
         ...
 
 class CameraRedGain(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraRedGain'
@@ -5914,6 +6096,7 @@ class CameraRedGain(CameraCommand):
         ...
 
 class CameraShutter(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraShutter'
@@ -5931,10 +6114,12 @@ class CameraShutter(CameraCommand):
         ...
 
 class CameraStreamAssociation(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CameraSwitchDebugger(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -5976,6 +6161,7 @@ class CameraSwitchDebugger(_BlipValue):
         ...
 
 class CameraSwitchFrameInfo(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6052,6 +6238,7 @@ class CameraSwitchFrameInfo(_BlipValue):
         ...
 
 class CameraTallyDisplay(DisplayIndirection):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraTallyDisplay'
@@ -6065,6 +6252,7 @@ class CameraTallyDisplay(DisplayIndirection):
         ...
 
 class CameraTrackerObservationsTester(ScreenPositionDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraTrackerObservationsTester'
@@ -6097,6 +6285,7 @@ class CameraTrackerObservationsTester(ScreenPositionDriver):
         ...
 
 class CameraTrackerRegistration(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6128,6 +6317,7 @@ class CameraTrackerRegistration(_BlipValue):
         ...
 
 class CameraTrackerTester(ScreenPositionDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraTrackerTester'
@@ -6258,6 +6448,7 @@ class CameraTrackerTester(ScreenPositionDriver):
         ...
 
 class CameraTrackingSource(ObjectTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraTrackingSource'
@@ -6382,10 +6573,12 @@ class CameraTrackingSource(ObjectTrackingSource):
         ...
 
 class CameraVideoIn(VideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CameraVideoInSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6393,6 +6586,7 @@ class CameraVideoInSystem(Subsystem):
         ...
 
 class CameraVideoOutputMode(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraVideoOutputMode'
@@ -6413,6 +6607,7 @@ class CameraVideoOutputMode(CameraCommand):
         ...
 
 class CameraWhiteBalanceMode(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraWhiteBalanceMode'
@@ -6431,6 +6626,7 @@ class CameraWhiteBalanceMode(CameraCommand):
         ...
 
 class CameraZoom(CameraCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CameraZoom'
@@ -6448,6 +6644,7 @@ class CameraZoom(CameraCommand):
         ...
 
 class CancelTaskMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6468,14 +6665,17 @@ class CancelTaskMessage(Message):
         ...
 
 class CanvasTransfer_AssignmentTransform(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CanvasTransfer_ProjectionFeedRectAssignmentTransform(CanvasTransfer_AssignmentTransform):
+    """Categories: ['Feed', 'GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CaptureSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6552,6 +6752,7 @@ class CaptureSettings(_BlipValue):
         ...
 
 class CaptureViewSettings(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CaptureViewSettings'
@@ -6579,14 +6780,26 @@ class CaptureViewSettings(Resource):
         ...
 
 class CatchupGroup(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
+class CategoryAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
+    null: Self
+    _classInfo: 'ClassInfo'
+
+    @property
+    def categoryStrings(self) -> List[str]:
+        ...
+
 class Change(_BlipValue):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ChannelInfo(_BlipValue):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6615,6 +6828,7 @@ class ChannelInfo(_BlipValue):
         ...
 
 class ChannelInstance(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6669,10 +6883,12 @@ class ChannelInstance(_BlipValue):
         ...
 
 class ChannelInstanceIdentifier(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ChannelMappingAssigner(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6724,6 +6940,7 @@ class ChannelMappingAssigner(_BlipValue):
         ...
 
 class ChannelRouterModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ChannelRouterModule'
@@ -6790,6 +7007,7 @@ class ChannelRouterModule(ProjectionAwareModule):
         ...
 
 class ChevronModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ChevronModule'
@@ -6852,6 +7070,7 @@ class ChevronModule(ProjectionAwareModule):
         ...
 
 class ChristieProjectorDevice(ProjectorDevice):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ChristieProjectorDevice'
@@ -6859,6 +7078,7 @@ class ChristieProjectorDevice(ProjectorDevice):
     exportWarpFilesHelper: Callable
 
 class ChromaKeyModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ChromaKeyModule'
@@ -6939,6 +7159,7 @@ class ChromaKeyModule(ProjectionAwareModule):
         ...
 
 class ChromaticitySet(_BlipValue):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -6988,6 +7209,7 @@ class ChromaticitySet(_BlipValue):
         ...
 
 class ClassEditorAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -7008,6 +7230,7 @@ class ClassEditorAttribute(ReflectionAttributeT):
         ...
 
 class ClassInfo(ReflectionAttributeContainer):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -7069,6 +7292,7 @@ class ClassInfo(ReflectionAttributeContainer):
         ...
 
 class ClassMenu(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ClassMenu'
@@ -7083,6 +7307,7 @@ class ClassMenu(Widget):
         ...
 
 class ClassNode(_BlipValue):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -7111,18 +7336,22 @@ class ClassNode(_BlipValue):
         ...
 
 class Client(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ClockTransitionInfo(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CloudExportTask(Task):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CloudSystem(Subsystem):
+    """Categories: ['Cloud', 'Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -7169,10 +7398,12 @@ class CloudSystem(Subsystem):
         ...
 
 class CloudUploadTask(Task):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ClusterAssigner(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ClusterAssigner'
@@ -7311,6 +7542,7 @@ class ClusterAssigner(Resource):
         ...
 
 class ClusterPool(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ClusterPool'
@@ -7346,6 +7578,7 @@ class ClusterPool(Resource):
         ...
 
 class Col(_BlipValue):
+    """Categories: ['Colour', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -7471,6 +7704,7 @@ class Col(_BlipValue):
         ...
 
 class CollapsableTitleButton(CollapsableWidget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CollapsableTitleButton'
@@ -7482,6 +7716,7 @@ class CollapsableTitleButton(CollapsableWidget):
         ...
 
 class CollapsableWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CollapsableWidget'
@@ -7527,6 +7762,7 @@ class CollapsableWidget(Widget):
         ...
 
 class CollapseHeaderWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CollapseHeaderWidget'
@@ -7563,6 +7799,7 @@ class CollapseHeaderWidget(Widget):
         ...
 
 class CollapseTitleHeader(TitleButton):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CollapseTitleHeader'
@@ -7572,6 +7809,7 @@ class CollapseTitleHeader(TitleButton):
         ...
 
 class Colour(_BlipValue):
+    """Categories: ['Colour', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -7722,6 +7960,7 @@ class Colour(_BlipValue):
         ...
 
 class ColourAdjustModule(ProjectionAwareModule):
+    """Categories: ['Colour', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ColourAdjustModule'
@@ -7882,6 +8121,7 @@ class ColourAdjustModule(ProjectionAwareModule):
         ...
 
 class ColourInspector(ResizableWidget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ColourInspector'
@@ -7897,6 +8137,7 @@ class ColourInspector(ResizableWidget):
         ...
 
 class ColourModule(ProjectionAwareModule):
+    """Categories: ['Colour', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ColourModule'
@@ -7905,6 +8146,7 @@ class ColourModule(ProjectionAwareModule):
         ...
 
 class ColourProfile(Resource):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ColourProfile'
@@ -8000,6 +8242,7 @@ class ColourProfile(Resource):
         ...
 
 class ColourResponseToDisplay(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ColourResponseToDisplay'
@@ -8048,6 +8291,7 @@ class ColourResponseToDisplay(Resource):
         ...
 
 class ColourShift(Resource):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ColourShift'
@@ -8243,6 +8487,7 @@ class ColourShift(Resource):
         ...
 
 class ColourShiftData(_BlipValue):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8309,6 +8554,7 @@ class ColourShiftData(_BlipValue):
         ...
 
 class ColourShiftMaterial(DxMaterial):
+    """Categories: ['Colour', 'Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8319,6 +8565,7 @@ class ColourShiftMaterial(DxMaterial):
         ...
 
 class ColourWheel(Resource):
+    """Categories: ['Stage', 'Colour']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ColourWheel'
@@ -8345,6 +8592,7 @@ class ColourWheel(Resource):
         ...
 
 class ColourWheelWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ColourWheelWidget'
@@ -8383,6 +8631,7 @@ class ColourWheelWidget(Widget):
         ...
 
 class Colours(_BlipValue):
+    """Categories: ['Colour', 'GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8398,6 +8647,7 @@ class Colours(_BlipValue):
         ...
 
 class Column(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8434,10 +8684,12 @@ class Column(_BlipValue):
         ...
 
 class CommonCommandInfo(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Comms(IComms):
+    """Categories: ['App', 'D3Net', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8454,6 +8706,7 @@ class Comms(IComms):
         ...
 
 class CommsSystem(Subsystem):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8465,6 +8718,7 @@ class CommsSystem(Subsystem):
         ...
 
 class ComposeModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ComposeModule'
@@ -8597,6 +8851,7 @@ class ComposeModule(Module):
         ...
 
 class CompositeCameraTrackingSource(CameraTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CompositeCameraTrackingSource'
@@ -8624,6 +8879,7 @@ class CompositeCameraTrackingSource(CameraTrackingSource):
         ...
 
 class CompositeTexture(ProceduralTexture):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CompositeTexture'
@@ -8660,6 +8916,7 @@ class CompositeTexture(ProceduralTexture):
         ...
 
 class CompositorTargetKey(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8696,6 +8953,7 @@ class CompositorTargetKey(_BlipValue):
         ...
 
 class CompressionOptions(_BlipValue):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8748,6 +9006,7 @@ class CompressionOptions(_BlipValue):
         ...
 
 class ComputeShaderSystem(Subsystem):
+    """Categories: ['Internal', 'Renderer', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8755,6 +9014,7 @@ class ComputeShaderSystem(Subsystem):
         ...
 
 class ConnectedField(_BlipValue):
+    """Categories: ['Expressions', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8781,18 +9041,22 @@ class ConnectedField(_BlipValue):
         ...
 
 class ConnectionArgs(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ConsoleEndpoint(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ConsoleExternalMutexProvider(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ConstructorInfo(ReflectionAttributeContainer):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8801,6 +9065,7 @@ class ConstructorInfo(ReflectionAttributeContainer):
         ...
 
 class ContainerWidget(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ContainerWidget'
@@ -8809,6 +9074,7 @@ class ContainerWidget(Widget):
         ...
 
 class ContentSource(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8859,6 +9125,7 @@ class ContentSource(_BlipValue):
         ...
 
 class ContentViewPoint(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8879,6 +9146,7 @@ class ContentViewPoint(_BlipValue):
         ...
 
 class ContentViewPointSource(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8899,6 +9167,7 @@ class ContentViewPointSource(_BlipValue):
         ...
 
 class Control3DManipulator(Manipulator):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -8922,6 +9191,7 @@ class Control3DManipulator(Manipulator):
         ...
 
 class ControlDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ControlDevice'
@@ -8951,6 +9221,7 @@ class ControlDevice(Device):
         ...
 
 class ControlModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ControlModule'
@@ -8996,11 +9267,13 @@ class ControlModule(Module):
         ...
 
 class ControlPatch(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ControlPatch'
 
     class InputValues(_BlipValue):
+        """Category: Sockpuppet"""
         null: Self
         _classInfo: 'ClassInfo'
     
@@ -9056,6 +9329,7 @@ class ControlPatch(Resource):
         ...
 
 class ControlString(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ControlString'
@@ -9073,6 +9347,7 @@ class ControlString(Resource):
         ...
 
 class ControlSurface(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ControlSurface'
@@ -9081,14 +9356,17 @@ class ControlSurface(Resource):
         ...
 
 class CopyData(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CopyFileTask(Task):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CoreResourceManager(Subsystem):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -9106,18 +9384,22 @@ class CoreResourceManager(Subsystem):
         ...
 
 class Core_Impl(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CoutEndpoint(ConsoleEndpoint):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CpsAxisState(TrackingScalarState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Cue(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Cue'
@@ -9174,6 +9456,7 @@ class Cue(Resource):
         ...
 
 class CueAttributesWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CueAttributesWidget'
@@ -9182,6 +9465,7 @@ class CueAttributesWidget(Widget):
         ...
 
 class CueNoteEditorWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CueNoteEditorWidget'
@@ -9190,6 +9474,7 @@ class CueNoteEditorWidget(Widget):
         ...
 
 class CueTagEditorWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CueTagEditorWidget'
@@ -9198,6 +9483,7 @@ class CueTagEditorWidget(Widget):
         ...
 
 class CustomEngineDefinition(EngineDefinition):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -9205,10 +9491,12 @@ class CustomEngineDefinition(EngineDefinition):
         ...
 
 class CustomStreamEndpoint(ConsoleEndpoint):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class CustomTiming(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CustomTiming'
@@ -9310,6 +9598,7 @@ class CustomTiming(Resource):
         ...
 
 class Cylindrical(Projection):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Cylindrical'
@@ -9364,6 +9653,7 @@ class Cylindrical(Projection):
         ...
 
 class CylindricalProjectionObject(ProjectionObject):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'CylindricalProjectionObject'
@@ -9383,6 +9673,7 @@ class CylindricalProjectionObject(ProjectionObject):
         ...
 
 class D3(App):
+    """Categories: ['App', 'Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'D3'
@@ -9568,6 +9859,7 @@ class D3(App):
         ...
 
 class D3Command(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -9588,6 +9880,7 @@ class D3Command(_BlipValue):
         ...
 
 class D3NetManager(Resource):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'd3net'
@@ -9749,6 +10042,7 @@ class D3NetManager(Resource):
         ...
 
 class D3NetManagerSystem(Subsystem):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -9760,6 +10054,7 @@ class D3NetManagerSystem(Subsystem):
         ...
 
 class D3Nmos(Resource):
+    """Categories: ['D3Net', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'D3Nmos'
@@ -9840,6 +10135,7 @@ class D3Nmos(Resource):
         ...
 
 class D3SSIAxis(Resource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'D3SSIAxis'
@@ -9848,10 +10144,12 @@ class D3SSIAxis(Resource):
         ...
 
 class D3SSIAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class D3SSIDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'D3SSIDriver'
@@ -9860,6 +10158,7 @@ class D3SSIDriver(UdpReceiverDriver):
         ...
 
 class D3State(Resource):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'D3State'
@@ -10242,6 +10541,7 @@ class D3State(Resource):
         ...
 
 class DL1(Fixture):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DL1'
@@ -10282,6 +10582,7 @@ class DL1(Fixture):
         ...
 
 class DVIMatrix(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Matrix'
@@ -10301,6 +10602,7 @@ class DVIMatrix(Device):
         ...
 
 class DVIMatrixCommand(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MatrixCommand'
@@ -10309,6 +10611,7 @@ class DVIMatrixCommand(Resource):
         ...
 
 class DVIMatrixCommandAutoTrans(DVIMatrixCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MatrixCommandAutoTrans'
@@ -10326,6 +10629,7 @@ class DVIMatrixCommandAutoTrans(DVIMatrixCommand):
         ...
 
 class DVIMatrixCommandCut(DVIMatrixCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MatrixCommandCut'
@@ -10334,6 +10638,7 @@ class DVIMatrixCommandCut(DVIMatrixCommand):
         ...
 
 class DVIMatrixCommandPreset(DVIMatrixCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MatrixCommandPreset'
@@ -10351,6 +10656,7 @@ class DVIMatrixCommandPreset(DVIMatrixCommand):
         ...
 
 class DVIMatrixCommandRoute(DVIMatrixCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DVIMatrixCommandRoute'
@@ -10377,6 +10683,7 @@ class DVIMatrixCommandRoute(DVIMatrixCommand):
         ...
 
 class DVIMatrixControlModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MatrixControlModule'
@@ -10394,6 +10701,7 @@ class DVIMatrixControlModule(Module):
         ...
 
 class DVIMatrixControlModuleConfig(ModuleConfig):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DVIMatrixControlModuleConfig'
@@ -10411,6 +10719,7 @@ class DVIMatrixControlModuleConfig(ModuleConfig):
         ...
 
 class DateStamp(FilesystemDateStamp):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -10435,6 +10744,7 @@ class DateStamp(FilesystemDateStamp):
         ...
 
 class DbgObject(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DbgObject'
@@ -10468,6 +10778,7 @@ class DbgObject(Object):
         ...
 
 class DcsDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DcsDriver'
@@ -10485,10 +10796,12 @@ class DcsDriver(UdpReceiverDriver):
         ...
 
 class DebugEndpoint(ConsoleEndpoint):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DebugOptions(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -10496,14 +10809,17 @@ class DebugOptions(_BlipValue):
         ...
 
 class DecodedAudioPlayer_Impl(_BlipValue):
+    """Categories: ['Audio', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DecodedFrame(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DefaultEngineSettings(EngineSettings):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -10511,6 +10827,7 @@ class DefaultEngineSettings(EngineSettings):
         ...
 
 class DefaultEngineSettingsResource(EngineSettingsResource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DefaultEngineSettingsResource'
@@ -10528,6 +10845,7 @@ class DefaultEngineSettingsResource(EngineSettingsResource):
         ...
 
 class DeferredRenderer(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -10618,6 +10936,7 @@ class DeferredRenderer(_BlipValue):
         ...
 
 class DeferredRendererItem(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -10679,6 +10998,7 @@ class DeferredRendererItem(_BlipValue):
         ...
 
 class DeformCircularMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -10686,6 +11006,7 @@ class DeformCircularMaterial(DxMaterial):
         ...
 
 class DeformStack(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStack'
@@ -10733,6 +11054,7 @@ class DeformStack(Resource):
         ...
 
 class DeformStackItem(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStackItem'
@@ -10773,6 +11095,7 @@ class DeformStackItem(Resource):
         ...
 
 class DeformStackItem_Circular(DeformStackItem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStackItem_Circular'
@@ -10800,6 +11123,7 @@ class DeformStackItem_Circular(DeformStackItem):
         ...
 
 class DeformStackItem_Lens(DeformStackItem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStackItem_Lens'
@@ -10813,6 +11137,7 @@ class DeformStackItem_Lens(DeformStackItem):
         ...
 
 class DeformStackItem_Mesh(DeformStackItem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStackItem_Mesh'
@@ -10832,6 +11157,7 @@ class DeformStackItem_Mesh(DeformStackItem):
         ...
 
 class DeformStackItem_MeshProject(DeformStackItem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStackItem_MeshProject'
@@ -10860,6 +11186,7 @@ class DeformStackItem_MeshProject(DeformStackItem):
         ...
 
 class DeformStackItem_PatchGroup(DeformStackItem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStackItem_PatchGroup'
@@ -10900,6 +11227,7 @@ class DeformStackItem_PatchGroup(DeformStackItem):
         ...
 
 class DeformStackItem_PufferSphere(DeformStackItem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStackItem_PufferSphere'
@@ -10913,6 +11241,7 @@ class DeformStackItem_PufferSphere(DeformStackItem):
         ...
 
 class DeformStackItem_Reference(DeformStackItem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeformStackItem_Reference'
@@ -10926,6 +11255,7 @@ class DeformStackItem_Reference(DeformStackItem):
         ...
 
 class DeformationSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -10997,14 +11327,17 @@ class DeformationSettings(_BlipValue):
         ...
 
 class DeleteTask(Task):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DeltaIn(BufferedVideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DeltaMesh(Mesh):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeltaMesh'
@@ -11043,6 +11376,7 @@ class DeltaMesh(Mesh):
         ...
 
 class DeltaSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11050,10 +11384,12 @@ class DeltaSystem(Subsystem):
         ...
 
 class DeltaThread(VideoInThread):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DeprecatedAttribute(DeprecatedAttributeBase):
+    """Categories: ['Reflection', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11066,20 +11402,24 @@ class DeprecatedAttribute(DeprecatedAttributeBase):
         ...
 
 class DeprecatedAttributeBase(ReflectionAttributeT):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DerogatedAttribute(ReflectionAttributeT):
+    """Categories: ['Reflection', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
     attrType: Final = 'Derogated'
 
 class DetailedException(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Device(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Device'
@@ -11109,6 +11449,7 @@ class Device(Resource):
         ...
 
 class DeviceManager(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeviceManager'
@@ -11131,11 +11472,13 @@ class DeviceManager(Resource):
         ...
 
 class DeviceMap(Resource):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeviceMap'
 
     class Mapping(_BlipValue):
+        """Category: Audio"""
         null: Self
         _classInfo: 'ClassInfo'
     
@@ -11197,6 +11540,7 @@ class DeviceMap(Resource):
         ...
 
 class DeviceMapping(Resource):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DeviceMapping'
@@ -11229,6 +11573,7 @@ class DeviceMapping(Resource):
         ...
 
 class DfxFile(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NotchFile'
@@ -11242,6 +11587,7 @@ class DfxFile(Resource):
         ...
 
 class DfxLicenseData(_BlipValue):
+    """Categories: ['Internal', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11281,6 +11627,7 @@ class DfxLicenseData(_BlipValue):
         ...
 
 class DfxSystem(Subsystem):
+    """Categories: ['Internal', 'Modules', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11294,6 +11641,7 @@ class DfxSystem(Subsystem):
         ...
 
 class DimmableScreen(Screen2):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DimmableScreen'
@@ -11302,6 +11650,7 @@ class DimmableScreen(Screen2):
         ...
 
 class DirectProjection(Projection):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Direct'
@@ -11310,10 +11659,12 @@ class DirectProjection(Projection):
         ...
 
 class Discovery(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DiskMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DiskMonitor'
@@ -11322,6 +11673,7 @@ class DiskMonitor(MetricMonitor):
         ...
 
 class Display(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Display'
@@ -11579,6 +11931,7 @@ class Display(Object):
         ...
 
 class DisplayAdapter(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11591,6 +11944,7 @@ class DisplayAdapter(_BlipValue):
         ...
 
 class DisplayAdapterList(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11609,6 +11963,7 @@ class DisplayAdapterList(_BlipValue):
         ...
 
 class DisplayAdapterOutput(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11625,6 +11980,7 @@ class DisplayAdapterOutput(_BlipValue):
         ...
 
 class DisplayBlobSettings(_BlipValue):
+    """Categories: ['Calibration', 'Feed']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11656,9 +12012,21 @@ class DisplayBlobSettings(_BlipValue):
         ...
 
 class DisplayImageSourceMapping(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DisplayImageSourceMapping'
+
+    @property
+    def acesTransform(self) -> AcesInputTransformParameters:
+        """ACES Input Transform (IDT)
+           
+           UserName: Input transform"""
+        ...
+
+    @acesTransform.setter
+    def acesTransform(self, value: AcesInputTransformParameters) -> None:
+        ...
 
     @property
     def display(self) -> Display:
@@ -11670,6 +12038,9 @@ class DisplayImageSourceMapping(Resource):
 
     @property
     def imageSourceDirectory(self) -> str:
+        """The folder containing the source images to be displayed
+           
+           UserName: Image source directory"""
         ...
 
     @imageSourceDirectory.setter
@@ -11684,10 +12055,22 @@ class DisplayImageSourceMapping(Resource):
     def isTargetDisplay(self, value: bool) -> None:
         ...
 
+    @property
+    def ocioTransform(self) -> OcioColourSpace:
+        """OCIO Input Transform (IDT)
+           
+           UserName: Input transform"""
+        ...
+
+    @ocioTransform.setter
+    def ocioTransform(self, value: OcioColourSpace) -> None:
+        ...
+
     def __init__(self) -> None:
         ...
 
 class DisplayIndirection(ForwardingDisplay):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DisplayIndirection'
@@ -11708,6 +12091,7 @@ class DisplayIndirection(ForwardingDisplay):
         ...
 
 class DisplayList(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11767,6 +12151,7 @@ class DisplayList(_BlipValue):
         ...
 
 class DisplayListWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DisplayListWidget'
@@ -11789,10 +12174,12 @@ class DisplayListWidget(Widget):
         ...
 
 class DisplayManagement_Client(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DisplayManagerSubsystem(Subsystem):
+    """Categories: ['Feed', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11813,6 +12200,7 @@ class DisplayManagerSubsystem(Subsystem):
         ...
 
 class DisplayMode(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11898,6 +12286,7 @@ class DisplayMode(_BlipValue):
         ...
 
 class DisplayOutputVFC(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11926,6 +12315,7 @@ class DisplayOutputVFC(_BlipValue):
         ...
 
 class DisplayTarget(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -11962,6 +12352,7 @@ class DisplayTarget(_BlipValue):
         ...
 
 class DisplayValueBox(ValueBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DisplayValueBox'
@@ -11970,10 +12361,12 @@ class DisplayValueBox(ValueBox):
         ...
 
 class DistributeTask(Task):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Dmx(Subsystem):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -12004,6 +12397,7 @@ class Dmx(Subsystem):
         ...
 
 class DmxAssignRule(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxAssignRule'
@@ -12049,6 +12443,7 @@ class DmxAssignRule(Resource):
         ...
 
 class DmxAssigner(FixtureAssigner):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxAssigner'
@@ -12065,6 +12460,7 @@ class DmxAssigner(FixtureAssigner):
         ...
 
 class DmxBank(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxBank'
@@ -12110,6 +12506,7 @@ class DmxBank(Resource):
         ...
 
 class DmxBankSlot(_BlipValue):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -12133,7 +12530,8 @@ class DmxBankSlot(_BlipValue):
         ...
 
 class DmxCommand(Resource):
-    """A command sent to a DMX fixture to get it to do things (eg turn off, reset, etc)"""
+    """A command sent to a DMX fixture to get it to do things (eg turn off, reset, etc)
+Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxCommand'
@@ -12209,6 +12607,7 @@ class DmxCommand(Resource):
         ...
 
 class DmxControlModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxLightsControlModule'
@@ -12361,6 +12760,7 @@ class DmxControlModule(Module):
         ...
 
 class DmxDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxDevice'
@@ -12511,6 +12911,7 @@ class DmxDevice(Device):
         ...
 
 class DmxDisplay(DownloadableDisplay):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxDisplay'
@@ -12519,6 +12920,7 @@ class DmxDisplay(DownloadableDisplay):
         ...
 
 class DmxDriver(FixtureDriver):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxDriver'
@@ -12585,6 +12987,7 @@ class DmxDriver(FixtureDriver):
         ...
 
 class DmxDriverInfo(FixtureDriverInfo):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxDriverInfo'
@@ -12611,11 +13014,13 @@ class DmxDriverInfo(FixtureDriverInfo):
         ...
 
 class DmxDriverSpecificOptions(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxDriverSpecificOptions'
 
 class DmxDummyPersonality(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxDummyPersonality'
@@ -12624,33 +13029,22 @@ class DmxDummyPersonality(Resource):
         ...
 
 class DmxIndirectionController(IndirectionController):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxIndirectionController'
 
     @property
-    def iChannel(self) -> int:
-        """DMX channel of the 8-bit bank/8-bit slot (1-based)
-           
-           UserName: Channel"""
+    def patch(self) -> DmxPatch:
+        """The patch containing the universe and channel which controls this indirection"""
         ...
 
-    @iChannel.setter
-    def iChannel(self, value: int) -> None:
-        ...
-
-    @property
-    def universe(self) -> int:
-        """DMX universe of the 8-bit bank/8-bit slot (1-based)
-           
-           UserName: Universe"""
-        ...
-
-    @universe.setter
-    def universe(self, value: int) -> None:
+    @patch.setter
+    def patch(self, value: DmxPatch) -> None:
         ...
 
 class DmxLibrary(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxLibrary'
@@ -12700,6 +13094,7 @@ class DmxLibrary(Resource):
         ...
 
 class DmxMachineControl(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxMachineControl'
@@ -12738,6 +13133,7 @@ class DmxMachineControl(Device):
         ...
 
 class DmxObjectSet(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxObjectSet'
@@ -12792,6 +13188,7 @@ class DmxObjectSet(Resource):
         ...
 
 class DmxPatch(ControlPatch):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxPatch'
@@ -12853,6 +13250,7 @@ class DmxPatch(ControlPatch):
         ...
 
 class DmxPatchSet(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxPatchSet'
@@ -12869,6 +13267,7 @@ class DmxPatchSet(Resource):
         ...
 
 class DmxProjectorControlDevice(ProjectorControlDevice):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxProjectorControlDevice'
@@ -13137,6 +13536,7 @@ class DmxProjectorControlDevice(ProjectorControlDevice):
         ...
 
 class DmxScreen(DmxDisplay):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxScreen'
@@ -13346,6 +13746,7 @@ class DmxScreen(DmxDisplay):
         ...
 
 class DmxScreenPositionDriver(ScreenPositionDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxScreenPositionDriver'
@@ -13444,6 +13845,7 @@ class DmxScreenPositionDriver(ScreenPositionDriver):
         ...
 
 class DmxShareModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxShareModule'
@@ -13472,6 +13874,7 @@ class DmxShareModule(Module):
         ...
 
 class DmxString(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxString'
@@ -13572,6 +13975,7 @@ class DmxString(Resource):
         ...
 
 class DmxTransport(Transport):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxTransport'
@@ -13701,6 +14105,7 @@ class DmxTransport(Transport):
         ...
 
 class DmxTransport2(Transport):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxTransport2'
@@ -13917,6 +14322,7 @@ class DmxTransport2(Transport):
         ...
 
 class DmxWaterFountain(WaterScreen):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxWaterFountain'
@@ -13925,6 +14331,7 @@ class DmxWaterFountain(WaterScreen):
         ...
 
 class DmxWaterJetReceiverModule(Module):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxWaterJetReceiverModule'
@@ -13933,6 +14340,7 @@ class DmxWaterJetReceiverModule(Module):
         ...
 
 class DmxWaterScreen(Screen2):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxWaterScreen'
@@ -13941,6 +14349,7 @@ class DmxWaterScreen(Screen2):
         ...
 
 class DmxWaterScreenReceiverModule(Module):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxWaterScreenReceiverModule'
@@ -13949,6 +14358,7 @@ class DmxWaterScreenReceiverModule(Module):
         ...
 
 class DocStringAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -13961,14 +14371,17 @@ class DocStringAttribute(ReflectionAttributeT):
         ...
 
 class Domain(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DomainConnection(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DomainManager(Subsystem):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -13982,10 +14395,12 @@ class DomainManager(Subsystem):
         ...
 
 class DownloadTask(Task):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DownloadableDisplay(Display):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DownloadableDisplay'
@@ -13994,10 +14409,12 @@ class DownloadableDisplay(Display):
         ...
 
 class DriverRegistry(_BlipValue):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DumpVmapApp(App):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DumpVmapApp'
@@ -14006,14 +14423,17 @@ class DumpVmapApp(App):
         ...
 
 class DxAdapterGroupDevice(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DxDevice(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class DxHistogram(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14064,6 +14484,7 @@ class DxHistogram(_BlipValue):
         ...
 
 class DxMaterial(_BlipValue):
+    """Category: Renderer"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14190,6 +14611,7 @@ class DxMaterial(_BlipValue):
         ...
 
 class DxRenderer(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14306,6 +14728,7 @@ class DxRenderer(_BlipValue):
         ...
 
 class DxResourceMgr(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14318,10 +14741,12 @@ class DxResourceMgr(_BlipValue):
         ...
 
 class DxShader(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
     class Param(_BlipValue):
+        """Categories: ['Internal', 'Renderer']"""
         null: Self
         _classInfo: 'ClassInfo'
     
@@ -14395,6 +14820,7 @@ class DxShader(_BlipValue):
         ...
 
 class DxSlugTriList(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14402,6 +14828,7 @@ class DxSlugTriList(_BlipValue):
         ...
 
 class DxSlugVert(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14449,6 +14876,7 @@ class DxSlugVert(_BlipValue):
         ...
 
 class DxTargetRestorer(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14461,6 +14889,7 @@ class DxTargetRestorer(_BlipValue):
         ...
 
 class DxTexture(Resource):
+    """Category: Renderer"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Texture'
@@ -14558,6 +14987,7 @@ class DxTexture(Resource):
         ...
 
 class DxTextureHistogram(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14585,6 +15015,7 @@ class DxTextureHistogram(_BlipValue):
         ...
 
 class DxTriStrip(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14592,6 +15023,7 @@ class DxTriStrip(_BlipValue):
         ...
 
 class DxVectorscope(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14614,6 +15046,7 @@ class DxVectorscope(_BlipValue):
         ...
 
 class DxVert(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14674,6 +15107,7 @@ class DxVert(_BlipValue):
         ...
 
 class DxWaveform(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14718,6 +15152,7 @@ class DxWaveform(_BlipValue):
         ...
 
 class EdgeFilterModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EdgeFilterModule'
@@ -14744,6 +15179,7 @@ class EdgeFilterModule(ProjectionAwareModule):
         ...
 
 class EditManipulator(Manipulator):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14759,6 +15195,7 @@ class EditManipulator(Manipulator):
         ...
 
 class Editor(cEditor):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Editor'
@@ -14795,10 +15232,12 @@ class Editor(cEditor):
         ...
 
 class ElementChangedArgs(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class EmberPlusMatrix(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MediorNetMatrix'
@@ -14825,6 +15264,7 @@ class EmberPlusMatrix(DVIMatrix):
         ...
 
 class EngineDefinition(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14834,6 +15274,7 @@ class EngineDefinition(_BlipValue):
         ...
 
 class EngineSettings(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14855,6 +15296,7 @@ class EngineSettings(_BlipValue):
         ...
 
 class EngineSettingsResource(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EngineSettingsResource'
@@ -14863,6 +15305,7 @@ class EngineSettingsResource(Resource):
         ...
 
 class Event(SyncObject):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -14876,6 +15319,7 @@ class Event(SyncObject):
         ...
 
 class EventTransport(Resource):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EventTransport'
@@ -14904,6 +15348,7 @@ class EventTransport(Resource):
         ...
 
 class EventTransportDmx(EventTransport):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EventTransportDmx'
@@ -14927,6 +15372,7 @@ class EventTransportDmx(EventTransport):
         ...
 
 class EventTransportInputMap(EventTransport):
+    """Categories: ['GUI', 'Internal', 'Transports']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EventTransportInputMap'
@@ -15024,6 +15470,7 @@ class EventTransportInputMap(EventTransport):
         ...
 
 class EventTransportMidiController(EventTransport):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EventTransportMidiController'
@@ -15130,6 +15577,7 @@ class EventTransportMidiController(EventTransport):
         ...
 
 class EventTransportMidiNote(EventTransport):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EventTransportMidiNote'
@@ -15359,6 +15807,7 @@ class EventTransportMidiNote(EventTransport):
         ...
 
 class EventTransportMsc(EventTransport):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EventTransportMsc'
@@ -15402,6 +15851,7 @@ class EventTransportMsc(EventTransport):
         ...
 
 class EventTransportOSC(EventTransport):
+    """Categories: ['Devices', 'Transports']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EventTransportOSC'
@@ -15653,6 +16103,7 @@ class EventTransportOSC(EventTransport):
         ...
 
 class EventTransportTrackWidget(EventTransport):
+    """Categories: ['GUI', 'Internal', 'Transports']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EventTransportTrackWidget'
@@ -15685,54 +16136,67 @@ class EventTransportTrackWidget(EventTransport):
         ...
 
 class ExArrayBounds(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExBadClass(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExBadResource(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExInFileFormatError(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExMapRead(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExNoSuchClass(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExNodeNotFound(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExResourceDelete(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExSystem(DetailedException):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExTimeOut(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExUidCollision(Exception):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Exception(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExceptionLog(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -15750,6 +16214,7 @@ class ExceptionLog(_BlipValue):
         ...
 
 class ExceptionMessage(_BlipValue):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -15768,6 +16233,7 @@ class ExceptionMessage(_BlipValue):
         ...
 
 class ExifData(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -15776,6 +16242,7 @@ class ExifData(_BlipValue):
         ...
 
 class ExportConfig(Resource):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ExportConfig'
@@ -15883,10 +16350,12 @@ class ExportConfig(Resource):
         ...
 
 class ExportOptions(_BlipValue):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ExportOptionsResource(Resource):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ExportOptionsResource'
@@ -15899,6 +16368,7 @@ class ExportOptionsResource(Resource):
         ...
 
 class ExporterStatus(_BlipValue):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -15923,6 +16393,7 @@ class ExporterStatus(_BlipValue):
         ...
 
 class Expression(Resource):
+    """Category: Expressions"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Expression'
@@ -15972,6 +16443,7 @@ class Expression(Resource):
         ...
 
 class ExpressionVariable(_BlipValue):
+    """Category: Expressions"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -16044,6 +16516,7 @@ class ExpressionVariable(_BlipValue):
         ...
 
 class ExpressionVariablesContainer(_BlipValue):
+    """Category: Expressions"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -16057,6 +16530,7 @@ class ExpressionVariablesContainer(_BlipValue):
         ...
 
 class ExpressionVariablesDevice(Device):
+    """Categories: ['Devices', 'Expressions']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ExpressionVariablesDevice'
@@ -16073,6 +16547,7 @@ class ExpressionVariablesDevice(Device):
         ...
 
 class ExpressionVariablesModule(Module):
+    """Categories: ['Expressions', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ExpressionVariablesModule'
@@ -16094,6 +16569,7 @@ class ExpressionVariablesModule(Module):
         ...
 
 class ExpressionVariablesModuleConfig(ModuleConfig):
+    """Categories: ['Modules', 'Expressions']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ExpressionVariablesModuleConfig'
@@ -16111,6 +16587,7 @@ class ExpressionVariablesModuleConfig(ModuleConfig):
         ...
 
 class ExtendedTaskStatus(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -16147,6 +16624,7 @@ class ExtendedTaskStatus(_BlipValue):
         ...
 
 class EzDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'EzDriver'
@@ -16166,6 +16644,7 @@ class EzDriver(UdpReceiverDriver):
         ...
 
 class FSDuplicateMultiple(Resource):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FSDuplicateMultiple'
@@ -16201,6 +16680,7 @@ class FSDuplicateMultiple(Resource):
         ...
 
 class FadeModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FadeModule'
@@ -16401,10 +16881,12 @@ class FadeModule(Module):
         ...
 
 class FailoverData(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class FastCaptureProcess(VideoInCaptureProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FastCaptureProcess'
@@ -16427,6 +16909,7 @@ class FastCaptureProcess(VideoInCaptureProcess):
         ...
 
 class FastCaptureTestProcess(FastCaptureProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FastCaptureTestProcess'
@@ -16441,6 +16924,7 @@ class FastCaptureTestProcess(FastCaptureProcess):
         ...
 
 class FastColourCaptureTestProcess(FastCaptureTestProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FastColourCaptureTestProcess'
@@ -16458,6 +16942,7 @@ class FastColourCaptureTestProcess(FastCaptureTestProcess):
         ...
 
 class FastMaskCreationProcess(FastCaptureTestProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FastMaskCreationProcess'
@@ -16466,11 +16951,13 @@ class FastMaskCreationProcess(FastCaptureTestProcess):
         ...
 
 class FastSpatialCaptureTestProcess(FastCaptureTestProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FastSpatialCaptureTestProcess'
 
 class Feed(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Feed'
@@ -16503,10 +16990,12 @@ class Feed(Resource):
         ...
 
 class FeedChangeDetector(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class FeedDisplayRenderHelper(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -16517,6 +17006,7 @@ class FeedDisplayRenderHelper(_BlipValue):
         ...
 
 class FeedHeadConfig(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FeedHeadConfig'
@@ -16594,6 +17084,7 @@ class FeedHeadConfig(Resource):
         ...
 
 class FeedProjection(Projection):
+    """Categories: ['Feed', 'Mappings']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Feed'
@@ -16610,6 +17101,7 @@ class FeedProjection(Projection):
         ...
 
 class FeedProjectionObject(ProjectionObject):
+    """Categories: ['Feed', 'Mappings']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FeedProjectionObject'
@@ -16618,6 +17110,7 @@ class FeedProjectionObject(ProjectionObject):
         ...
 
 class FeedRect(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FeedRect'
@@ -16762,6 +17255,7 @@ class FeedRect(Resource):
         ...
 
 class FeedScene(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Feed'
@@ -16838,10 +17332,12 @@ class FeedScene(Resource):
         ...
 
 class FeedSceneEventLogger(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class FeedSceneRenderHelper(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -16859,6 +17355,7 @@ class FeedSceneRenderHelper(_BlipValue):
         ...
 
 class FeedSceneVisualiser(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FeedSceneVisualiser'
@@ -17008,6 +17505,7 @@ class FeedSceneVisualiser(Widget):
         ...
 
 class FeedViewSettings(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -17028,6 +17526,7 @@ class FeedViewSettings(_BlipValue):
         ...
 
 class Field(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Field'
@@ -17099,6 +17598,7 @@ class Field(Widget):
         ...
 
 class FieldAccessor(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -17107,6 +17607,7 @@ class FieldAccessor(_BlipValue):
         ...
 
 class FieldEditorAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -17139,6 +17640,7 @@ class FieldEditorAttribute(ReflectionAttributeT):
         ...
 
 class FieldInfo(ReflectionAttributeContainer):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -17166,6 +17668,7 @@ class FieldInfo(ReflectionAttributeContainer):
         ...
 
 class FieldProperty(ValueBoxProperty):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -17182,6 +17685,7 @@ class FieldProperty(ValueBoxProperty):
         ...
 
 class FieldSequence(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FieldSequence'
@@ -17290,6 +17794,7 @@ class FieldSequence(Resource):
         ...
 
 class FifoDataSeries(Resource):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FifoDataSeries'
@@ -17327,14 +17832,17 @@ class FifoDataSeries(Resource):
         ...
 
 class File(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class FileEndpoint(ConsoleEndpoint):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class FileSys(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -17348,10 +17856,12 @@ class FileSys(_BlipValue):
     unescapePath: Callable
 
 class FileSystemWatcher(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class FilesystemDateStamp(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -17408,6 +17918,7 @@ class FilesystemDateStamp(_BlipValue):
         ...
 
 class FilmicGrainModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FilmicGrainModule'
@@ -17442,7 +17953,84 @@ class FilmicGrainModule(ProjectionAwareModule):
     def __init__(self) -> None:
         ...
 
+class FisheyeProjection(Projection):
+    """Category: Mappings"""
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'Fisheye'
+
+    Content2D: Final = 0
+    Content3D: Final = 1
+
+    @property
+    def allowContentOutside(self) -> int:
+        """Allow content outside the fisheye circle. When Field of view < 180 degrees, allows filling content into a larger portion of the canvas.
+           
+           UserName: Content outside circle"""
+        ...
+
+    @allowContentOutside.setter
+    def allowContentOutside(self, value: int) -> None:
+        ...
+
+    @property
+    def contentMode(self) -> int:
+        """For realtime rendered content, the mapping can provide camera parameters in 3D mode. The engine must supply correctly distorted fisheye results.
+           
+           Options: {0: '2D', 1: '3D'}
+           UserName: Content mode"""
+        ...
+
+    @contentMode.setter
+    def contentMode(self, value: int) -> None:
+        ...
+
+    @property
+    def fisheyeType(self) -> int:
+        """Type of fisheye projection mapping. Equidistant is the most common type, also known as 'tru-theta' or 'f-theta'.
+           
+           Options: {0: 'Equidistant', 1: 'Equisolid', 2: 'Orthographic', 3: 'Stereographic'}
+           UserName: Fisheye type"""
+        ...
+
+    @fisheyeType.setter
+    def fisheyeType(self, value: int) -> None:
+        ...
+
+    @property
+    def fov(self) -> float:
+        """The field of view of the projection, in degrees
+           
+           UserName: Field of view"""
+        ...
+
+    @fov.setter
+    def fov(self, value: float) -> None:
+        ...
+
+    @property
+    def pixelBorder(self) -> int:
+        """UV islands on screens are expanded by this many pixels to cover edge sampling artifacts such as black fringing.
+           Note that there must be an equivalent amount of empty space in the screen UV map to take advantage of this.
+           
+           UserName: Border expansion"""
+        ...
+
+    @pixelBorder.setter
+    def pixelBorder(self, value: int) -> None:
+        ...
+
+class FisheyeProjectionObject(ProjectionObject):
+    """Category: Mappings"""
+    null: Self
+    _classInfo: 'ClassInfo'
+    __username__ = 'FisheyeProjectionObject'
+
+    def __init__(self) -> None:
+        ...
+
 class Fixture(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Fixture'
@@ -17639,6 +18227,7 @@ class Fixture(Resource):
         ...
 
 class FixtureAssigner(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FixtureAssigner'
@@ -17650,6 +18239,7 @@ class FixtureAssigner(Resource):
         ...
 
 class FixtureDriver(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FixtureDriver'
@@ -17667,6 +18257,7 @@ class FixtureDriver(Resource):
         ...
 
 class FixtureDriverInfo(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FixtureDriverInfo'
@@ -17675,6 +18266,7 @@ class FixtureDriverInfo(Resource):
         ...
 
 class FixtureGroup(DmxDisplay):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxLights'
@@ -17845,6 +18437,7 @@ class FixtureGroup(DmxDisplay):
         ...
 
 class FixtureInstance(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FixtureInstance'
@@ -17890,6 +18483,7 @@ class FixtureInstance(Object):
         ...
 
 class FixtureLine(FixtureGroup):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxLine'
@@ -17911,6 +18505,7 @@ class FixtureLine(FixtureGroup):
         ...
 
 class FixtureRotation(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FixtureTransform'
@@ -17937,6 +18532,7 @@ class FixtureRotation(Resource):
         ...
 
 class FixtureTarget(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FixtureTarget'
@@ -17980,6 +18576,7 @@ class FixtureTarget(Resource):
         ...
 
 class FixtureTargetObject(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FixtureTargetObject'
@@ -17988,6 +18585,7 @@ class FixtureTargetObject(Object):
         ...
 
 class FloatSequence(KeySequence):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FloatSequence'
@@ -17996,10 +18594,12 @@ class FloatSequence(KeySequence):
         ...
 
 class FolderWatcher(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class FolderWatcherNotification(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18012,6 +18612,7 @@ class FolderWatcherNotification(_BlipValue):
         ...
 
 class FolderWatcherSystem(Subsystem):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18025,6 +18626,7 @@ class FolderWatcherSystem(Subsystem):
         ...
 
 class FolsomMatrixPro16x16(BarcoMatrixPro):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FolsomMatrixPro16x16'
@@ -18033,6 +18635,7 @@ class FolsomMatrixPro16x16(BarcoMatrixPro):
         ...
 
 class ForwardingDisplay(Display):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ForwardingDisplay'
@@ -18046,6 +18649,7 @@ class ForwardingDisplay(Display):
         ...
 
 class FpClearMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18053,6 +18657,7 @@ class FpClearMaterial(DxMaterial):
         ...
 
 class FrameFragment(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18089,6 +18694,7 @@ class FrameFragment(_BlipValue):
         ...
 
 class FrameFragmentCluster(RenderStreamCluster):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FrameFragmentCluster'
@@ -18106,10 +18712,12 @@ class FrameFragmentCluster(RenderStreamCluster):
         ...
 
 class FrameRateFraction(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class FreeDDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'FreeDDriver'
@@ -18129,6 +18737,7 @@ class FreeDDriver(UdpReceiverDriver):
         ...
 
 class FsrMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18136,6 +18745,7 @@ class FsrMaterial(DxMaterial):
         ...
 
 class FuzzySearchValues(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18157,6 +18767,7 @@ class FuzzySearchValues(_BlipValue):
         ...
 
 class FxaaMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18164,6 +18775,7 @@ class FxaaMaterial(DxMaterial):
         ...
 
 class GPUMemoryMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GPUMemoryMonitor'
@@ -18172,6 +18784,7 @@ class GPUMemoryMonitor(MetricMonitor):
         ...
 
 class GPUProfilerMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GPUProfilerMonitor'
@@ -18180,6 +18793,7 @@ class GPUProfilerMonitor(MetricMonitor):
         ...
 
 class GPUSubsystem(Subsystem):
+    """Categories: ['Internal', 'Renderer', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18193,6 +18807,7 @@ class GPUSubsystem(Subsystem):
         ...
 
 class GVGMatrix(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GVGMatrix'
@@ -18232,6 +18847,7 @@ class GVGMatrix(DVIMatrix):
         ...
 
 class GamutWalkProcess(FastCaptureProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GamutWalkProcess'
@@ -18305,6 +18921,7 @@ class GamutWalkProcess(FastCaptureProcess):
         ...
 
 class GefenMatrix(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GefenMatrix'
@@ -18331,6 +18948,7 @@ class GefenMatrix(DVIMatrix):
         ...
 
 class GeneratedCameraTrackingSource(CameraTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GeneratedCameraTrackingSource'
@@ -18339,6 +18957,7 @@ class GeneratedCameraTrackingSource(CameraTrackingSource):
         ...
 
 class GeneratedObjectTrackingSource(ObjectTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GeneratedObjectTrackingSource'
@@ -18347,6 +18966,7 @@ class GeneratedObjectTrackingSource(ObjectTrackingSource):
         ...
 
 class GeneratedSkeletalTrackingSource(SkeletalTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GeneratedSkeletalTrackingSource'
@@ -18355,6 +18975,7 @@ class GeneratedSkeletalTrackingSource(SkeletalTrackingSource):
         ...
 
 class GenericCommand(Resource):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GenericCommand'
@@ -18395,6 +19016,7 @@ class GenericCommand(Resource):
         ...
 
 class GenericLampDriver(DmxDriver):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GenericLampDriver'
@@ -18451,6 +19073,7 @@ class GenericLampDriver(DmxDriver):
         ...
 
 class GenericLampInfo(DmxDriverInfo):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GenericLampInfo'
@@ -18492,10 +19115,12 @@ class GenericLampInfo(DmxDriverInfo):
         ...
 
 class Gizmo(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Gizmo3D(Gizmo):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18503,6 +19128,7 @@ class Gizmo3D(Gizmo):
         ...
 
 class GltfExportOptions(ExportOptions):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18536,6 +19162,7 @@ class GltfExportOptions(ExportOptions):
         ...
 
 class GltfExportOptionsResource(ExportOptionsResource):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GltfExportOptionsResource'
@@ -18550,6 +19177,7 @@ class GltfExportOptionsResource(ExportOptionsResource):
         ...
 
 class GpGpuSystem(Subsystem):
+    """Categories: ['Internal', 'Renderer', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18557,6 +19185,7 @@ class GpGpuSystem(Subsystem):
         ...
 
 class GradientModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GradientModule'
@@ -18681,6 +19310,7 @@ class GradientModule(Module):
         ...
 
 class GradientTexture(ProceduralTexture):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GradientTexture'
@@ -18756,6 +19386,7 @@ class GradientTexture(ProceduralTexture):
         ...
 
 class Graph(GraphWidget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Graph'
@@ -18767,6 +19398,7 @@ class Graph(GraphWidget):
         ...
 
 class GraphDescriptor(Resource):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GraphDescriptor'
@@ -18844,6 +19476,7 @@ class GraphDescriptor(Resource):
         ...
 
 class GraphThreshold(Resource):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GraphThreshold'
@@ -18873,6 +19506,7 @@ class GraphThreshold(Resource):
         ...
 
 class GraphWidget(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GraphWidget'
@@ -18912,6 +19546,7 @@ class GraphWidget(Widget):
         ...
 
 class GreenScreen(Prop):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GreenScreen'
@@ -18920,6 +19555,7 @@ class GreenScreen(Prop):
         ...
 
 class GridAlignmentErrorData(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -18972,6 +19608,7 @@ class GridAlignmentErrorData(_BlipValue):
         ...
 
 class GroupLayer(SuperLayer):
+    """Categories: ['Sockpuppet', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GroupLayer'
@@ -19024,6 +19661,7 @@ class GroupLayer(SuperLayer):
         ...
 
 class GroupScrollList(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GroupScrollList'
@@ -19032,6 +19670,7 @@ class GroupScrollList(Widget):
         ...
 
 class GrpcReceiverDriver(ScreenPositionDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'GrpcReceiverDriver'
@@ -19060,6 +19699,7 @@ class GrpcReceiverDriver(ScreenPositionDriver):
         ...
 
 class GrpcServer(Subsystem):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19067,6 +19707,7 @@ class GrpcServer(Subsystem):
         ...
 
 class Gui(Resource):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Gui'
@@ -19141,6 +19782,7 @@ class Gui(Resource):
         ...
 
 class GuiResourceManager(Subsystem):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19244,6 +19886,7 @@ class GuiResourceManager(Subsystem):
         ...
 
 class GuiSystem(Subsystem):
+    """Categories: ['GUI', 'Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19601,6 +20244,7 @@ class GuiSystem(Subsystem):
         ...
 
 class HDRColour(float4):
+    """Categories: ['Colour', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19652,6 +20296,7 @@ class HDRColour(float4):
         ...
 
 class HTTPPatch(ControlPatch):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HTTPPatch'
@@ -19660,6 +20305,7 @@ class HTTPPatch(ControlPatch):
         ...
 
 class HTTPSockpuppetSystem(Subsystem):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19667,6 +20313,7 @@ class HTTPSockpuppetSystem(Subsystem):
         ...
 
 class HTTPSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19674,6 +20321,7 @@ class HTTPSystem(Subsystem):
         ...
 
 class HardwareIdentifier(Resource):
+    """Categories: ['D3Net', 'Video Input', 'Devices']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HardwareIdentifier'
@@ -19706,6 +20354,7 @@ class HardwareIdentifier(Resource):
         ...
 
 class HardwareVideoInIdentifier(HardwareIdentifier):
+    """Categories: ['D3Net', 'Devices', 'Video Input']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HardwareVideoInIdentifier'
@@ -19729,6 +20378,7 @@ class HardwareVideoInIdentifier(HardwareIdentifier):
         ...
 
 class HeadConfig(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HeadConfig'
@@ -19737,6 +20387,7 @@ class HeadConfig(Resource):
         ...
 
 class HeadInfo(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19784,6 +20435,7 @@ class HeadInfo(_BlipValue):
         ...
 
 class HelpSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19800,6 +20452,7 @@ class HelpSystem(Subsystem):
         ...
 
 class HistogramComputeMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19807,10 +20460,12 @@ class HistogramComputeMaterial(DxMaterial):
         ...
 
 class HmcAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class HmcDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HmcDriver'
@@ -19819,6 +20474,7 @@ class HmcDriver(UdpReceiverDriver):
         ...
 
 class HoldOutputSystem(Subsystem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19830,6 +20486,7 @@ class HoldOutputSystem(Subsystem):
         ...
 
 class HorizScrollBar2(ScrollBar):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HorizScrollBar2'
@@ -19843,6 +20500,7 @@ class HorizScrollBar2(ScrollBar):
         ...
 
 class HttpControlHeader(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HttpControlHeader'
@@ -19869,6 +20527,7 @@ class HttpControlHeader(Resource):
         ...
 
 class HttpControlModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HttpControlModule'
@@ -19896,6 +20555,7 @@ class HttpControlModule(Module):
         ...
 
 class HttpControlRequest(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'HttpControlRequest'
@@ -19941,10 +20601,12 @@ class HttpControlRequest(Resource):
         ...
 
 class IComms(ConsoleExternalMutexProvider):
+    """Categories: ['App', 'D3Net', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class IDataState(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -19973,6 +20635,7 @@ class IDataState(_BlipValue):
         ...
 
 class IFilesystem(_BlipValue):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20024,10 +20687,12 @@ class IFilesystem(_BlipValue):
         ...
 
 class IMessageHandler(_BlipValue):
+    """Categories: ['Reflection', 'Message', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class IPAddress(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20061,6 +20726,7 @@ class IPAddress(_BlipValue):
         ...
 
 class IPAddressBox(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'IPAddressBox'
@@ -20075,6 +20741,7 @@ class IPAddressBox(ValueBox):
         ...
 
 class IPEndpoint(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20103,6 +20770,7 @@ class IPEndpoint(_BlipValue):
         ...
 
 class IPEndpointBox(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'IPEndpointBox'
@@ -20111,6 +20779,7 @@ class IPEndpointBox(ValueBox):
         ...
 
 class IPNetConfig(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20171,6 +20840,7 @@ class IPNetConfig(_BlipValue):
         ...
 
 class IPVideoInSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20185,14 +20855,17 @@ class IPVideoInSystem(Subsystem):
         ...
 
 class ISubsystemManager(_BlipValue):
+    """Category: System"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class IView(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Icon(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Icon'
@@ -20251,10 +20924,12 @@ class Icon(Widget):
         ...
 
 class IdentityDomain(Domain):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class IdentityDomainConnection(DomainConnection):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20262,6 +20937,7 @@ class IdentityDomainConnection(DomainConnection):
         ...
 
 class IgnoreTimecodeModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeModeModule'
@@ -20280,6 +20956,7 @@ class IgnoreTimecodeModule(Module):
         ...
 
 class ImageCaptureProcess(FastCaptureProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ImageCaptureProcess'
@@ -20301,6 +20978,24 @@ class ImageCaptureProcess(FastCaptureProcess):
         ...
 
     @property
+    def nCapturesPerBatch(self) -> int:
+        """Number of captures to run in each batch"""
+        ...
+
+    @nCapturesPerBatch.setter
+    def nCapturesPerBatch(self, value: int) -> None:
+        ...
+
+    @property
+    def nCapturesPerImage(self) -> int:
+        """Number of captures to take for each image"""
+        ...
+
+    @nCapturesPerImage.setter
+    def nCapturesPerImage(self, value: int) -> None:
+        ...
+
+    @property
     def targetDisplays(self) -> List[Display]:
         ...
 
@@ -20308,10 +21003,14 @@ class ImageCaptureProcess(FastCaptureProcess):
     def targetDisplays(self, value: List[Display]) -> None:
         ...
 
+    def addDisplayImageMapping(self, arg0: DisplayImageSourceMapping) -> None:
+        ...
+
     def clearTextureCache(self) -> None:
         ...
 
 class ImageInfo(ResolutionInfo):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20367,6 +21066,7 @@ class ImageInfo(ResolutionInfo):
         ...
 
 class ImageMosaic(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20374,6 +21074,7 @@ class ImageMosaic(_BlipValue):
         ...
 
 class ImagePair(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20400,6 +21101,7 @@ class ImagePair(_BlipValue):
         ...
 
 class ImageSequenceInfo(ImageInfo):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20420,6 +21122,7 @@ class ImageSequenceInfo(ImageInfo):
         ...
 
 class ImportMenu(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ImportMenu'
@@ -20428,10 +21131,12 @@ class ImportMenu(Widget):
         ...
 
 class InDevice(_BlipValue):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Indirection(KeyContainer):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Indirection'
@@ -20464,6 +21169,7 @@ class Indirection(KeyContainer):
         ...
 
 class IndirectionControl(Module):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'IndirectionControl'
@@ -20492,6 +21198,7 @@ class IndirectionControl(Module):
         ...
 
 class IndirectionController(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'IndirectionController'
@@ -20508,6 +21215,7 @@ class IndirectionController(Resource):
         ...
 
 class IndirectionSystem(Subsystem):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20515,6 +21223,7 @@ class IndirectionSystem(Subsystem):
         ...
 
 class InkDropperTool(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'InkDropperTool'
@@ -20546,6 +21255,7 @@ class InkDropperTool(Widget):
         ...
 
 class InputMap(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20562,6 +21272,7 @@ class InputMap(_BlipValue):
         ...
 
 class InputMapManager(Subsystem):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20575,6 +21286,7 @@ class InputMapManager(Subsystem):
         ...
 
 class Int2(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20702,6 +21414,7 @@ class Int2(_BlipValue):
         ...
 
 class Int2Box(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Int2Box'
@@ -20710,6 +21423,7 @@ class Int2Box(ValueBox):
         ...
 
 class InterlacedField(_BlipValue):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20758,6 +21472,7 @@ class InterlacedField(_BlipValue):
         ...
 
 class InternalParams(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20806,6 +21521,7 @@ class InternalParams(_BlipValue):
         ...
 
 class JsonMachineControlDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'JsonMachineControlDevice'
@@ -20823,6 +21539,7 @@ class JsonMachineControlDevice(Device):
         ...
 
 class KaleidoscopeModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'KaleidoscopeModule'
@@ -20894,6 +21611,7 @@ class KaleidoscopeModule(ProjectionAwareModule):
         ...
 
 class Kalman3Monitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Kalman3Monitor'
@@ -20902,6 +21620,7 @@ class Kalman3Monitor(MetricMonitor):
         ...
 
 class Key(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20927,6 +21646,7 @@ class Key(_BlipValue):
         ...
 
 class KeyAsKeyContainer(Key):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20939,11 +21659,13 @@ class KeyAsKeyContainer(Key):
         ...
 
 class KeyContainer(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'KeyContainer'
 
 class KeyFloat(Key):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20956,6 +21678,7 @@ class KeyFloat(Key):
         ...
 
 class KeyManipulatorSelector(ManipulatorSelector):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20963,6 +21686,7 @@ class KeyManipulatorSelector(ManipulatorSelector):
         ...
 
 class KeyResource(Key):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -20975,15 +21699,16 @@ class KeyResource(Key):
         ...
 
 class KeySequence(KeyContainer):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'KeySequence'
 
 # !!!!!! Error generating stub for property 'keys'
 #Traceback (most recent call last):
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -21036,6 +21761,7 @@ class KeySequence(KeyContainer):
         ...
 
 class KeyString(Key):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -21048,6 +21774,7 @@ class KeyString(Key):
         ...
 
 class KeyThumbnail(Thumbnail):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'KeyThumbnail'
@@ -21065,6 +21792,7 @@ class KeyThumbnail(Thumbnail):
         ...
 
 class KeyWidget(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'KeyWidget'
@@ -21190,6 +21918,7 @@ class KeyWidget(Widget):
         ...
 
 class KeyWidgetOptionBox(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'KeyWidgetOptionBox'
@@ -21207,6 +21936,7 @@ class KeyWidgetOptionBox(ValueBox):
         ...
 
 class Keyboard(OsDevice):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -21338,6 +22068,7 @@ class Keyboard(OsDevice):
         ...
 
 class KeyedIndirectionResource(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -21358,6 +22089,7 @@ class KeyedIndirectionResource(_BlipValue):
         ...
 
 class KeyedListIndirectionController(IndirectionController):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'KeyedListIndirectionController'
@@ -21406,6 +22138,7 @@ class KeyedListIndirectionController(IndirectionController):
         ...
 
 class Kinesys(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'KinesysDriver'
@@ -21414,10 +22147,12 @@ class Kinesys(UdpReceiverDriver):
         ...
 
 class KinesysTrackerState(Tracking6DOFState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class LCPUSBDriver(ScreenPositionDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LCPUSBDriver'
@@ -21442,6 +22177,7 @@ class LCPUSBDriver(ScreenPositionDriver):
         ...
 
 class Label(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Label'
@@ -21450,6 +22186,7 @@ class Label(Object):
         ...
 
 class LampController(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LampController'
@@ -21622,6 +22359,7 @@ class LampController(Resource):
         ...
 
 class LampTester(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LampTester'
@@ -21699,6 +22437,7 @@ class LampTester(Resource):
         ...
 
 class LatencyCaptureProcess(VideoInCaptureProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LatencyCaptureProcess'
@@ -21723,6 +22462,7 @@ class LatencyCaptureProcess(VideoInCaptureProcess):
         ...
 
 class Layer(SuperLayer):
+    """Categories: ['Sockpuppet', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Layer'
@@ -21833,6 +22573,7 @@ class Layer(SuperLayer):
         ...
 
 class LayerColourRule(Resource):
+    """Categories: ['Colour', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LayerColourRule'
@@ -21896,6 +22637,7 @@ class LayerColourRule(Resource):
         ...
 
 class LayerColourRuleSet(Resource):
+    """Categories: ['Colour', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LayerColourRuleSet'
@@ -21912,6 +22654,7 @@ class LayerColourRuleSet(Resource):
         ...
 
 class LayerStack(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LayerStack'
@@ -21946,6 +22689,7 @@ class LayerStack(Resource):
         ...
 
 class LayerStackPlayHead(PlayHead):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LayerStackPlayHead'
@@ -21962,12 +22706,14 @@ class LayerStackPlayHead(PlayHead):
         ...
 
 class LayerViewHelper(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
     precompExtents: Callable
 
 class LdsDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LdsDriver'
@@ -21985,10 +22731,12 @@ class LdsDriver(UdpReceiverDriver):
         ...
 
 class LdsState(TrackingState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class LedModule(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LedModule'
@@ -22013,6 +22761,7 @@ class LedModule(Resource):
         ...
 
 class LedProduct(Product):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LedProduct'
@@ -22043,6 +22792,7 @@ class LedProduct(Product):
         ...
 
 class LedScreen(SlcAwareDisplay):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LedScreen'
@@ -22153,6 +22903,7 @@ class LedScreen(SlcAwareDisplay):
         ...
 
 class Lens(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Lens'
@@ -22209,6 +22960,7 @@ class Lens(Resource):
         ...
 
 class LensCalibrationPose(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22237,6 +22989,7 @@ class LensCalibrationPose(_BlipValue):
         ...
 
 class LensDistortion(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22284,6 +23037,7 @@ class LensDistortion(_BlipValue):
         ...
 
 class LensFocusParams(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22310,6 +23064,7 @@ class LensFocusParams(_BlipValue):
         ...
 
 class LensIntrinsics(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22394,6 +23149,7 @@ class LensIntrinsics(_BlipValue):
         ...
 
 class Light(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Light'
@@ -22426,6 +23182,7 @@ class Light(Object):
         ...
 
 class LightwareMatrix(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LightwareMatrix'
@@ -22467,6 +23224,7 @@ class LightwareMatrix(DVIMatrix):
         ...
 
 class LightwareMatrixLW3(LightwareMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LightwareMatrixLW3'
@@ -22485,6 +23243,7 @@ class LightwareMatrixLW3(LightwareMatrix):
         ...
 
 class Line(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22501,6 +23260,7 @@ class Line(_BlipValue):
         ...
 
 class ListEditor(ResizableWidget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ListEditor'
@@ -22704,6 +23464,7 @@ class ListEditor(ResizableWidget):
         ...
 
 class ListEditorDataSource(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22722,6 +23483,7 @@ class ListEditorDataSource(_BlipValue):
         ...
 
 class ListEditorDataSource_ManualSet(ListEditorDataSource):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22750,6 +23512,7 @@ class ListEditorDataSource_ManualSet(ListEditorDataSource):
         ...
 
 class ListEditorDataSource_ResourceType(ListEditorDataSource):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22757,6 +23520,7 @@ class ListEditorDataSource_ResourceType(ListEditorDataSource):
         ...
 
 class ListEditorHeader(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ListEditorHeader'
@@ -22765,6 +23529,7 @@ class ListEditorHeader(Widget):
         ...
 
 class ListEditorRow(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ListEditorRow'
@@ -22802,6 +23567,7 @@ class ListEditorRow(Widget):
         ...
 
 class ListIndirectionController(IndirectionController):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ListIndirectionController'
@@ -22843,6 +23609,7 @@ class ListIndirectionController(IndirectionController):
         ...
 
 class LocalCoordSystem(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -22900,6 +23667,7 @@ class LocalCoordSystem(_BlipValue):
         ...
 
 class LocalGuiDisplay(Display):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LocalGuiDisplay'
@@ -22907,6 +23675,7 @@ class LocalGuiDisplay(Display):
     localGui: Callable
 
 class LocalOutputCameraDisplay(Display):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LocalOutputCameraDisplay'
@@ -22915,6 +23684,7 @@ class LocalOutputCameraDisplay(Display):
         ...
 
 class LocalState(Resource):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LocalState'
@@ -22996,6 +23766,7 @@ class LocalState(Resource):
         ...
 
 class Locale(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -23006,10 +23777,12 @@ class Locale(_BlipValue):
         ...
 
 class LoggerEndPoint(ConsoleEndpoint):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class LogicalAudioOutDevice(LogicalDevice):
+    """Categories: ['Audio', 'Devices']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AudioOutPatch'
@@ -23018,6 +23791,7 @@ class LogicalAudioOutDevice(LogicalDevice):
         ...
 
 class LogicalDevice(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LogicalDevice'
@@ -23026,6 +23800,7 @@ class LogicalDevice(Resource):
         ...
 
 class LogicalVideoInDevice(LogicalDevice):
+    """Categories: ['Devices', 'Video Input']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LogicalVideoInDevice'
@@ -23180,6 +23955,7 @@ class LogicalVideoInDevice(LogicalDevice):
         ...
 
 class LogicalVideoInSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -23187,6 +23963,7 @@ class LogicalVideoInSystem(Subsystem):
         ...
 
 class LookAtManipulable(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LookAtManipulable'
@@ -23207,6 +23984,7 @@ class LookAtManipulable(Object):
         ...
 
 class LookupTexture(ProceduralTexture):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LookupTexture'
@@ -23237,6 +24015,7 @@ class LookupTexture(ProceduralTexture):
         ...
 
 class LumaKeyComponents(_BlipValue):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -23273,6 +24052,7 @@ class LumaKeyComponents(_BlipValue):
         ...
 
 class LumaKeyVideoIn(VideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -23280,6 +24060,7 @@ class LumaKeyVideoIn(VideoIn):
     parseHardwareId: Callable
 
 class LumaKeyVideoInSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -23287,6 +24068,7 @@ class LumaKeyVideoInSystem(Subsystem):
         ...
 
 class LutFile(Resource):
+    """Categories: ['Media', 'Colour']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LutFile'
@@ -23331,6 +24113,7 @@ class LutFile(Resource):
         ...
 
 class LutModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LutModule'
@@ -23377,6 +24160,7 @@ class LutModule(ProjectionAwareModule):
         ...
 
 class MDCModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MDCModule'
@@ -23455,14 +24239,17 @@ class MDCModule(Module):
         ...
 
 class MSCMessage(_BlipValue):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MSCState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MTCState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -23498,6 +24285,7 @@ class MTCState(IDataState):
         ...
 
 class MVCameraStatsDisplay(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -23590,6 +24378,7 @@ class MVCameraStatsDisplay(_BlipValue):
         ...
 
 class Machine(Resource):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Machine'
@@ -24165,6 +24954,7 @@ class Machine(Resource):
         ...
 
 class MachineListIndirectionController(IndirectionController):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MachineListIndirectionController'
@@ -24185,6 +24975,7 @@ class MachineListIndirectionController(IndirectionController):
         ...
 
 class MachineMedia(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24213,6 +25004,7 @@ class MachineMedia(_BlipValue):
         ...
 
 class MachineMediaFile(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MachineMediaFile'
@@ -24262,6 +25054,7 @@ class MachineMediaFile(Resource):
         ...
 
 class MachineMediaRegistry(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MachineMediaRegistry'
@@ -24270,6 +25063,7 @@ class MachineMediaRegistry(Resource):
         ...
 
 class MachineMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MachineMonitor'
@@ -24278,6 +25072,7 @@ class MachineMonitor(MetricMonitor):
         ...
 
 class MachineStatus(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24294,10 +25089,12 @@ class MachineStatus(_BlipValue):
         ...
 
 class Manipulator(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Manipulator3D(Manipulator):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24309,14 +25106,17 @@ class Manipulator3D(Manipulator):
         ...
 
 class ManipulatorSelector(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ManipulatorStack(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ManualAlignmentPlan(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ManualAlignmentPlan'
@@ -24354,6 +25154,7 @@ class ManualAlignmentPlan(Resource):
         ...
 
 class ManualCameraCalibrationObservation(CameraCalibrationObservation):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ManualCameraCalibrationObservation'
@@ -24404,6 +25205,7 @@ class ManualCameraCalibrationObservation(CameraCalibrationObservation):
         ...
 
 class ManualIndirectionController(IndirectionController):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ManualIndirectionController'
@@ -24421,14 +25223,17 @@ class ManualIndirectionController(IndirectionController):
         ...
 
 class ManualProjectorSettings(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Map(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MappedMedia(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24461,6 +25266,7 @@ class MappedMedia(_BlipValue):
         ...
 
 class MappedMediaDomain(Domain):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24483,6 +25289,7 @@ class MappedMediaDomain(Domain):
         ...
 
 class MappedMediaDomainConnection(DomainConnection):
+    """Categories: ['Internal', 'Media']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24498,6 +25305,7 @@ class MappedMediaDomainConnection(DomainConnection):
         ...
 
 class MappedMediaLocation(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24546,18 +25354,22 @@ class MappedMediaLocation(_BlipValue):
         ...
 
 class MappedMediaLocationChange(Change):
+    """Categories: ['Internal', 'Media']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MappedTypeAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Mapping(_BlipValue):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MasterModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MasterBrightnessModule'
@@ -24566,14 +25378,15 @@ class MasterModule(Module):
         ...
 
 class Mat(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 # !!!!!! Error generating stub for property 'coefficient'
 #Traceback (most recent call last):
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -24819,6 +25632,7 @@ class Mat(_BlipValue):
         ...
 
 class MatBox(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MatBox'
@@ -24827,10 +25641,12 @@ class MatBox(ValueBox):
         ...
 
 class Material(_BlipValue):
+    """Category: Renderer"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MatroxSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24859,10 +25675,12 @@ class MatroxSystem(Subsystem):
         ...
 
 class MatroxThread(VideoInThread):
+    """Categories: ['Internal', 'Video Input']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MayaBridgeDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MayaBridgeDevice'
@@ -24889,10 +25707,12 @@ class MayaBridgeDevice(Device):
         ...
 
 class McAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MeanColourComputeKernel(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24900,6 +25720,7 @@ class MeanColourComputeKernel(DxMaterial):
         ...
 
 class Measurement(Resource):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Measurement'
@@ -24940,6 +25761,7 @@ class Measurement(Resource):
         ...
 
 class MeasurementManipulator(Manipulator):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24955,6 +25777,7 @@ class MeasurementManipulator(Manipulator):
         ...
 
 class MeasurementSet(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MeasurementSet'
@@ -24972,6 +25795,7 @@ class MeasurementSet(Object):
         ...
 
 class MediaFileHeader(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MediaFileHeader'
@@ -24980,14 +25804,17 @@ class MediaFileHeader(Resource):
         ...
 
 class MediaInfo(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MediaInfoDomain(Domain):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MediaInfoDomainConnection(DomainConnection):
+    """Categories: ['Internal', 'Media']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -24995,6 +25822,7 @@ class MediaInfoDomainConnection(DomainConnection):
         ...
 
 class MediaManager(Subsystem):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25005,10 +25833,12 @@ class MediaManager(Subsystem):
         ...
 
 class MediaManagerFile(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MediaTypes(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25021,6 +25851,7 @@ class MediaTypes(_BlipValue):
         ...
 
 class MemoryWatcher(_BlipValue):
+    """Categories: ['Internal', 'Monitoring']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25057,6 +25888,7 @@ class MemoryWatcher(_BlipValue):
         ...
 
 class Mesh(Node):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Mesh'
@@ -25138,6 +25970,7 @@ class Mesh(Node):
         ...
 
 class MeshFromObj(Mesh):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MeshFromObj'
@@ -25186,6 +26019,7 @@ class MeshFromObj(Mesh):
         ...
 
 class MeshFromScene(Mesh):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MeshFromScene'
@@ -25223,6 +26057,7 @@ class MeshFromScene(Mesh):
         ...
 
 class MeshInfo(MediaInfo):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25267,6 +26102,7 @@ class MeshInfo(MediaInfo):
         ...
 
 class MeshProjection(Projection):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Mesh'
@@ -25394,6 +26230,7 @@ class MeshProjection(Projection):
         ...
 
 class MeshProjectionObject(ProjectionObject):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MeshProjectionObject'
@@ -25402,10 +26239,12 @@ class MeshProjectionObject(ProjectionObject):
         ...
 
 class MeshProjectionWarper(_BlipValue):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MeshUnion(Mesh):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MeshUnion'
@@ -25422,6 +26261,7 @@ class MeshUnion(Mesh):
         ...
 
 class Message(_BlipValue):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25434,6 +26274,7 @@ class Message(_BlipValue):
         ...
 
 class MessageBus(_BlipValue):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25447,6 +26288,7 @@ class MessageBus(_BlipValue):
         ...
 
 class MessageReceivedData(_BlipValue):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25479,6 +26321,7 @@ class MessageReceivedData(_BlipValue):
         ...
 
 class MessageSystem(Subsystem):
+    """Categories: ['Internal', 'Message', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25490,6 +26333,7 @@ class MessageSystem(Subsystem):
         ...
 
 class MetaField(Resource):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MetaField'
@@ -25564,6 +26408,7 @@ class MetaField(Resource):
         ...
 
 class MetaFieldPopulateArgs(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25584,6 +26429,7 @@ class MetaFieldPopulateArgs(_BlipValue):
         ...
 
 class MethodInfo(ReflectionAttributeContainer):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25599,12 +26445,14 @@ class MethodInfo(ReflectionAttributeContainer):
         ...
 
 class MetricGraphCategories(_BlipValue):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
 
     categories: Callable
 
 class MetricMonitor(Resource):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MetricMonitor'
@@ -25691,6 +26539,7 @@ class MetricMonitor(Resource):
         ...
 
 class MidiBeatClockState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25719,6 +26568,7 @@ class MidiBeatClockState(IDataState):
         ...
 
 class MidiControl(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiControl'
@@ -25756,6 +26606,7 @@ class MidiControl(Resource):
         ...
 
 class MidiControlSet(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiControlSet'
@@ -25771,9 +26622,9 @@ class MidiControlSet(Resource):
 
 # !!!!!! Error generating stub for property 'objects'
 #Traceback (most recent call last):
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -25794,6 +26645,7 @@ class MidiControlSet(Resource):
         ...
 
 class MidiControlSetEntry(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiControlSetEntry'
@@ -25834,6 +26686,7 @@ class MidiControlSetEntry(Resource):
         ...
 
 class MidiControlSurface(ControlSurface):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiControlSurface'
@@ -25842,6 +26695,7 @@ class MidiControlSurface(ControlSurface):
         ...
 
 class MidiControllerState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -25865,15 +26719,16 @@ class MidiControllerState(IDataState):
         ...
 
 class MidiDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiDevice'
 
 # !!!!!! Error generating stub for property 'controlSets'
 #Traceback (most recent call last):
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -26037,6 +26892,7 @@ class MidiDevice(Device):
         ...
 
 class MidiIn(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26055,6 +26911,7 @@ class MidiIn(_BlipValue):
         ...
 
 class MidiLink(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiLink'
@@ -26063,6 +26920,7 @@ class MidiLink(Resource):
         ...
 
 class MidiMap(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiMap'
@@ -26095,6 +26953,7 @@ class MidiMap(Resource):
         ...
 
 class MidiNoteModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiNoteModule'
@@ -26150,6 +27009,7 @@ class MidiNoteModule(Module):
         ...
 
 class MidiNoteState(IDataState):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26177,6 +27037,7 @@ class MidiNoteState(IDataState):
         ...
 
 class MidiOut(Thread):
+    """Categories: ['Devices', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26190,6 +27051,7 @@ class MidiOut(Thread):
         ...
 
 class MidiPatchChangeState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26198,6 +27060,7 @@ class MidiPatchChangeState(IDataState):
         ...
 
 class MidiPitchBendState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26206,6 +27069,7 @@ class MidiPitchBendState(IDataState):
         ...
 
 class MidiSystem(Subsystem):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26221,6 +27085,7 @@ class MidiSystem(Subsystem):
         ...
 
 class MidiTransport(Transport):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiTransport'
@@ -26411,6 +27276,7 @@ class MidiTransport(Transport):
         ...
 
 class MidiTrigger(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MidiTrigger'
@@ -26419,6 +27285,7 @@ class MidiTrigger(Resource):
         ...
 
 class MipmappedMaskTexture(DxTexture):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MipmappedMaskTexture'
@@ -26427,6 +27294,7 @@ class MipmappedMaskTexture(DxTexture):
         ...
 
 class MissingMediaDomain(Domain):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26446,6 +27314,7 @@ class MissingMediaDomain(Domain):
         ...
 
 class MissingMediaDomainConnection(DomainConnection):
+    """Categories: ['Internal', 'Media']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26460,6 +27329,7 @@ class MissingMediaDomainConnection(DomainConnection):
         ...
 
 class MixedRealitySet(CameraTallyDisplay):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MixedRealitySet'
@@ -26524,6 +27394,7 @@ class MixedRealitySet(CameraTallyDisplay):
         ...
 
 class MoSysF4Driver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MoSysF4Driver'
@@ -26543,6 +27414,7 @@ class MoSysF4Driver(UdpReceiverDriver):
         ...
 
 class MobileCam(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26684,6 +27556,7 @@ class MobileCam(_BlipValue):
         ...
 
 class MobileCamData(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26726,6 +27599,7 @@ class MobileCamData(_BlipValue):
         ...
 
 class MobileCamPair(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MobileCamPair'
@@ -26734,6 +27608,7 @@ class MobileCamPair(Resource):
         ...
 
 class MobileCameraCommunication(CameraCommunication):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -26797,6 +27672,7 @@ class MobileCameraCommunication(CameraCommunication):
         ...
 
 class MobileCameraReference(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MobileCameraReference'
@@ -26818,6 +27694,7 @@ class MobileCameraReference(Resource):
         ...
 
 class Module(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Module'
@@ -26983,6 +27860,7 @@ class Module(Resource):
         ...
 
 class ModuleConfig(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ModuleConfig'
@@ -26991,14 +27869,17 @@ class ModuleConfig(Resource):
         ...
 
 class ModuleEventLogger(_BlipValue):
+    """Categories: ['Internal', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MonitoringGroup(_BlipValue):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class MonitoringManager(Subsystem):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27061,6 +27942,7 @@ class MonitoringManager(Subsystem):
         ...
 
 class MotionBlurModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MotionBlurModule'
@@ -27087,6 +27969,7 @@ class MotionBlurModule(ProjectionAwareModule):
         ...
 
 class Mouse(OsDevice):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27119,6 +28002,7 @@ class Mouse(OsDevice):
         ...
 
 class MouseClickManipulatorSelector(ManipulatorSelector):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27126,6 +28010,7 @@ class MouseClickManipulatorSelector(ManipulatorSelector):
         ...
 
 class MouseCursor(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27150,6 +28035,7 @@ class MouseCursor(_BlipValue):
     set: Callable
 
 class MouseDragManipulatorSelector(ManipulatorSelector):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27157,6 +28043,7 @@ class MouseDragManipulatorSelector(ManipulatorSelector):
         ...
 
 class MouseScrollManipulatorSelector(ManipulatorSelector):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27164,6 +28051,7 @@ class MouseScrollManipulatorSelector(ManipulatorSelector):
         ...
 
 class MoveAIDriver(GrpcReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MoveAIDriver'
@@ -27180,6 +28068,7 @@ class MoveAIDriver(GrpcReceiverDriver):
         ...
 
 class MoveCatDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MoveCatDriver'
@@ -27188,6 +28077,7 @@ class MoveCatDriver(UdpReceiverDriver):
         ...
 
 class MovieWriter(Subsystem):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27207,6 +28097,7 @@ class MovieWriter(Subsystem):
         ...
 
 class MovingHeadLedDriver(DmxDriver):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MovingHeadLedDriver'
@@ -27245,6 +28136,7 @@ class MovingHeadLedDriver(DmxDriver):
         ...
 
 class MpegFile(File):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27257,6 +28149,7 @@ class MpegFile(File):
         ...
 
 class MtcModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MTCModule'
@@ -27330,6 +28223,7 @@ class MtcModule(Module):
         ...
 
 class MtcSystem(Subsystem):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27337,6 +28231,7 @@ class MtcSystem(Subsystem):
         ...
 
 class MultiCalibratorFactory(CalibratorSystem):
+    """Categories: ['Calibration', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27344,6 +28239,7 @@ class MultiCalibratorFactory(CalibratorSystem):
         ...
 
 class MultiCameraCluster(RenderStreamCluster):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MultiCameraCluster'
@@ -27352,11 +28248,13 @@ class MultiCameraCluster(RenderStreamCluster):
         ...
 
 class MultiChannelClusterAssigner(MultiChannelClusterAssignerBase):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MultiChannelClusterAssigner'
 
 class MultiChannelClusterAssignerBase(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MultiChannelClusterAssignerBase'
@@ -27387,11 +28285,13 @@ class MultiChannelClusterAssignerBase(Resource):
         ...
 
 class MultiChannelClusterLocalAssigner(MultiChannelClusterAssignerBase):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MultiChannelClusterLocalAssigner'
 
 class MultiChannelMap(Projection):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MultiChannelMap'
@@ -27400,6 +28300,7 @@ class MultiChannelMap(Projection):
         ...
 
 class MultiEventTransport(Resource):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MultiEventTransport'
@@ -27408,6 +28309,7 @@ class MultiEventTransport(Resource):
         ...
 
 class MultiEventTransportRemote(MultiEventTransport):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MultiEventTransportRemote'
@@ -27425,6 +28327,7 @@ class MultiEventTransportRemote(MultiEventTransport):
         ...
 
 class MultiTransportManager(SuperTransportManager):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MultiTransportManager'
@@ -27451,6 +28354,7 @@ class MultiTransportManager(SuperTransportManager):
         ...
 
 class MulticastDelegate(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27466,6 +28370,7 @@ class MulticastDelegate(_BlipValue):
         ...
 
 class MultiviewData(_BlipValue):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27502,12 +28407,14 @@ class MultiviewData(_BlipValue):
         ...
 
 class MultiviewVideoIn(VideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
     dataFromHardwareId: Callable
 
 class MyClassV(Resource):
+    """Category: Test"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'MyClassV'
@@ -27516,6 +28423,7 @@ class MyClassV(Resource):
         ...
 
 class NCAMDriver(ScreenPositionDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NCAMDriver'
@@ -27563,6 +28471,7 @@ class NCAMDriver(ScreenPositionDriver):
         ...
 
 class NG360Driver(ScreenPositionDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NG360Driver'
@@ -27595,6 +28504,7 @@ class NG360Driver(ScreenPositionDriver):
         ...
 
 class NameWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NameWidget'
@@ -27624,6 +28534,7 @@ class NameWidget(Widget):
         ...
 
 class NatNetDriver(ScreenPositionDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NatNetDriver'
@@ -27759,14 +28670,17 @@ class NatNetDriver(ScreenPositionDriver):
         ...
 
 class NatNetMarkerState(TrackingVectorState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class NatNetRigidBodyState(Tracking6DOFState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class NavigationManipulator(Manipulator):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27826,10 +28740,12 @@ class NavigationManipulator(Manipulator):
         ...
 
 class NavigatorAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class NavigatorDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NavigatorDriver'
@@ -27838,6 +28754,7 @@ class NavigatorDriver(UdpReceiverDriver):
         ...
 
 class NetSys(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27846,10 +28763,12 @@ class NetSys(_BlipValue):
     getNetworkAdaptors: Callable
 
 class NetworkBase(_BlipValue):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class NewFileMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27870,6 +28789,7 @@ class NewFileMessage(Message):
         ...
 
 class NewNames(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27889,6 +28809,7 @@ class NewNames(_BlipValue):
         ...
 
 class NewTekNDIRelaySystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -27896,10 +28817,12 @@ class NewTekNDIRelaySystem(Subsystem):
         ...
 
 class NewTekNDIRelayVideoIn(BufferedVideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Node(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Node'
@@ -27948,18 +28871,22 @@ class Node(Resource):
         ...
 
 class NodeUserInfoIdentifier(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class NodeUserInfoMessage(_BlipValue):
+    """Categories: ['Message', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class NodeUserInfoTable(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class NoiseModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NoiseModule'
@@ -28006,6 +28933,7 @@ class NoiseModule(ProjectionAwareModule):
         ...
 
 class NormalisedMipmappedMaskTexture(MipmappedMaskTexture):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NormalisedMipmappedMaskTexture'
@@ -28014,6 +28942,7 @@ class NormalisedMipmappedMaskTexture(MipmappedMaskTexture):
         ...
 
 class NotFoundMedia(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28053,6 +28982,7 @@ class NotFoundMedia(_BlipValue):
         ...
 
 class NotFoundMediaMachineInfo(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28073,6 +29003,7 @@ class NotFoundMediaMachineInfo(_BlipValue):
         ...
 
 class NotchCameraData(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28085,6 +29016,7 @@ class NotchCameraData(_BlipValue):
         ...
 
 class NotchEngineDefinition(EngineDefinition):
+    """Categories: ['Media', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28092,6 +29024,7 @@ class NotchEngineDefinition(EngineDefinition):
         ...
 
 class NotchEngineSettings(EngineSettings):
+    """Categories: ['Media', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28143,6 +29076,7 @@ class NotchEngineSettings(EngineSettings):
         ...
 
 class NotchEngineSettingsResource(EngineSettingsResource):
+    """Categories: ['Media', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NotchEngineSettingsResource'
@@ -28160,6 +29094,7 @@ class NotchEngineSettingsResource(EngineSettingsResource):
         ...
 
 class NotchEulerPoseAndScaleData(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28172,6 +29107,7 @@ class NotchEulerPoseAndScaleData(_BlipValue):
         ...
 
 class NotchHandle(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28196,10 +29132,12 @@ class NotchHandle(_BlipValue):
         ...
 
 class NotchInfo(MediaInfo):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class NotchLCSubsystem(Subsystem):
+    """Categories: ['Media', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28207,6 +29145,7 @@ class NotchLCSubsystem(Subsystem):
         ...
 
 class NotchModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NotchModule'
@@ -28300,11 +29239,13 @@ class NotchModule(Module):
         ...
 
 class NotchModuleConfig(ModuleConfig):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NotchModuleConfig'
 
     class Field(_BlipValue):
+        """Category: Modules"""
         null: Self
         _classInfo: 'ClassInfo'
     
@@ -28408,6 +29349,7 @@ class NotchModuleConfig(ModuleConfig):
         ...
 
 class NotchObjectArray(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'NotchObjectArray'
@@ -28427,6 +29369,7 @@ class NotchObjectArray(Resource):
         ...
 
 class NotchPoseAndScaleData(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28439,6 +29382,7 @@ class NotchPoseAndScaleData(_BlipValue):
         ...
 
 class NotchPoseData(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28451,6 +29395,7 @@ class NotchPoseData(_BlipValue):
         ...
 
 class NotchProperty(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28483,6 +29428,7 @@ class NotchProperty(_BlipValue):
         ...
 
 class Note(Resource):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Note'
@@ -28511,10 +29457,12 @@ class Note(Resource):
         ...
 
 class Notification(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class OS(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28543,6 +29491,7 @@ class OS(_BlipValue):
         ...
 
 class OSCSender(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OSCSender'
@@ -28551,6 +29500,7 @@ class OSCSender(Resource):
         ...
 
 class Object(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Object'
@@ -28713,6 +29663,7 @@ class Object(Resource):
         ...
 
 class ObjectBox(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ObjectBox'
@@ -28737,10 +29688,12 @@ class ObjectBox(Resource):
         ...
 
 class ObjectBoxOld(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ObjectDeformationSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28759,6 +29712,7 @@ class ObjectDeformationSettings(_BlipValue):
         ...
 
 class ObjectDeformationSettingsPair(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -28779,6 +29733,7 @@ class ObjectDeformationSettingsPair(_BlipValue):
         ...
 
 class ObjectSet(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ObjectSet'
@@ -28795,6 +29750,7 @@ class ObjectSet(Resource):
         ...
 
 class ObjectTrackingSource(Resource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ObjectTrackingSource'
@@ -28878,6 +29834,7 @@ class ObjectTrackingSource(Resource):
         ...
 
 class ObjectView(ResizableWidget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ObjectView'
@@ -28989,6 +29946,7 @@ class ObjectView(ResizableWidget):
         ...
 
 class ObjectViewBoxFilter(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29007,6 +29965,7 @@ class ObjectViewBoxFilter(_BlipValue):
         ...
 
 class ObjectViewState(Resource):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ObjectViewState'
@@ -29047,6 +30006,7 @@ class ObjectViewState(Resource):
         ...
 
 class ObjectViewThumbnail(Thumbnail):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ObjectViewThumbnail'
@@ -29068,6 +30028,7 @@ class ObjectViewThumbnail(Thumbnail):
         ...
 
 class OcioBuiltinConfig(OcioConfig):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OcioBuiltinConfig'
@@ -29089,6 +30050,7 @@ class OcioBuiltinConfig(OcioConfig):
         ...
 
 class OcioColourSpace(_BlipValue):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29148,6 +30110,7 @@ class OcioColourSpace(_BlipValue):
         ...
 
 class OcioColourSpaceBox(ValueBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OcioColourSpaceBox'
@@ -29163,6 +30126,7 @@ class OcioColourSpaceBox(ValueBox):
         ...
 
 class OcioColourSpaceSelector(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OcioColourSpaceSelector'
@@ -29174,6 +30138,7 @@ class OcioColourSpaceSelector(Widget):
         ...
 
 class OcioConfig(Resource):
+    """Category: Colour"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OcioConfig'
@@ -29222,6 +30187,7 @@ class OcioConfig(Resource):
         ...
 
 class OcioMenuHelper(_BlipValue):
+    """Categories: ['Colour', 'GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29235,6 +30201,7 @@ class OcioMenuHelper(_BlipValue):
         ...
 
 class OcioMenuItem(_BlipValue):
+    """Categories: ['Colour', 'GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29255,6 +30222,7 @@ class OcioMenuItem(_BlipValue):
         ...
 
 class OcioShader(_BlipValue):
+    """Categories: ['Colour', 'Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29262,6 +30230,7 @@ class OcioShader(_BlipValue):
         ...
 
 class OcioShaderProperties(_BlipValue):
+    """Categories: ['Colour', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29302,6 +30271,7 @@ class OcioShaderProperties(_BlipValue):
         ...
 
 class OcioShaderPropertiesBox(ValueBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OcioShaderPropertiesBox'
@@ -29313,6 +30283,7 @@ class OcioShaderPropertiesBox(ValueBox):
         ...
 
 class OcioSystem(Subsystem):
+    """Categories: ['Colour', 'Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29320,6 +30291,7 @@ class OcioSystem(Subsystem):
         ...
 
 class OfflineCameraCommunication(CameraCommunication):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29331,14 +30303,17 @@ class OfflineCameraCommunication(CameraCommunication):
         ...
 
 class OldHeadMode(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class OldHeadMode2(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class OldMovFile(File):
+    """Categories: ['Internal', 'Media']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29349,6 +30324,7 @@ class OldMovFile(File):
         ...
 
 class OpenModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OpenModule'
@@ -29357,11 +30333,13 @@ class OpenModule(Module):
         ...
 
 class OpenModuleConfig(ModuleConfig):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OpenModuleConfig'
 
     class Param(_BlipValue):
+        """Category: Modules"""
         null: Self
         _classInfo: 'ClassInfo'
     
@@ -29414,6 +30392,7 @@ class OpenModuleConfig(ModuleConfig):
         ...
 
 class Operation(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29421,6 +30400,7 @@ class Operation(_BlipValue):
         ...
 
 class OptiCalCameraPlan(Camera):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OmniCalCameraPlan'
@@ -29528,6 +30508,7 @@ class OptiCalCameraPlan(Camera):
         ...
 
 class OptiCalCameraPlanReport(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29554,6 +30535,7 @@ class OptiCalCameraPlanReport(_BlipValue):
         ...
 
 class OptiCalCaptureSetup(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29625,6 +30607,7 @@ class OptiCalCaptureSetup(_BlipValue):
         ...
 
 class OptiCalCaptureSystem(Subsystem):
+    """Categories: ['Omnical', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29642,6 +30625,7 @@ class OptiCalCaptureSystem(Subsystem):
         ...
 
 class OptiCalDeform(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29649,6 +30633,7 @@ class OptiCalDeform(_BlipValue):
     resetScreenToOrigMesh: Callable
 
 class OptiCalGridImagePaths(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29712,10 +30697,12 @@ class OptiCalGridImagePaths(_BlipValue):
         ...
 
 class OptiCalMainTask(OptiCalTask):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class OptiCalMetrics(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29732,6 +30719,7 @@ class OptiCalMetrics(_BlipValue):
         ...
 
 class OptiCalReport(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29747,6 +30735,7 @@ class OptiCalReport(_BlipValue):
         ...
 
 class OptiCalReportText(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -29754,11 +30743,13 @@ class OptiCalReportText(_BlipValue):
         ...
 
 class OptiCalResult(OptiCalStagePlan):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OptiCalResult'
 
 class OptiCalRun(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OptiCalRun'
@@ -30071,6 +31062,7 @@ class OptiCalRun(Resource):
         ...
 
 class OptiCalSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -30079,6 +31071,7 @@ class OptiCalSettings(_BlipValue):
     getPointCloudModeValues: Callable
 
 class OptiCalStagePlan(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OmniCalStagePlan'
@@ -30388,6 +31381,7 @@ class OptiCalStagePlan(Resource):
         ...
 
 class OptiCalStepResult(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OptiCalStepResult'
@@ -30396,6 +31390,7 @@ class OptiCalStepResult(Resource):
         ...
 
 class OptiCalTask(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -30421,6 +31416,7 @@ class OptiCalTask(_BlipValue):
         ...
 
 class OptiCal_io(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -30428,6 +31424,7 @@ class OptiCal_io(_BlipValue):
     savePlanToPointClouds: Callable
 
 class OpticalCalibrator(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OpticalCalibrator'
@@ -30644,6 +31641,7 @@ class OpticalCalibrator(Resource):
         ...
 
 class OpticalCalibratorObject(Object):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OpticalCalibratorObject'
@@ -30701,6 +31699,7 @@ class OpticalCalibratorObject(Object):
         ...
 
 class OpticalCalibratorSystem(Subsystem):
+    """Categories: ['Omnical', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -30760,6 +31759,7 @@ class OpticalCalibratorSystem(Subsystem):
         ...
 
 class OptionParam(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -30772,6 +31772,7 @@ class OptionParam(_BlipValue):
         ...
 
 class Options(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -33053,6 +34054,24 @@ class Options(_BlipValue):
         ...
 
     @property
+    def proResDecoders(self) -> OptionValue[int]:
+        """The value of the option switch proResDecoders"""
+        ...
+
+    @proResDecoders.setter
+    def proResDecoders(self, value: OptionValue[int]) -> None:
+        ...
+
+    @property
+    def proResThreadOverride(self) -> OptionValue[int]:
+        """The value of the option switch proResThreadOverride"""
+        ...
+
+    @proResThreadOverride.setter
+    def proResThreadOverride(self, value: OptionValue[int]) -> None:
+        ...
+
+    @property
     def profileGPUPoolFromLaunch(self) -> OptionValue[bool]:
         """The value of the option switch profileGPUPoolFromLaunch"""
         ...
@@ -33557,10 +34576,12 @@ class Options(_BlipValue):
         ...
 
 class OsDevice(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class OscArgument(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscArgument'
@@ -33590,6 +34611,7 @@ class OscArgument(Resource):
         ...
 
 class OscCommand(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscCommand'
@@ -33616,6 +34638,7 @@ class OscCommand(Resource):
         ...
 
 class OscControlModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscControlModule'
@@ -33688,6 +34711,7 @@ class OscControlModule(Module):
         ...
 
 class OscDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscDevice'
@@ -33768,6 +34792,7 @@ class OscDevice(Device):
         ...
 
 class OscDriver(ScreenPositionDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscDriver'
@@ -33796,6 +34821,7 @@ class OscDriver(ScreenPositionDriver):
         ...
 
 class OscIndirectionController(IndirectionController):
+    """Categories: ['Devices', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscIndirectionController'
@@ -33821,6 +34847,7 @@ class OscIndirectionController(IndirectionController):
         ...
 
 class OscMachineControl(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscMachineControl'
@@ -33887,6 +34914,7 @@ class OscMachineControl(Device):
         ...
 
 class OscMessage(_BlipValue):
+    """Categories: ['Message', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -33914,6 +34942,7 @@ class OscMessage(_BlipValue):
         ...
 
 class OscPatch(ControlPatch):
+    """Categories: ['Devices', 'Sockpuppet']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscPatch'
@@ -33944,15 +34973,18 @@ class OscPatch(ControlPatch):
         ...
 
 class OscPlaybackStatusDriver(PlaybackStatusDriver):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscPlaybackStatusDriver'
 
 class OscState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class OscTester(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'OscTester'
@@ -33996,10 +35028,12 @@ class OscTester(Device):
         ...
 
 class OutDevice(_BlipValue):
+    """Category: Audio"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class OutputOSCExpression(_BlipValue):
+    """Categories: ['Devices', 'Expressions']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34050,10 +35084,12 @@ class OutputOSCExpression(_BlipValue):
         ...
 
 class OutputRenderHeads(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class PClass(Resource):
+    """Category: Test"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PClass'
@@ -34062,6 +35098,7 @@ class PClass(Resource):
         ...
 
 class PTPInfo(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34106,6 +35143,7 @@ class PTPInfo(_BlipValue):
         ...
 
 class PTPLockState(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34126,6 +35164,7 @@ class PTPLockState(_BlipValue):
         ...
 
 class Package(IFilesystem):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34136,6 +35175,7 @@ class Package(IFilesystem):
         ...
 
 class PackageEventMonitoringSystem(Subsystem):
+    """Categories: ['Internal', 'Monitoring', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34143,6 +35183,7 @@ class PackageEventMonitoringSystem(Subsystem):
         ...
 
 class PackageSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34152,6 +35193,7 @@ class PackageSystem(Subsystem):
         ...
 
 class Pair(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34164,6 +35206,7 @@ class Pair(_BlipValue):
         ...
 
 class PanTiltController(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PanTiltController'
@@ -34253,6 +35296,7 @@ class PanTiltController(Resource):
         ...
 
 class Parallel(Projection):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Parallel'
@@ -34345,6 +35389,7 @@ class Parallel(Projection):
         ...
 
 class ParallelProjectionObject(ProjectionObject):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ParallelProjectionObject'
@@ -34353,6 +35398,7 @@ class ParallelProjectionObject(ProjectionObject):
         ...
 
 class ParamID(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ParamID'
@@ -34361,6 +35407,7 @@ class ParamID(Resource):
         ...
 
 class ParameterCollection(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ParameterCollection'
@@ -34390,10 +35437,12 @@ class ParameterCollection(Resource):
         ...
 
 class ParameterReceiver(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ParameterSource(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34444,6 +35493,7 @@ class ParameterSource(_BlipValue):
         ...
 
 class PatchGroup(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34478,6 +35528,7 @@ class PatchGroup(_BlipValue):
         ...
 
 class PatchSurface(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34517,6 +35568,7 @@ class PatchSurface(_BlipValue):
         ...
 
 class Path(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34599,6 +35651,7 @@ class Path(_BlipValue):
         ...
 
 class PathsManager(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34748,6 +35801,7 @@ class PathsManager(_BlipValue):
         ...
 
 class PathsManagerOptiCal(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34824,6 +35878,7 @@ class PathsManagerOptiCal(_BlipValue):
         ...
 
 class PciToCpuIOMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PciToCpuIOMonitor'
@@ -34832,6 +35887,7 @@ class PciToCpuIOMonitor(MetricMonitor):
         ...
 
 class PerCameraBlobs(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -34853,6 +35909,7 @@ class PerCameraBlobs(_BlipValue):
         ...
 
 class PercentageBar(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PercentageBar'
@@ -34884,6 +35941,7 @@ class PercentageBar(Widget):
         ...
 
 class PersistentIPVideoIn(Resource):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PersistentIPVideoIn'
@@ -34956,6 +36014,7 @@ class PersistentIPVideoIn(Resource):
         ...
 
 class PerspectiveProjection(Projection):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Perspective'
@@ -35058,6 +36117,7 @@ class PerspectiveProjection(Projection):
         ...
 
 class PerspectiveProjectionObject(ProjectionObject):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PerspectiveProjectionObject'
@@ -35066,6 +36126,7 @@ class PerspectiveProjectionObject(ProjectionObject):
         ...
 
 class PingMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35086,6 +36147,7 @@ class PingMessage(Message):
         ...
 
 class PinholeCamera(LocalCoordSystem):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35112,6 +36174,7 @@ class PinholeCamera(LocalCoordSystem):
         ...
 
 class PixelMapModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PixelMapModule'
@@ -35166,10 +36229,12 @@ class PixelMapModule(Module):
         ...
 
 class PixelMapShader(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class PixelateModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PixelateModule'
@@ -35205,6 +36270,7 @@ class PixelateModule(ProjectionAwareModule):
         ...
 
 class PlaceholderVideoIn(VideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35212,6 +36278,7 @@ class PlaceholderVideoIn(VideoIn):
     makeHardwareId: Callable
 
 class PlaceholderVideoInSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35219,6 +36286,7 @@ class PlaceholderVideoInSystem(Subsystem):
         ...
 
 class Plane(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35255,6 +36323,7 @@ class Plane(_BlipValue):
         ...
 
 class PlannedBlobStatistics(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35307,6 +36376,7 @@ class PlannedBlobStatistics(_BlipValue):
         ...
 
 class PlannedMobileCamParams(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35375,6 +36445,7 @@ class PlannedMobileCamParams(_BlipValue):
         ...
 
 class PlayHead(Resource):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PlayHead'
@@ -35427,6 +36498,7 @@ class PlayHead(Resource):
         ...
 
 class PlayMode(_BlipValue):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35451,6 +36523,7 @@ class PlayMode(_BlipValue):
         ...
 
 class PlayModeModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PlayModeModule'
@@ -35471,6 +36544,7 @@ class PlayModeModule(Module):
         ...
 
 class PlaybackStatusDriver(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PlaybackStatusDriver'
@@ -35485,6 +36559,7 @@ class PlaybackStatusDriver(Resource):
         ...
 
 class PlaybackStatusMonitor(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PlaybackStatusMonitor'
@@ -35514,16 +36589,19 @@ class PlaybackStatusMonitor(Resource):
         ...
 
 class PluginAuth(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
     hasPluginLicense: Callable
 
 class PluginAuthException(Exception):
+    """Categories: ['App', 'Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class PluginEventLogger(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35538,6 +36616,7 @@ class PluginEventLogger(_BlipValue):
         ...
 
 class PluginInstance(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35569,6 +36648,7 @@ class PluginInstance(_BlipValue):
         ...
 
 class PointCloudRenderer2D(_BlipValue):
+    """Categories: ['GUI', 'Internal', 'Omnical']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35579,6 +36659,7 @@ class PointCloudRenderer2D(_BlipValue):
         ...
 
 class PongMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35599,6 +36680,7 @@ class PongMessage(Message):
         ...
 
 class PongModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TennisModule'
@@ -35738,7 +36820,8 @@ class PongModule(Module):
         ...
 
 class PopupMenu(Widget):
-    """Popup Menu"""
+    """Popup Menu
+Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PopupMenu'
@@ -35782,6 +36865,7 @@ class PopupMenu(Widget):
         ...
 
 class PosiStageNetDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PSNDriver'
@@ -35790,6 +36874,7 @@ class PosiStageNetDriver(UdpReceiverDriver):
         ...
 
 class Posital(ScreenPositionDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Posital'
@@ -35851,6 +36936,7 @@ class Posital(ScreenPositionDriver):
         ...
 
 class PreComp(Projection):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PreComp'
@@ -35859,6 +36945,7 @@ class PreComp(Projection):
         ...
 
 class PreCompDisplay(Display):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PreCompDisplay'
@@ -35871,6 +36958,7 @@ class PreCompDisplay(Display):
         ...
 
 class PreCompTexture(ProceduralTexture):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PreCompTexture'
@@ -35893,6 +36981,7 @@ class PreCompTexture(ProceduralTexture):
         ...
 
 class PrecompExtent(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -35929,6 +37018,7 @@ class PrecompExtent(_BlipValue):
         ...
 
 class PrefetchLookaheads(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PrefetchLookaheads'
@@ -35973,21 +37063,25 @@ class PrefetchLookaheads(Resource):
         ...
 
 class PrefetcherMetricMonitor(_BlipValue):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
 
     name: Final = 'prefetcher'
 
 class PreviewApp(App):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PreviewApp'
 
 class PrgAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class PrgDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PrgDriver'
@@ -35996,10 +37090,12 @@ class PrgDriver(UdpReceiverDriver):
         ...
 
 class PrgStageCommandAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class PrgStageCommandDriver(PrgDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PrgStageCommandDriver'
@@ -36008,6 +37104,7 @@ class PrgStageCommandDriver(PrgDriver):
         ...
 
 class Primary(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Primary'
@@ -36052,6 +37149,7 @@ class Primary(Resource):
         ...
 
 class PrivateState(Resource):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PrivateState'
@@ -36438,6 +37536,7 @@ class PrivateState(Resource):
         ...
 
 class ProceduralTexture(DxTexture):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProceduralTexture'
@@ -36446,6 +37545,7 @@ class ProceduralTexture(DxTexture):
         ...
 
 class ProcessMemoryMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProcessMemoryMonitor'
@@ -36454,6 +37554,7 @@ class ProcessMemoryMonitor(MetricMonitor):
         ...
 
 class Product(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Product'
@@ -36495,6 +37596,7 @@ class Product(Resource):
         ...
 
 class ProfilerCallNode(_BlipValue):
+    """Categories: ['Internal', 'Monitoring']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -36531,6 +37633,7 @@ class ProfilerCallNode(_BlipValue):
         ...
 
 class ProfilerHTTPSystem(Subsystem):
+    """Categories: ['Internal', 'Monitoring', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -36541,6 +37644,7 @@ class ProfilerHTTPSystem(Subsystem):
         ...
 
 class ProfilerSystem(Subsystem):
+    """Categories: ['Internal', 'Monitoring', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -36578,10 +37682,12 @@ class ProfilerSystem(Subsystem):
         ...
 
 class ProjectData(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ProjectPathsManager(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -36638,6 +37744,7 @@ class ProjectPathsManager(_BlipValue):
         ...
 
 class ProjectSnapshots(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -36657,6 +37764,7 @@ class ProjectSnapshots(_BlipValue):
     takeSnapshot: Callable
 
 class Projection(Resource):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Mapping'
@@ -36763,15 +37871,18 @@ class Projection(Resource):
         ...
 
 class ProjectionAwareModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectionAwareModule'
 
 class ProjectionMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ProjectionObject(Object):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectionObject'
@@ -36793,6 +37904,7 @@ class ProjectionObject(Object):
         ...
 
 class Projector(SlcAwareDisplay):
+    """Categories: ['Calibration', 'Omnical', 'Stage']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Projector'
@@ -37408,6 +38520,7 @@ class Projector(SlcAwareDisplay):
         ...
 
 class ProjectorCalibrationSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -37495,6 +38608,7 @@ class ProjectorCalibrationSettings(_BlipValue):
         ...
 
 class ProjectorCalibratorDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorCalibratorDevice'
@@ -37607,6 +38721,7 @@ class ProjectorCalibratorDevice(Device):
         ...
 
 class ProjectorCaptureSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -37715,6 +38830,7 @@ class ProjectorCaptureSettings(_BlipValue):
         ...
 
 class ProjectorCaptureSettingsPair(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -37746,6 +38862,7 @@ class ProjectorCaptureSettingsPair(_BlipValue):
         ...
 
 class ProjectorChangeDetectionSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -37753,6 +38870,7 @@ class ProjectorChangeDetectionSystem(Subsystem):
         ...
 
 class ProjectorConfig(Resource):
+    """Categories: ['Calibration', 'Omnical', 'Stage']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorConfig'
@@ -38398,6 +39516,7 @@ class ProjectorConfig(Resource):
         ...
 
 class ProjectorControlCommand(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorControlCommand'
@@ -38415,6 +39534,7 @@ class ProjectorControlCommand(Resource):
         ...
 
 class ProjectorControlCommands(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorControlCommands'
@@ -38432,6 +39552,7 @@ class ProjectorControlCommands(Resource):
         ...
 
 class ProjectorControlDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorControlDevice'
@@ -38567,6 +39688,7 @@ class ProjectorControlDevice(Device):
         ...
 
 class ProjectorControlModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorControlModule'
@@ -38584,6 +39706,7 @@ class ProjectorControlModule(Module):
         ...
 
 class ProjectorControlPreset(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorControlPreset'
@@ -38592,6 +39715,7 @@ class ProjectorControlPreset(Resource):
         ...
 
 class ProjectorDevice(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorDevice'
@@ -38680,6 +39804,7 @@ class ProjectorDevice(Device):
         ...
 
 class ProjectorDeviceSystem(Subsystem):
+    """Categories: ['Devices', 'Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -38687,6 +39812,7 @@ class ProjectorDeviceSystem(Subsystem):
         ...
 
 class ProjectorGroup(_BlipValue):
+    """Categories: ['Omnical', 'Stage']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -38699,6 +39825,7 @@ class ProjectorGroup(_BlipValue):
         ...
 
 class ProjectorGuiState(Resource):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorGuiState'
@@ -38736,6 +39863,7 @@ class ProjectorGuiState(Resource):
         ...
 
 class ProjectorPreset(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorPreset'
@@ -38771,6 +39899,7 @@ class ProjectorPreset(Resource):
         ...
 
 class ProjectorPresets(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorPresets'
@@ -38787,6 +39916,7 @@ class ProjectorPresets(Resource):
         ...
 
 class ProjectorReference(_BlipValue):
+    """Categories: ['Omnical', 'Stage']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -38815,10 +39945,12 @@ class ProjectorReference(_BlipValue):
         ...
 
 class ProjectorRestorer(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ProjectorStudy(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -38839,6 +39971,7 @@ class ProjectorStudy(_BlipValue):
         ...
 
 class ProjectorViewMaterial(ScreenMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -38846,6 +39979,7 @@ class ProjectorViewMaterial(ScreenMaterial):
         ...
 
 class ProjectorYokeControlPreset(ProjectorControlPreset):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProjectorYokeControlPreset'
@@ -38908,6 +40042,7 @@ class ProjectorYokeControlPreset(ProjectorControlPreset):
         ...
 
 class Prop(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Prop'
@@ -39002,6 +40137,7 @@ class Prop(Object):
         ...
 
 class PropRenderer(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39105,6 +40241,7 @@ class PropRenderer(_BlipValue):
         ...
 
 class PropertyInfo(ReflectionAttributeContainer):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39135,6 +40272,7 @@ class PropertyInfo(ReflectionAttributeContainer):
         ...
 
 class PropertyProjectorControlCommand(ProjectorControlCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PropertyProjectorControlCommand'
@@ -39162,6 +40300,7 @@ class PropertyProjectorControlCommand(ProjectorControlCommand):
         ...
 
 class PropertyProperty(ValueBoxProperty):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39178,6 +40317,7 @@ class PropertyProperty(ValueBoxProperty):
         ...
 
 class ProxyFieldProperty(ValueBoxProperty):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39185,6 +40325,7 @@ class ProxyFieldProperty(ValueBoxProperty):
         ...
 
 class ProxyListWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProxyListWidget'
@@ -39193,6 +40334,7 @@ class ProxyListWidget(Widget):
         ...
 
 class ProxyMakerSettings(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProxyMakerSettings'
@@ -39209,6 +40351,7 @@ class ProxyMakerSettings(Resource):
         ...
 
 class ProxyMakerSystem(Subsystem):
+    """Categories: ['Media', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39219,6 +40362,7 @@ class ProxyMakerSystem(Subsystem):
         ...
 
 class ProxyMakerWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProxyMakerWidget'
@@ -39238,6 +40382,7 @@ class ProxyMakerWidget(Widget):
         ...
 
 class ProxySettings(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ProxySettings'
@@ -39266,10 +40411,12 @@ class ProxySettings(Resource):
         ...
 
 class PsnTrackerState(Tracking6DOFState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Puck(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Puck'
@@ -39296,6 +40443,7 @@ class Puck(Object):
         ...
 
 class PureLinkMatrix(DVIMatrix):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PureLinkMatrix'
@@ -39333,6 +40481,7 @@ class PureLinkMatrix(DVIMatrix):
         ...
 
 class PythonApp(App):
+    """Categories: ['App', 'Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PythonApp'
@@ -39342,10 +40491,12 @@ class PythonApp(App):
         ...
 
 class PythonException(Exception):
+    """Categories: ['Internal', 'Reflection', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class PythonFile(Resource):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PythonFile'
@@ -39354,6 +40505,7 @@ class PythonFile(Resource):
         ...
 
 class PythonObject(_BlipValue):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39366,6 +40518,7 @@ class PythonObject(_BlipValue):
         ...
 
 class PythonPluginSystem(Subsystem):
+    """Categories: ['Internal', 'Reflection', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39373,6 +40526,7 @@ class PythonPluginSystem(Subsystem):
         ...
 
 class PythonSystem(Subsystem):
+    """Categories: ['Internal', 'Reflection', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39380,6 +40534,7 @@ class PythonSystem(Subsystem):
         ...
 
 class Quantiser(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Quantiser'
@@ -39438,10 +40593,12 @@ class Quantiser(Widget):
         ...
 
 class QuantiserWaveform(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Quaternion(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39503,6 +40660,7 @@ class Quaternion(_BlipValue):
         ...
 
 class QuickAlignViewSettings(Resource):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'QuickAlignViewSettings'
@@ -39685,6 +40843,7 @@ class QuickAlignViewSettings(Resource):
         ...
 
 class QuickProfiler(Subsystem):
+    """Categories: ['Internal', 'Monitoring']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39695,6 +40854,7 @@ class QuickProfiler(Subsystem):
         ...
 
 class QuickSelectSlots(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'QuickSelectSlots'
@@ -39711,6 +40871,7 @@ class QuickSelectSlots(Resource):
         ...
 
 class QuickSelectSlotsView(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'QuickSelectSlotsView'
@@ -39719,12 +40880,14 @@ class QuickSelectSlotsView(Widget):
         ...
 
 class QuitPopupMenu(PopupMenu):
-    """Quit Popup Menu"""
+    """Quit Popup Menu
+Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'QuitPopupMenu'
 
 class RGBColourModule(ProjectionAwareModule):
+    """Categories: ['Colour', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RGBColourModule'
@@ -39760,6 +40923,7 @@ class RGBColourModule(ProjectionAwareModule):
         ...
 
 class RGBColourModuleConfig(ModuleConfig):
+    """Categories: ['Colour', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RGBColourModuleConfig'
@@ -39786,6 +40950,7 @@ class RGBColourModuleConfig(ModuleConfig):
         ...
 
 class RMAXSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39793,14 +40958,17 @@ class RMAXSystem(Subsystem):
         ...
 
 class RMAXVideoIn(VideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RSCompressedVideoIn(VideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RSCompressedVideoInSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39808,6 +40976,7 @@ class RSCompressedVideoInSystem(Subsystem):
         ...
 
 class RSNode(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -39836,6 +41005,7 @@ class RSNode(_BlipValue):
         ...
 
 class RTTrPMDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RTTrPMDriver'
@@ -39844,14 +41014,17 @@ class RTTrPMDriver(UdpReceiverDriver):
         ...
 
 class RTTrPMModuleState(Tracking6DOFState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RTTrPMTrackableState(TrackingState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Radar(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Radar'
@@ -39901,6 +41074,7 @@ class Radar(Module):
         ...
 
 class RadarModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RadarModule'
@@ -39956,6 +41130,7 @@ class RadarModule(Module):
         ...
 
 class Radial(Cylindrical):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Radial'
@@ -39964,6 +41139,7 @@ class Radial(Cylindrical):
         ...
 
 class RadialProjectionObject(CylindricalProjectionObject):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RadialProjectionObject'
@@ -39972,6 +41148,7 @@ class RadialProjectionObject(CylindricalProjectionObject):
         ...
 
 class Rational(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40022,6 +41199,7 @@ class Rational(_BlipValue):
         ...
 
 class RealCamera(PinholeCamera):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40042,10 +41220,12 @@ class RealCamera(PinholeCamera):
         ...
 
 class ReceivedPacket(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ReceivedTestData(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40066,6 +41246,7 @@ class ReceivedTestData(_BlipValue):
         ...
 
 class ReconstructionSettings(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40166,6 +41347,7 @@ class ReconstructionSettings(_BlipValue):
         ...
 
 class Recorder(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40221,6 +41403,7 @@ class Recorder(_BlipValue):
         ...
 
 class RecorderWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RecorderWidget'
@@ -40244,6 +41427,7 @@ class RecorderWidget(Widget):
         ...
 
 class RecordingFile(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RecordingFile'
@@ -40281,6 +41465,7 @@ class RecordingFile(Resource):
         ...
 
 class RecordingSystem(Subsystem):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40313,6 +41498,7 @@ class RecordingSystem(Subsystem):
         ...
 
 class RecordingTake(Resource):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RecordingTake'
@@ -40374,6 +41560,7 @@ class RecordingTake(Resource):
         ...
 
 class Rect(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40501,6 +41688,7 @@ class Rect(_BlipValue):
         ...
 
 class RectBox(ValueBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RectBox'
@@ -40514,6 +41702,7 @@ class RectBox(ValueBox):
         ...
 
 class ReferencePoint(Object):
+    """Categories: ['Calibration', 'Stage']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ReferencePoint'
@@ -40581,6 +41770,7 @@ class ReferencePoint(Object):
         ...
 
 class ReferencePointCameraCoordinates(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ReferencePointCameraCoordinates'
@@ -40589,6 +41779,7 @@ class ReferencePointCameraCoordinates(Resource):
         ...
 
 class ReferencePointGizmo(Gizmo):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40598,6 +41789,7 @@ class ReferencePointGizmo(Gizmo):
     lineupReferencePointUp: Callable
 
 class ReferencePointSet(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ReferencePointSet'
@@ -40635,10 +41827,12 @@ class ReferencePointSet(Resource):
         ...
 
 class ReflectionArray(_BlipValue):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ReflectionAttributeContainer(_BlipValue):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40660,6 +41854,7 @@ class ReflectionAttributeContainer(_BlipValue):
         ...
 
 class ReflectionAttributeT(_BlipValue):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40668,6 +41863,7 @@ class ReflectionAttributeT(_BlipValue):
         ...
 
 class ReflectionCallable(_BlipValue):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40695,10 +41891,12 @@ class ReflectionCallable(_BlipValue):
         ...
 
 class ReflectionMap(_BlipValue):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ReflectionMessageHandler(IMessageHandler):
+    """Categories: ['Reflection', 'Message', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40719,6 +41917,7 @@ class ReflectionMessageHandler(IMessageHandler):
         ...
 
 class ReflectionValue(_BlipValue):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40726,6 +41925,7 @@ class ReflectionValue(_BlipValue):
         ...
 
 class ReflectionValueProperty(ValueBoxProperty):
+    """Categories: ['GUI', 'Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40738,6 +41938,7 @@ class ReflectionValueProperty(ValueBoxProperty):
         ...
 
 class RefpointsManipulator(Manipulator):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40800,6 +42001,7 @@ class RefpointsManipulator(Manipulator):
         ...
 
 class ReleaseVersion(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40839,10 +42041,12 @@ class ReleaseVersion(_BlipValue):
     versionString: Callable
 
 class Remora_RemoraClient(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RemoteCluster(RemoteRenderer):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RemoteCluster'
@@ -40851,6 +42055,7 @@ class RemoteCluster(RemoteRenderer):
         ...
 
 class RemoteCommand(_BlipValue):
+    """Categories: ['D3Net', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40884,14 +42089,17 @@ class RemoteCommand(_BlipValue):
         ...
 
 class RemoteCommandDispatcher(_BlipValue):
+    """Categories: ['D3Net', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RemoteConsoleEndpoint(ConsoleEndpoint):
+    """Categories: ['Internal', 'Monitoring']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RemoteMonitor(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RemoteMonitor'
@@ -40906,6 +42114,7 @@ class RemoteMonitor(MetricMonitor):
         ...
 
 class RemoteNodeInfo(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40934,6 +42143,7 @@ class RemoteNodeInfo(_BlipValue):
         ...
 
 class RemoteParameter(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40982,6 +42192,7 @@ class RemoteParameter(_BlipValue):
         ...
 
 class RemoteParameterSchema(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -40994,6 +42205,7 @@ class RemoteParameterSchema(_BlipValue):
         ...
 
 class RemoteRenderer(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RemoteRenderer'
@@ -41002,10 +42214,12 @@ class RemoteRenderer(Resource):
         ...
 
 class RemoteResourceAllocResponseInfo(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RemoteStream(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RemoteStream'
@@ -41047,6 +42261,7 @@ class RemoteStream(Resource):
         ...
 
 class RemoteStreamFrame(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -41075,6 +42290,7 @@ class RemoteStreamFrame(_BlipValue):
         ...
 
 class RemovedMediaMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -41095,6 +42311,7 @@ class RemovedMediaMessage(Message):
         ...
 
 class RenameLayersConfirmation(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenameLayersConfirmation'
@@ -41110,6 +42327,7 @@ class RenameLayersConfirmation(Widget):
         ...
 
 class RenameTableSetting(Resource):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenameTableSetting'
@@ -41142,6 +42360,7 @@ class RenameTableSetting(Resource):
         ...
 
 class RenderArea(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -41186,6 +42405,7 @@ class RenderArea(_BlipValue):
         ...
 
 class RenderStreamAsset(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamAsset'
@@ -41372,11 +42592,13 @@ class RenderStreamAsset(Resource):
         ...
 
 class RenderStreamCluster(RenderStreamClusterBase):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamCluster'
 
 class RenderStreamClusterBase(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamClusterBase'
@@ -41447,16 +42669,19 @@ class RenderStreamClusterBase(Resource):
         ...
 
 class RenderStreamLocalCluster(RenderStreamClusterBase):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamLocalCluster'
 
 class RenderStreamLocalModule(RenderStreamModuleBase):
+    """Categories: ['Modules', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamLocalModule'
 
 class RenderStreamLocalModuleConfig(RenderStreamModuleConfigBase):
+    """Categories: ['Modules', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamLocalModuleConfig'
@@ -41498,6 +42723,7 @@ class RenderStreamLocalModuleConfig(RenderStreamModuleConfigBase):
         ...
 
 class RenderStreamMachine(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamMachine'
@@ -41601,6 +42827,7 @@ class RenderStreamMachine(Resource):
         ...
 
 class RenderStreamMachinesList(Resource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamMachinesList'
@@ -41623,17 +42850,20 @@ class RenderStreamMachinesList(Resource):
         ...
 
 class RenderStreamMetricMonitor(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
     name: Final = 'renderstream'
 
 class RenderStreamModule(RenderStreamModuleBase):
+    """Categories: ['Modules', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamModule'
 
 class RenderStreamModuleBase(ProjectionAwareModule):
+    """Categories: ['Modules', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamModuleBase'
@@ -41694,6 +42924,7 @@ class RenderStreamModuleBase(ProjectionAwareModule):
         ...
 
 class RenderStreamModuleConfig(RenderStreamModuleConfigBase):
+    """Categories: ['Modules', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamModuleConfig'
@@ -41741,6 +42972,7 @@ class RenderStreamModuleConfig(RenderStreamModuleConfigBase):
         ...
 
 class RenderStreamModuleConfigBase(ModuleConfig):
+    """Categories: ['Modules', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RenderStreamModuleConfigBase'
@@ -41818,6 +43050,7 @@ class RenderStreamModuleConfigBase(ModuleConfig):
         ...
 
 class RenderStreamSystem(Subsystem):
+    """Categories: ['Renderstream', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -41903,6 +43136,7 @@ class RenderStreamSystem(Subsystem):
         ...
 
 class ReportTasksMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -41915,10 +43149,12 @@ class ReportTasksMessage(Message):
         ...
 
 class RequestHandlerData(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResizableWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ResizableWidget'
@@ -41987,6 +43223,7 @@ class ResizableWidget(Widget):
         ...
 
 class ResolutionInfo(MediaInfo):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42007,6 +43244,7 @@ class ResolutionInfo(MediaInfo):
         ...
 
 class Resource(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Resource'
@@ -42147,10 +43385,12 @@ class Resource(_BlipValue):
         ...
 
 class ResourceAddChange(Change):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceBox(ValueBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ResourceBox'
@@ -42196,10 +43436,12 @@ class ResourceBox(ValueBox):
         ...
 
 class ResourceCache(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceLinks(Subsystem):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42207,14 +43449,17 @@ class ResourceLinks(Subsystem):
         ...
 
 class ResourceLoadChange(Change):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceLockChange(Change):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceManager(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42297,6 +43542,7 @@ class ResourceManager(_BlipValue):
         ...
 
 class ResourceReference(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42320,14 +43566,17 @@ class ResourceReference(_BlipValue):
         ...
 
 class ResourceRemoveChange(Change):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceRenameChange(Change):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceRenameParams(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42344,6 +43593,7 @@ class ResourceRenameParams(_BlipValue):
         ...
 
 class ResourceReport(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42364,6 +43614,7 @@ class ResourceReport(_BlipValue):
         ...
 
 class ResourceSequence(KeySequence):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ResourceSequence'
@@ -42387,6 +43638,7 @@ class ResourceSequence(KeySequence):
         ...
 
 class ResourceSetColourParams(_BlipValue):
+    """Categories: ['Colour', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42399,14 +43651,17 @@ class ResourceSetColourParams(_BlipValue):
         ...
 
 class ResourceState(_BlipValue):
+    """Category: Internal"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceStatusChange(Change):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceTag(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42422,6 +43677,7 @@ class ResourceTag(_BlipValue):
         ...
 
 class ResourceTransport(Subsystem):
+    """Categories: ['D3Net', 'Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42435,14 +43691,17 @@ class ResourceTransport(Subsystem):
         ...
 
 class ResourceTransportMechanism(_BlipValue):
+    """Categories: ['D3Net', 'Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceUpdateChange(Change):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ResourceViewSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42450,6 +43709,7 @@ class ResourceViewSystem(Subsystem):
         ...
 
 class ResourceViewSystemUpdateMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42478,6 +43738,7 @@ class ResourceViewSystemUpdateMessage(Message):
         ...
 
 class RestrictedAttribute(ReflectionAttributeT):
+    """Categories: ['Reflection', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42488,6 +43749,7 @@ class RestrictedAttribute(ReflectionAttributeT):
         ...
 
 class RestrictedScope(_BlipValue):
+    """Categories: ['Reflection', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42499,10 +43761,12 @@ class RestrictedScope(_BlipValue):
         ...
 
 class RgbEasyIn(BufferedVideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RgbEasySystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42510,6 +43774,7 @@ class RgbEasySystem(Subsystem):
         ...
 
 class RigidBodyTrackingSource(ObjectTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'RigidBodyTrackingSource'
@@ -42811,6 +44076,7 @@ class RigidBodyTrackingSource(ObjectTrackingSource):
         ...
 
 class RotatedBlobRect(_BlipValue):
+    """Categories: ['Calibration', 'Omnical']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42835,10 +44101,12 @@ class RotatedBlobRect(_BlipValue):
         ...
 
 class RotationGizmo(Gizmo3D):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RotationManipulator(Manipulator3D):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42850,6 +44118,7 @@ class RotationManipulator(Manipulator3D):
         ...
 
 class RoundedQuad(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42857,6 +44126,7 @@ class RoundedQuad(_BlipValue):
         ...
 
 class RoundedShadowQuad(RoundedQuad):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42864,14 +44134,17 @@ class RoundedShadowQuad(RoundedQuad):
         ...
 
 class RsyncDiscovery(_BlipValue):
+    """Categories: ['D3Net', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class RunningInstancesOnNode(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class SACNDmxUniverseState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -42883,10 +44156,12 @@ class SACNDmxUniverseState(IDataState):
         ...
 
 class SKMCAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class SKVDriver(ScreenPositionDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SKVDriver'
@@ -42993,6 +44268,7 @@ class SKVDriver(ScreenPositionDriver):
         ...
 
 class SMPTE(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -43017,6 +44293,7 @@ class SMPTE(_BlipValue):
         ...
 
 class ST2110Details(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -43094,6 +44371,7 @@ class ST2110Details(_BlipValue):
         ...
 
 class SaveFrameSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -43104,10 +44382,12 @@ class SaveFrameSystem(Subsystem):
         ...
 
 class ScaleGizmo(Gizmo3D):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ScaleManipulator(Manipulator3D):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -43119,6 +44399,7 @@ class ScaleManipulator(Manipulator3D):
         ...
 
 class ScanModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScanModule'
@@ -43174,6 +44455,7 @@ class ScanModule(Module):
         ...
 
 class Scene(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Scene'
@@ -43182,6 +44464,7 @@ class Scene(Resource):
         ...
 
 class SceneOrigin(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SceneOrigin'
@@ -43232,6 +44515,7 @@ class SceneOrigin(Object):
         ...
 
 class Schedule(Resource):
+    """Categories: ['System', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Schedule'
@@ -43271,6 +44555,7 @@ class Schedule(Resource):
         ...
 
 class ScheduleItem(Resource):
+    """Categories: ['System', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScheduleItem'
@@ -43352,6 +44637,7 @@ class ScheduleItem(Resource):
         ...
 
 class ScheduleLink(Resource):
+    """Categories: ['System', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScheduleLink'
@@ -43384,6 +44670,7 @@ class ScheduleLink(Resource):
         ...
 
 class Screen2(Display):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Surface'
@@ -43502,6 +44789,7 @@ class Screen2(Display):
         ...
 
 class ScreenAxisExpression(Resource):
+    """Categories: ['Expressions', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AxisExpression'
@@ -43594,6 +44882,7 @@ class ScreenAxisExpression(Resource):
         ...
 
 class ScreenConfiguration(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScreenConfiguration'
@@ -43659,6 +44948,7 @@ class ScreenConfiguration(Resource):
         ...
 
 class ScreenMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -43666,6 +44956,7 @@ class ScreenMaterial(DxMaterial):
         ...
 
 class ScreenPositionAxis(Resource):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PositionAxis'
@@ -44003,6 +45294,7 @@ class ScreenPositionAxis(Resource):
         ...
 
 class ScreenPositionDriver(Resource):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PositionDriver'
@@ -44011,6 +45303,7 @@ class ScreenPositionDriver(Resource):
         ...
 
 class ScreenPositionDriverDistributor(Resource):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScreenPositionDriverDistributor'
@@ -44030,6 +45323,7 @@ class ScreenPositionDriverDistributor(Resource):
         ...
 
 class ScreenPositionModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'AnimateObjectPresetModule'
@@ -44087,6 +45381,7 @@ class ScreenPositionModule(Module):
         ...
 
 class ScreenPositionReceiver(Device):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'PositionReceiver'
@@ -44235,6 +45530,7 @@ class ScreenPositionReceiver(Device):
         ...
 
 class ScrollBar(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScrollBar'
@@ -44286,6 +45582,7 @@ class ScrollBar(Widget):
         ...
 
 class ScrollModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScrollModule'
@@ -44332,6 +45629,7 @@ class ScrollModule(Module):
         ...
 
 class ScrollWidget2(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScrollWidget2'
@@ -44392,11 +45690,13 @@ class ScrollWidget2(Widget):
         ...
 
 class ScrollWithAltWidget(ScrollWidget2):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ScrollWithAltWidget'
 
 class SelectMenu(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SelectMenu'
@@ -44422,6 +45722,7 @@ class SelectMenu(Widget):
         ...
 
 class SelectMenuButton(Button):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SelectMenuButton'
@@ -44431,6 +45732,7 @@ class SelectMenuButton(Button):
         ...
 
 class SelectionData(_BlipValue):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44443,6 +45745,7 @@ class SelectionData(_BlipValue):
         ...
 
 class SelectionManipulator(Manipulator):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44462,6 +45765,7 @@ class SelectionManipulator(Manipulator):
         ...
 
 class SequenceGroup(Resource):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SequenceGroup'
@@ -44470,6 +45774,7 @@ class SequenceGroup(Resource):
         ...
 
 class SequencedIndirectionController(IndirectionController):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SequencedIndirectionController'
@@ -44489,6 +45794,7 @@ class SequencedIndirectionController(IndirectionController):
         ...
 
 class SequencedValue(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44525,6 +45831,7 @@ class SequencedValue(_BlipValue):
         ...
 
 class SerialCommand(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SerialCommand'
@@ -44541,6 +45848,7 @@ class SerialCommand(Resource):
         ...
 
 class SerialDevice(ControlDevice):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SerialDevice'
@@ -44598,6 +45906,7 @@ class SerialDevice(ControlDevice):
         ...
 
 class SerialModule(ControlModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SerialModule'
@@ -44606,18 +45915,22 @@ class SerialModule(ControlModule):
         ...
 
 class SerializableAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Server(NetworkBase):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Session(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class SessionDiscovery(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44625,6 +45938,7 @@ class SessionDiscovery(_BlipValue):
         ...
 
 class SessionDiscoverySystem(Subsystem):
+    """Categories: ['D3Net', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44635,6 +45949,7 @@ class SessionDiscoverySystem(Subsystem):
         ...
 
 class SessionSystem(Subsystem):
+    """Categories: ['D3Net', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44649,6 +45964,7 @@ class SessionSystem(Subsystem):
         ...
 
 class SetList(Resource):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SetList'
@@ -44661,6 +45977,7 @@ class SetList(Resource):
         ...
 
 class ShaderMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44683,6 +46000,7 @@ class ShaderMaterial(DxMaterial):
         ...
 
 class ShadowRP(_BlipValue):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44695,6 +46013,7 @@ class ShadowRP(_BlipValue):
         ...
 
 class ShadowResource(_BlipValue):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44702,10 +46021,12 @@ class ShadowResource(_BlipValue):
         ...
 
 class ShadowResourceDomain(Domain):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ShadowResourceDomainConnection(DomainConnection):
+    """Categories: ['Internal', 'Resources']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44713,6 +46034,7 @@ class ShadowResourceDomainConnection(DomainConnection):
         ...
 
 class ShadowResourceHTTPSystem(Subsystem):
+    """Category: System"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44720,10 +46042,12 @@ class ShadowResourceHTTPSystem(Subsystem):
         ...
 
 class SharedVideoIn(VideoIn):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class SharedVideoInVideoInSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44731,6 +46055,7 @@ class SharedVideoInVideoInSystem(Subsystem):
         ...
 
 class ShortcutView(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ShortcutView'
@@ -44747,6 +46072,7 @@ class ShortcutView(Widget):
         ...
 
 class ShotRecorder(Device):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ShotRecorder'
@@ -44871,6 +46197,7 @@ class ShotRecorder(Device):
         ...
 
 class ShotRecorderExportSettings(_BlipValue):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -44953,6 +46280,7 @@ class ShotRecorderExportSettings(_BlipValue):
         ...
 
 class Simotion(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SimotionDriver'
@@ -44972,10 +46300,12 @@ class Simotion(UdpReceiverDriver):
         ...
 
 class SimotionAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class SimpleGraph(MetricMonitor):
+    """Category: Monitoring"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SimpleGraph'
@@ -44989,6 +46319,7 @@ class SimpleGraph(MetricMonitor):
         ...
 
 class SinglePoseCalibratedPoint(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SinglePoseCalibratedPoint'
@@ -45020,6 +46351,7 @@ class SinglePoseCalibratedPoint(Resource):
         ...
 
 class SingleRenderStream(RenderStreamCluster):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SingleRenderStream'
@@ -45028,6 +46360,7 @@ class SingleRenderStream(RenderStreamCluster):
         ...
 
 class SizeMetadata(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45052,6 +46385,7 @@ class SizeMetadata(_BlipValue):
         ...
 
 class SkeletalJointLayout(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45088,6 +46422,7 @@ class SkeletalJointLayout(_BlipValue):
         ...
 
 class SkeletalJointPose(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45108,6 +46443,7 @@ class SkeletalJointPose(_BlipValue):
         ...
 
 class SkeletalPointGroup(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45134,6 +46470,7 @@ class SkeletalPointGroup(_BlipValue):
         ...
 
 class SkeletalPointTrackingSource(SkeletalTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SkeletalPointTrackingSource'
@@ -45205,6 +46542,7 @@ class SkeletalPointTrackingSource(SkeletalTrackingSource):
         ...
 
 class SkeletalTrackingSource(ObjectTrackingSource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SkeletalTrackingSource'
@@ -45213,6 +46551,7 @@ class SkeletalTrackingSource(ObjectTrackingSource):
         ...
 
 class Skeleton(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Skeleton'
@@ -45332,6 +46671,7 @@ class Skeleton(Object):
         ...
 
 class SkeletonJoint(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45352,6 +46692,7 @@ class SkeletonJoint(_BlipValue):
         ...
 
 class SkeletonJoints(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45383,6 +46724,7 @@ class SkeletonJoints(_BlipValue):
         ...
 
 class SkeletonTrackerTester(ScreenPositionDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SkeletonTrackerTester'
@@ -45424,20 +46766,24 @@ class SkeletonTrackerTester(ScreenPositionDriver):
         ...
 
 class SkinVert(Vert):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class SkinnedMesh(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SkinnedMesh'
 
 class SkinnedMesh2(Mesh):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SkinnedMesh'
 
 class SkinnedMeshComputeMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45445,6 +46791,7 @@ class SkinnedMeshComputeMaterial(DxMaterial):
         ...
 
 class SkinnedMeshJoints(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SkinnedMeshJoints'
@@ -45453,6 +46800,7 @@ class SkinnedMeshJoints(Resource):
         ...
 
 class SlcAwareDisplay(Display):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SlcAwareDisplay'
@@ -45461,6 +46809,7 @@ class SlcAwareDisplay(Display):
         ...
 
 class SlcConfig(Resource):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SlcConfig'
@@ -45574,6 +46923,7 @@ class SlcConfig(Resource):
         ...
 
 class SlcRegionManagement(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45586,10 +46936,12 @@ class SlcRegionManagement(_BlipValue):
         ...
 
 class SlcRegionUpdate(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class SlideShow(ResourceSequence):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SlideShow'
@@ -45630,6 +46982,7 @@ class SlideShow(ResourceSequence):
         ...
 
 class SlugFont(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45727,6 +47080,7 @@ class SlugFont(_BlipValue):
         ...
 
 class SmartGroupLayer(GroupLayer):
+    """Categories: ['Modules', 'Sockpuppet']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SmartGroupLayer'
@@ -45735,6 +47089,7 @@ class SmartGroupLayer(GroupLayer):
         ...
 
 class SockPuppetChevronModule(ChevronModule):
+    """Categories: ['Sockpuppet', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockPuppetChevronModule'
@@ -45761,6 +47116,7 @@ class SockPuppetChevronModule(ChevronModule):
         ...
 
 class SockPuppetGradientModule(GradientModule):
+    """Categories: ['Sockpuppet', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockPuppetGradientModule'
@@ -45787,6 +47143,7 @@ class SockPuppetGradientModule(GradientModule):
         ...
 
 class SockPuppetNotchModule(NotchModule):
+    """Categories: ['Modules', 'Sockpuppet']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockPuppetNotchModule'
@@ -45853,6 +47210,7 @@ class SockPuppetNotchModule(NotchModule):
         ...
 
 class SockPuppetSystem(Subsystem):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -45871,6 +47229,7 @@ class SockPuppetSystem(Subsystem):
         ...
 
 class SockPuppetVideoModule(ProjectionAwareModule):
+    """Categories: ['Modules', 'Sockpuppet']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockPuppetVideoModule'
@@ -46256,6 +47615,7 @@ class SockPuppetVideoModule(ProjectionAwareModule):
         ...
 
 class SocketSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -46263,6 +47623,7 @@ class SocketSystem(Subsystem):
         ...
 
 class SockpuppetPersonality(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockpuppetPersonality'
@@ -46317,6 +47678,7 @@ class SockpuppetPersonality(Resource):
         ...
 
 class SockpuppetPersonalityRegistry(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockpuppetPersonalityRegistry'
@@ -46350,6 +47712,7 @@ class SockpuppetPersonalityRegistry(Resource):
         ...
 
 class SockpuppetPersonalitySet(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockpuppetPersonalitySet'
@@ -46382,6 +47745,7 @@ class SockpuppetPersonalitySet(Resource):
         ...
 
 class SockpuppetProperty(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockpuppetProperty'
@@ -46526,6 +47890,7 @@ class SockpuppetProperty(Resource):
         ...
 
 class SockpuppetPropertyOption(Resource):
+    """Category: Sockpuppet"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SockpuppetPropertyOption'
@@ -46564,6 +47929,7 @@ class SockpuppetPropertyOption(Resource):
         ...
 
 class SoftEdgePoint(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SoftEdgePoint'
@@ -46585,6 +47951,7 @@ class SoftEdgePoint(Resource):
         ...
 
 class SoftEdgeTexture(ProceduralTexture):
+    """Categories: ['Feed', 'GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SoftEdgeTexture'
@@ -46668,6 +48035,7 @@ class SoftEdgeTexture(ProceduralTexture):
         ...
 
 class SoftEdgeUpdateSystem(Subsystem):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -46675,6 +48043,7 @@ class SoftEdgeUpdateSystem(Subsystem):
         ...
 
 class SolidIcon(Icon):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SolidIcon'
@@ -46691,6 +48060,7 @@ class SolidIcon(Icon):
         ...
 
 class SolidTexture(ProceduralTexture):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SolidTexture'
@@ -46708,6 +48078,7 @@ class SolidTexture(ProceduralTexture):
         ...
 
 class SortedRenderList(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -46718,10 +48089,12 @@ class SortedRenderList(_BlipValue):
         ...
 
 class SortedRenderObject(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class SourcePopupMenu(PopupMenu):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SourcePopupMenu'
@@ -46731,6 +48104,7 @@ class SourcePopupMenu(PopupMenu):
         ...
 
 class Space(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Space'
@@ -46746,6 +48120,7 @@ class Space(Resource):
         ...
 
 class SpaceWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SpaceWidget'
@@ -46813,14 +48188,17 @@ class SpaceWidget(Widget):
         ...
 
 class SparseStringArray(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
     class CompressedEntry(_BlipValue):
+        """Category: Utility"""
         null: Self
         _classInfo: 'ClassInfo'
 
 class SpatialCalibrationConfig(Resource):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SpatialCalibrationConfig'
@@ -46902,6 +48280,7 @@ class SpatialCalibrationConfig(Resource):
         ...
 
 class SpatialCalibrationFrameOfReference(AnimationAxisSettings):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SpatialCalibrationFrameOfReference'
@@ -46924,6 +48303,7 @@ class SpatialCalibrationFrameOfReference(AnimationAxisSettings):
         ...
 
 class SpatialCalibrationSettings(_BlipValue):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -46999,6 +48379,7 @@ class SpatialCalibrationSettings(_BlipValue):
         ...
 
 class SpatialMap(CameraPlate):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Spatial'
@@ -47027,6 +48408,7 @@ class SpatialMap(CameraPlate):
         ...
 
 class SpatialMapObject(ProjectionObject):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SpatialMapObject'
@@ -47035,6 +48417,7 @@ class SpatialMapObject(ProjectionObject):
         ...
 
 class SpatialMapPoseUpgrade(_BlipValue):
+    """Categories: ['Internal', 'Mappings']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -47045,6 +48428,7 @@ class SpatialMapPoseUpgrade(_BlipValue):
         ...
 
 class Spherical(Projection):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Spherical'
@@ -47152,6 +48536,7 @@ class Spherical(Projection):
         ...
 
 class SphericalCamera(Camera):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SphericalCamera'
@@ -47165,6 +48550,7 @@ class SphericalCamera(Camera):
         ...
 
 class SphericalCameraImpl(_BlipValue):
+    """Categories: ['Internal', 'Stage']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -47177,6 +48563,7 @@ class SphericalCameraImpl(_BlipValue):
         ...
 
 class SphericalCameraNavigationManipulator(NavigationManipulator):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -47184,6 +48571,7 @@ class SphericalCameraNavigationManipulator(NavigationManipulator):
         ...
 
 class SphericalProjectionObject(ProjectionObject):
+    """Category: Mappings"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SphericalProjectionObject'
@@ -47192,6 +48580,7 @@ class SphericalProjectionObject(ProjectionObject):
         ...
 
 class SphericalRenderParams(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -47240,6 +48629,7 @@ class SphericalRenderParams(_BlipValue):
         ...
 
 class SpinBitmap(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SpinBitmap'
@@ -47331,6 +48721,7 @@ class SpinBitmap(Module):
         ...
 
 class Stage(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Stage'
@@ -47504,9 +48895,9 @@ class Stage(Object):
 
 # !!!!!! Error generating stub for property 'displays'
 #Traceback (most recent call last):
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -47911,6 +49302,7 @@ class Stage(Object):
         ...
 
 class StageKinetiksMoveCatDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StageKinetiksMoveCatDriver'
@@ -47931,6 +49323,7 @@ class StageKinetiksMoveCatDriver(UdpReceiverDriver):
         ...
 
 class StageRenderModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StageRenderModule'
@@ -47962,6 +49355,7 @@ class StageRenderModule(Module):
         ...
 
 class StageRenderSettings(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StageRenderSettings'
@@ -48435,6 +49829,7 @@ class StageRenderSettings(Resource):
         ...
 
 class State(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -48465,14 +49860,17 @@ class State(_BlipValue):
         ...
 
 class StatusSharer(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class StatusUI(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class StreamIdentifier(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -48497,6 +49895,7 @@ class StreamIdentifier(_BlipValue):
         ...
 
 class StreamObject(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -48569,6 +49968,7 @@ class StreamObject(_BlipValue):
         ...
 
 class StreamStatusManager(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -48576,6 +49976,7 @@ class StreamStatusManager(_BlipValue):
         ...
 
 class StreamStatusMsg(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -48591,6 +49992,7 @@ class StreamStatusMsg(_BlipValue):
         ...
 
 class StreamingACNSystem(Subsystem):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -48598,6 +50000,7 @@ class StreamingACNSystem(Subsystem):
         ...
 
 class StringProjectorControlCommand(ProjectorControlCommand):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StringProjectorControlCommand'
@@ -48615,6 +50018,7 @@ class StringProjectorControlCommand(ProjectorControlCommand):
         ...
 
 class StringProjectorControlDevice(ProjectorControlDevice):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StringProjectorControlDevice'
@@ -48803,6 +50207,7 @@ class StringProjectorControlDevice(ProjectorControlDevice):
         ...
 
 class StringSequence(KeySequence):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StringSequence'
@@ -48814,6 +50219,7 @@ class StringSequence(KeySequence):
         ...
 
 class StrobeModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StrobeModule'
@@ -48896,6 +50302,7 @@ class StrobeModule(Module):
         ...
 
 class StructuredLightRenderSystem(Subsystem):
+    """Categories: ['Calibration', 'Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -48910,10 +50317,12 @@ class StructuredLightRenderSystem(Subsystem):
         ...
 
 class StsAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class StsDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StsDriver'
@@ -48922,6 +50331,7 @@ class StsDriver(UdpReceiverDriver):
         ...
 
 class StypeDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'StypeDriver'
@@ -48941,6 +50351,7 @@ class StypeDriver(UdpReceiverDriver):
         ...
 
 class SubscribeMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -48961,6 +50372,7 @@ class SubscribeMessage(Message):
         ...
 
 class SubscribedStreamStatus(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49086,6 +50498,7 @@ class SubscribedStreamStatus(_BlipValue):
         ...
 
 class SubscriptionLookupError(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49109,6 +50522,7 @@ class SubscriptionLookupError(_BlipValue):
         ...
 
 class SubscriptionManager(Subsystem):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49116,6 +50530,7 @@ class SubscriptionManager(Subsystem):
         ...
 
 class Subsystem(_BlipValue):
+    """Category: System"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49132,6 +50547,7 @@ class Subsystem(_BlipValue):
         ...
 
 class SubsystemManager(ISubsystemManager):
+    """Category: System"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49145,6 +50561,7 @@ class SubsystemManager(ISubsystemManager):
         ...
 
 class SuperLayer(Resource):
+    """Categories: ['Sockpuppet', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SuperLayer'
@@ -49263,6 +50680,7 @@ class SuperLayer(Resource):
         ...
 
 class SuperResolutionModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SuperResolutionModule'
@@ -49289,11 +50707,13 @@ class SuperResolutionModule(Module):
         ...
 
 class SuperTrack(Resource):
+    """Categories: ['Sockpuppet', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SuperTrack'
 
     class AudioSection(_BlipValue):
+        """Categories: ['Audio', 'Track and Sequencing']"""
         null: Self
         _classInfo: 'ClassInfo'
 
@@ -49520,6 +50940,7 @@ return: Whether the superlayer is found in the track"""
         ...
 
 class SuperTransportManager(Resource):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportManager'
@@ -49561,6 +50982,7 @@ class SuperTransportManager(Resource):
         ...
 
 class SwitchableString(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49579,6 +51001,7 @@ class SwitchableString(_BlipValue):
         ...
 
 class SyncCheckProcess(VideoInCaptureProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'SyncCheckProcess'
@@ -49614,6 +51037,7 @@ class SyncCheckProcess(VideoInCaptureProcess):
         ...
 
 class SyncCommand(_BlipValue):
+    """Categories: ['Internal', 'Renderstream']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49621,6 +51045,7 @@ class SyncCommand(_BlipValue):
         ...
 
 class SyncObject(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49636,6 +51061,7 @@ class SyncObject(_BlipValue):
         ...
 
 class SyncSystem(Subsystem):
+    """Categories: ['D3Net', 'Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49654,6 +51080,7 @@ class SyncSystem(Subsystem):
         ...
 
 class SystemAlertStatus(_BlipValue):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49674,10 +51101,12 @@ class SystemAlertStatus(_BlipValue):
         ...
 
 class SystemInfoDataSharer_Client(_BlipValue):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class Table(Resource):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Table'
@@ -49697,6 +51126,7 @@ class Table(Resource):
         ...
 
 class Tag(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49724,6 +51154,7 @@ class Tag(_BlipValue):
         ...
 
 class Target2Module(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TargetPresetModule'
@@ -49746,6 +51177,7 @@ class Target2Module(Module):
         ...
 
 class TargetModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TargetControlModule'
@@ -49786,6 +51218,7 @@ class TargetModule(Module):
         ...
 
 class TargetObjectModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TargetObjectModule'
@@ -49827,10 +51260,12 @@ class TargetObjectModule(Module):
         ...
 
 class Task(_BlipValue):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class TaskExecutorSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49846,10 +51281,12 @@ class TaskExecutorSystem(Subsystem):
         ...
 
 class TaskGroup(Task):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class TaskMetrics(_BlipValue):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49870,6 +51307,7 @@ class TaskMetrics(_BlipValue):
         ...
 
 class TaskStatus(_BlipValue):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49949,6 +51387,7 @@ class TaskStatus(_BlipValue):
         ...
 
 class TaskStatusMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49977,6 +51416,7 @@ class TaskStatusMessage(Message):
         ...
 
 class TaskSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -49990,6 +51430,7 @@ class TaskSystem(Subsystem):
         ...
 
 class TasksReportMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -50010,6 +51451,7 @@ class TasksReportMessage(Message):
         ...
 
 class TcpIndirectionController(KeyedListIndirectionController):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TcpIndirectionController'
@@ -50038,6 +51480,7 @@ class TcpIndirectionController(KeyedListIndirectionController):
         ...
 
 class TelnetConsole(Subsystem):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -50053,6 +51496,7 @@ class TelnetConsole(Subsystem):
         ...
 
 class TelnetDVIMatrix(DVIMatrix):
+    """Categories: ['Devices', 'Internal', 'App']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TelnetMatrix'
@@ -50120,6 +51564,7 @@ class TelnetDVIMatrix(DVIMatrix):
         ...
 
 class TelnetDevice(ControlDevice):
+    """Categories: ['Devices', 'Internal', 'App']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TelnetDevice'
@@ -50173,6 +51618,7 @@ class TelnetDevice(ControlDevice):
         ...
 
 class TelnetModule(ControlModule):
+    """Categories: ['App', 'Modules', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TelnetModule'
@@ -50199,6 +51645,7 @@ class TelnetModule(ControlModule):
         ...
 
 class TelnetSystem(Subsystem):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -50206,6 +51653,7 @@ class TelnetSystem(Subsystem):
         ...
 
 class TestApp(App):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TestApp'
@@ -50214,6 +51662,7 @@ class TestApp(App):
         ...
 
 class TestPatternModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TestPatternModule'
@@ -50357,6 +51806,7 @@ class TestPatternModule(Module):
         ...
 
 class TestReceiverDriver(ScreenPositionDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TestReceiverDriver'
@@ -50374,6 +51824,7 @@ class TestReceiverDriver(ScreenPositionDriver):
         ...
 
 class TextBox(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TextBox'
@@ -50613,6 +52064,7 @@ class TextBox(Widget):
         ...
 
 class TextFont(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TextFont'
@@ -50621,6 +52073,7 @@ class TextFont(Resource):
         ...
 
 class TextLabel(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TextLabel'
@@ -50656,6 +52109,7 @@ class TextLabel(Widget):
         ...
 
 class TextModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TextModule'
@@ -50743,6 +52197,7 @@ class TextModule(Module):
         ...
 
 class TextureDownloader(Subsystem):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -50750,6 +52205,7 @@ class TextureDownloader(Subsystem):
         ...
 
 class TextureParameterAssigner(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -50784,10 +52240,12 @@ class TextureParameterAssigner(_BlipValue):
         ...
 
 class Thread(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ThreadPool(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -50795,6 +52253,7 @@ class ThreadPool(_BlipValue):
         ...
 
 class Thumbnail(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Thumbnail'
@@ -50850,10 +52309,12 @@ class Thumbnail(Widget):
         ...
 
 class ThumbnailRequest(_BlipValue):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class ThumbnailSystem(Subsystem):
+    """Categories: ['Internal', 'Renderer', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -50875,6 +52336,7 @@ class ThumbnailSystem(Subsystem):
         ...
 
 class TickBoxWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TickBoxWidget'
@@ -50902,6 +52364,7 @@ class TickBoxWidget(Widget):
         ...
 
 class TickValueBox(ValueBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TickValueBox'
@@ -50910,6 +52373,7 @@ class TickValueBox(ValueBox):
         ...
 
 class TimeSeparatedPackageList(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimeSeparatedPackageList'
@@ -50921,6 +52385,7 @@ class TimeSeparatedPackageList(Widget):
         ...
 
 class Timecode(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -50973,6 +52438,7 @@ class Timecode(_BlipValue):
         ...
 
 class TimecodeCursor(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeCursor'
@@ -50985,6 +52451,7 @@ class TimecodeCursor(Widget):
         ...
 
 class TimecodeReadoutModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ReadoutModule'
@@ -51021,6 +52488,7 @@ class TimecodeReadoutModule(Module):
         ...
 
 class TimecodeSubmitWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeSubmitWidget'
@@ -51035,6 +52503,7 @@ class TimecodeSubmitWidget(Widget):
         ...
 
 class TimecodeSystemTime(TimecodeTransportClocked):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeSystemTime'
@@ -51049,6 +52518,7 @@ class TimecodeSystemTime(TimecodeTransportClocked):
         ...
 
 class TimecodeTester(TimecodeTransportClocked):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTester'
@@ -51096,11 +52566,13 @@ class TimecodeTester(TimecodeTransportClocked):
         ...
 
 class TimecodeTextBox(TextBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTextBox'
 
 class TimecodeTransport(Resource):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTransport'
@@ -51118,6 +52590,7 @@ class TimecodeTransport(Resource):
         ...
 
 class TimecodeTransportBeat(TimecodeTransport):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTransportBeat'
@@ -51142,6 +52615,7 @@ class TimecodeTransportBeat(TimecodeTransport):
         ...
 
 class TimecodeTransportClocked(TimecodeTransport):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTransportClocked'
@@ -51156,6 +52630,7 @@ class TimecodeTransportClocked(TimecodeTransport):
         ...
 
 class TimecodeTransportLtc(TimecodeTransportClocked):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTransportLtc'
@@ -51195,6 +52670,7 @@ class TimecodeTransportLtc(TimecodeTransportClocked):
         ...
 
 class TimecodeTransportMidiBeatClock(TimecodeTransportBeat):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTransportMidiBeatClock'
@@ -51213,6 +52689,7 @@ class TimecodeTransportMidiBeatClock(TimecodeTransportBeat):
         ...
 
 class TimecodeTransportMtc(TimecodeTransportClocked):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTransportMtc'
@@ -51239,6 +52716,7 @@ class TimecodeTransportMtc(TimecodeTransportClocked):
         ...
 
 class TimecodeTransportTapTempo(TimecodeTransportBeat):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTransportTapTempo'
@@ -51267,6 +52745,7 @@ class TimecodeTransportTapTempo(TimecodeTransportBeat):
         ...
 
 class TimecodeTransportVitc(TimecodeTransportClocked):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeTransportVitc'
@@ -51308,6 +52787,7 @@ class TimecodeTransportVitc(TimecodeTransportClocked):
         ...
 
 class TimecodeValueBox(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TimecodeValueBox'
@@ -51316,6 +52796,7 @@ class TimecodeValueBox(ValueBox):
         ...
 
 class Timer(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -51338,6 +52819,7 @@ class Timer(_BlipValue):
         ...
 
 class Timing(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -51438,6 +52920,7 @@ class Timing(_BlipValue):
         ...
 
 class TitleButton(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TitleButton'
@@ -51516,20 +52999,24 @@ class TitleButton(Widget):
         ...
 
 class Toggle3DButton(Button):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Toggle3DButton'
 
 class ToggleButton(Button):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ToggleButton'
 
 class TokenDesc(_BlipValue):
+    """Categories: ['Cloud', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class TooltipInfo(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -51577,6 +53064,7 @@ class TooltipInfo(_BlipValue):
         ...
 
 class TouchDesignerEngineDefinition(EngineDefinition):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -51584,12 +53072,14 @@ class TouchDesignerEngineDefinition(EngineDefinition):
         ...
 
 class Track(SuperTrack):
+    """Categories: ['Sockpuppet', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Track'
 
     @property
     def cues(self) -> TimeSequence[Cue]:
+        """All cues (containing Sections, Tags, Notes, and transition settings) in the track"""
         ...
 
     @cues.setter
@@ -51598,6 +53088,7 @@ class Track(SuperTrack):
 
     @property
     def defaultTransitionInfo(self) -> TrackTransitionInfo:
+        """Default transition settings for the track."""
         ...
 
     @defaultTransitionInfo.setter
@@ -51617,6 +53108,7 @@ class Track(SuperTrack):
 
     @property
     def trigger_note(self) -> str:
+        """Numerical identifier for the track, used to trigger the track from MIDI or ArtNet."""
         ...
 
     @trigger_note.setter
@@ -51748,10 +53240,12 @@ return: Whether the superlayer is found in the track"""
         ...
 
 class TrackAndBeat(_BlipValue):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class TrackHelper(_BlipValue):
+    """Categories: ['GUI', 'Internal', 'Track and Sequencing']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -51759,6 +53253,7 @@ class TrackHelper(_BlipValue):
     barSectionColours: Callable
 
 class TrackJumpModule(Module):
+    """Categories: ['Track and Sequencing', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackJumpModule'
@@ -51794,6 +53289,7 @@ class TrackJumpModule(Module):
         ...
 
 class TrackModule(Module):
+    """Categories: ['Track and Sequencing', 'Modules']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackModule'
@@ -51836,11 +53332,13 @@ class TrackModule(Module):
         ...
 
 class TrackPlayHead(PlayHead):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackPlayHead'
 
 class TrackPlayer(Resource):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackPlayer'
@@ -51929,6 +53427,7 @@ class TrackPlayer(Resource):
         ...
 
 class TrackTransitionInfo(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -51985,6 +53484,7 @@ class TrackTransitionInfo(_BlipValue):
         ...
 
 class TrackTransitionInfoValueBox(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackTransitionInfoValueBox'
@@ -51993,6 +53493,7 @@ class TrackTransitionInfoValueBox(ValueBox):
         ...
 
 class TrackUtils(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52000,6 +53501,7 @@ class TrackUtils(_BlipValue):
     tagAlreadyExists: Callable
 
 class TrackedFixedPoint(_BlipValue):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52036,6 +53538,7 @@ class TrackedFixedPoint(_BlipValue):
         ...
 
 class TrackedPoint(ReferencePoint):
+    """Categories: ['Stage', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackedPoint'
@@ -52053,6 +53556,7 @@ class TrackedPoint(ReferencePoint):
         ...
 
 class TrackedSkeletalLayout(_BlipValue):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52073,6 +53577,7 @@ class TrackedSkeletalLayout(_BlipValue):
         ...
 
 class TrackerDelayCalibrationProcess(VideoInCaptureProcess):
+    """Category: Calibration"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackerDelayCalibrationProcess'
@@ -52135,6 +53640,7 @@ class TrackerDelayCalibrationProcess(VideoInCaptureProcess):
         ...
 
 class Tracking6DOF(TrackingItem):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Tracking6DOF'
@@ -52153,6 +53659,7 @@ class Tracking6DOF(TrackingItem):
         ...
 
 class Tracking6DOFState(TrackingVectorState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52169,6 +53676,7 @@ class Tracking6DOFState(TrackingVectorState):
         ...
 
 class TrackingFlags(_BlipValue):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52261,6 +53769,7 @@ class TrackingFlags(_BlipValue):
         ...
 
 class TrackingFrameOfReference(AnimationAxisSettings):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackingFrameOfReference'
@@ -52337,6 +53846,7 @@ class TrackingFrameOfReference(AnimationAxisSettings):
         ...
 
 class TrackingItem(Resource):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackingItem'
@@ -52373,6 +53883,7 @@ class TrackingItem(Resource):
         ...
 
 class TrackingMarkerModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackingMarkerModule'
@@ -52466,6 +53977,7 @@ class TrackingMarkerModule(Module):
         ...
 
 class TrackingMarkerModuleConfig(ModuleConfig):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackingMarkerModuleConfig'
@@ -52492,6 +54004,7 @@ class TrackingMarkerModuleConfig(ModuleConfig):
         ...
 
 class TrackingScalar(TrackingItem):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackingScalar'
@@ -52510,6 +54023,7 @@ class TrackingScalar(TrackingItem):
         ...
 
 class TrackingScalarState(TrackingState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52526,6 +54040,7 @@ class TrackingScalarState(TrackingState):
         ...
 
 class TrackingState(IDataState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52534,6 +54049,7 @@ class TrackingState(IDataState):
         ...
 
 class TrackingVector(TrackingItem):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackingVector'
@@ -52552,6 +54068,7 @@ class TrackingVector(TrackingItem):
         ...
 
 class TrackingVectorState(TrackingState):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52568,6 +54085,7 @@ class TrackingVectorState(TrackingState):
         ...
 
 class TrackmenDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TrackmenDriver'
@@ -52587,6 +54105,7 @@ class TrackmenDriver(UdpReceiverDriver):
         ...
 
 class TransformedPositionDeltaMesh(DeltaMesh):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransformedPositionDeltaMesh'
@@ -52603,10 +54122,12 @@ class TransformedPositionDeltaMesh(DeltaMesh):
         ...
 
 class TranslationGizmo(Gizmo3D):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class TranslationManipulator(Manipulator3D):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52618,12 +54139,14 @@ class TranslationManipulator(Manipulator3D):
         ...
 
 class Translator(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
     translateToString: Callable
 
 class TransmitIPDestination(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -52652,6 +54175,7 @@ class TransmitIPDestination(_BlipValue):
         ...
 
 class Transport(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Transport'
@@ -52660,6 +54184,7 @@ class Transport(Resource):
         ...
 
 class TransportBrightnessLocalModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportBrightnessLocalModule'
@@ -52677,11 +54202,13 @@ class TransportBrightnessLocalModule(Module):
         ...
 
 class TransportButton(Button):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportButton'
 
 class TransportCMDBrightness(TransportCommand):
+    """Categories: ['Internal', 'Transports']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDBrightness'
@@ -52697,6 +54224,7 @@ class TransportCMDBrightness(TransportCommand):
         ...
 
 class TransportCMDChaseTime(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDChaseTime'
@@ -52729,6 +54257,7 @@ class TransportCMDChaseTime(TransportCommand):
         ...
 
 class TransportCMDOutputMode(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDOutputMode'
@@ -52745,6 +54274,7 @@ class TransportCMDOutputMode(TransportCommand):
         ...
 
 class TransportCMDPlayMode(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDPlayMode'
@@ -52761,6 +54291,7 @@ class TransportCMDPlayMode(TransportCommand):
         ...
 
 class TransportCMDRecvTimecode(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDRecvTimecode'
@@ -52785,6 +54316,7 @@ class TransportCMDRecvTimecode(TransportCommand):
         ...
 
 class TransportCMDSetSpeed(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDSetSpeed'
@@ -52801,6 +54333,7 @@ class TransportCMDSetSpeed(TransportCommand):
         ...
 
 class TransportCMDSmoothTime(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDSmoothTime'
@@ -52825,6 +54358,7 @@ class TransportCMDSmoothTime(TransportCommand):
         ...
 
 class TransportCMDStatus(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDStatus'
@@ -52897,6 +54431,7 @@ class TransportCMDStatus(TransportCommand):
         ...
 
 class TransportCMDStop(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDStop'
@@ -52905,6 +54440,7 @@ class TransportCMDStop(TransportCommand):
         ...
 
 class TransportCMDTRender(TransportCommand):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDTRender'
@@ -52913,6 +54449,7 @@ class TransportCMDTRender(TransportCommand):
         ...
 
 class TransportCMDTrackBeat(TransportCommand):
+    """Categories: ['Internal', 'Transports']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDTrackBeat'
@@ -52928,6 +54465,7 @@ class TransportCMDTrackBeat(TransportCommand):
         ...
 
 class TransportCMDVolume(TransportCommand):
+    """Categories: ['Internal', 'Transports']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCMDVolume'
@@ -52943,6 +54481,7 @@ class TransportCMDVolume(TransportCommand):
         ...
 
 class TransportCommand(GenericCommand):
+    """Categories: ['Internal', 'Transports']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportCommand'
@@ -52982,6 +54521,7 @@ class TransportCommand(GenericCommand):
         ...
 
 class TransportControl(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportControl'
@@ -52993,6 +54533,7 @@ class TransportControl(Widget):
         ...
 
 class TransportControlModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportControlModule'
@@ -53029,6 +54570,7 @@ class TransportControlModule(Module):
         ...
 
 class TransportJumpCommand(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportJumpCommand'
@@ -53089,6 +54631,7 @@ class TransportJumpCommand(Resource):
         ...
 
 class TransportManager(SuperTransportManager):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportManager'
@@ -53330,6 +54873,7 @@ class TransportManager(SuperTransportManager):
         ...
 
 class TransportVolumeLocalModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TransportVolumeLocalModule'
@@ -53347,10 +54891,12 @@ class TransportVolumeLocalModule(Module):
         ...
 
 class Triangle(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class TriggerModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'TriggerModule'
@@ -53396,6 +54942,7 @@ class TriggerModule(Module):
         ...
 
 class TwoPoint5DAsset(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = '2.5DAsset'
@@ -53526,6 +55073,7 @@ class TwoPoint5DAsset(Object):
         ...
 
 class TwoPoint5DFile(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = '2.5DFile'
@@ -53534,6 +55082,7 @@ class TwoPoint5DFile(Resource):
         ...
 
 class TwoPoint5DModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = '2.5DModule'
@@ -53570,6 +55119,7 @@ class TwoPoint5DModule(Module):
         ...
 
 class TwoPoint5DPlate(Display):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = '2.5DPlate'
@@ -53633,6 +55183,7 @@ class TwoPoint5DPlate(Display):
         ...
 
 class TwoPoint5DSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53640,6 +55191,7 @@ class TwoPoint5DSystem(Subsystem):
         ...
 
 class UVLookupModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UVLookupModule'
@@ -53678,6 +55230,7 @@ class UVLookupModule(ProjectionAwareModule):
         ...
 
 class UdpDevice(ControlDevice):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UdpDevice'
@@ -53704,6 +55257,7 @@ class UdpDevice(ControlDevice):
         ...
 
 class UdpIndirectionController(KeyedListIndirectionController):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UdpIndirectionController'
@@ -53732,6 +55286,7 @@ class UdpIndirectionController(KeyedListIndirectionController):
         ...
 
 class UdpReceiverDriver(ScreenPositionDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UdpReceiverDriver'
@@ -53770,6 +55325,7 @@ class UdpReceiverDriver(ScreenPositionDriver):
         ...
 
 class UidManager(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53779,10 +55335,12 @@ class UidManager(_BlipValue):
         ...
 
 class UidNotFound(_BlipValue):
+    """Category: Resources"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class UndistImageResult(_BlipValue):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53798,6 +55356,7 @@ class UndistImageResult(_BlipValue):
         ...
 
 class UndoSystem(Subsystem):
+    """Categories: ['App', 'Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53821,6 +55380,7 @@ class UndoSystem(Subsystem):
         ...
 
 class Undoable(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53833,10 +55393,12 @@ class Undoable(_BlipValue):
         ...
 
 class UnicanAxisState(TrackingScalarState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class UnicanOpenCue(UdpReceiverDriver):
+    """Categories: ['Devices', 'Tracking']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UnicanOpenCueDriver'
@@ -53845,6 +55407,7 @@ class UnicanOpenCue(UdpReceiverDriver):
         ...
 
 class UnitTypeAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53859,6 +55422,7 @@ class UnitTypeAttribute(ReflectionAttributeT):
         ...
 
 class UnrealEngineDefinition(EngineDefinition):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53866,6 +55430,7 @@ class UnrealEngineDefinition(EngineDefinition):
         ...
 
 class UnrealEngineSettings(EngineSettings):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53957,6 +55522,7 @@ class UnrealEngineSettings(EngineSettings):
         ...
 
 class UnrealEngineSettingsResource(EngineSettingsResource):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UnrealEngineSettingsResource'
@@ -53974,6 +55540,7 @@ class UnrealEngineSettingsResource(EngineSettingsResource):
         ...
 
 class UnsubscribeMessage(Message):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -53994,6 +55561,7 @@ class UnsubscribeMessage(Message):
         ...
 
 class UnusedMediaDomain(Domain):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54013,6 +55581,7 @@ class UnusedMediaDomain(Domain):
         ...
 
 class UnusedMediaDomainConnection(DomainConnection):
+    """Categories: ['Internal', 'Media']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54024,6 +55593,7 @@ class UnusedMediaDomainConnection(DomainConnection):
         ...
 
 class UnusedMediaList(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UnusedMediaList'
@@ -54048,30 +55618,37 @@ class UnusedMediaList(Resource):
         ...
 
 class UserAbortException(DetailedException):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class UserInfoDispatcher(_BlipValue):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class UserInfoMessage(_BlipValue):
+    """Categories: ['Message', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class UserInfoProcessMessageHandler(_BlipValue):
+    """Categories: ['Message', 'D3Net', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class UserInfoServer(_BlipValue):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class UserInfoTable(_BlipValue):
+    """Categories: ['Internal', 'Message']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class UserNameAttribute(ReflectionAttributeT):
+    """Categories: ['Internal', 'Reflection']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54080,6 +55657,7 @@ class UserNameAttribute(ReflectionAttributeT):
         ...
 
 class UserSetList(SetList):
+    """Category: Transports"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UserSetList'
@@ -54097,6 +55675,7 @@ class UserSetList(SetList):
         ...
 
 class UvManipulatorMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54104,6 +55683,7 @@ class UvManipulatorMaterial(DxMaterial):
         ...
 
 class UvMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54111,6 +55691,7 @@ class UvMaterial(DxMaterial):
         ...
 
 class UvPositionDeltaMesh(DeltaMesh):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'UvPositionDeltaMesh'
@@ -54119,6 +55700,7 @@ class UvPositionDeltaMesh(DeltaMesh):
         ...
 
 class VClass(Resource):
+    """Category: Test"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VClass'
@@ -54167,6 +55749,7 @@ class VClass(Resource):
         ...
 
 class VFCDevice(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VFCDevice'
@@ -54321,6 +55904,7 @@ class VFCDevice(Resource):
         ...
 
 class VFCDeviceMap(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VFCDeviceMap'
@@ -54337,6 +55921,7 @@ class VFCDeviceMap(Resource):
         ...
 
 class VFCFpgaVersion(_BlipValue):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54368,6 +55953,7 @@ class VFCFpgaVersion(_BlipValue):
         ...
 
 class VFCIPNetConfig(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VFCIPNetConfig'
@@ -54430,6 +56016,7 @@ class VFCIPNetConfig(Resource):
         ...
 
 class VFCPortConfig(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VFCPortConfig'
@@ -54549,6 +56136,7 @@ class VFCPortConfig(Resource):
         ...
 
 class VFCTxIPDestination(Resource):
+    """Category: Feed"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VFCTxIPDestination'
@@ -54578,6 +56166,7 @@ class VFCTxIPDestination(Resource):
         ...
 
 class VRSettings(Resource):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VRSettings'
@@ -54663,6 +56252,7 @@ class VRSettings(Resource):
         ...
 
 class VRSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54688,6 +56278,7 @@ class VRSystem(Subsystem):
         ...
 
 class VRUser(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VRUser'
@@ -54696,6 +56287,7 @@ class VRUser(Object):
         ...
 
 class ValueBox(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ValueBox'
@@ -54808,9 +56400,9 @@ class ValueBox(Widget):
 
 # !!!!!! Error generating stub for property 'property_'
 #Traceback (most recent call last):
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 259, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 259, in _writeProp
 #    prop = self.cls._classInfo.property_(n) # type: d3.PropertyInfo
 #RuntimeError: Failed to find Property in class ValueBox or base classes! Property name = property_.
 
@@ -54905,6 +56497,7 @@ class ValueBox(Widget):
         ...
 
 class ValueBoxProperty(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54951,6 +56544,7 @@ class ValueBoxProperty(_BlipValue):
         ...
 
 class ValueRange(_BlipValue):
+    """Category: Track and Sequencing"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -54965,6 +56559,7 @@ class ValueRange(_BlipValue):
         ...
 
 class VariableVideoModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoModule'
@@ -55253,6 +56848,7 @@ class VariableVideoModule(ProjectionAwareModule):
         ...
 
 class VariableVideoTransitionModule(VariableVideoModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoTransitionModule'
@@ -55301,6 +56897,7 @@ class VariableVideoTransitionModule(VariableVideoModule):
         ...
 
 class Vec(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -55461,6 +57058,7 @@ class Vec(_BlipValue):
         ...
 
 class Vec2(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -55474,7 +57072,9 @@ class Vec2(_BlipValue):
 
     @property
     def x(self) -> float:
-        """UserName: X"""
+        """The x component of the vector.
+           
+           UserName: X"""
         ...
 
     @x.setter
@@ -55483,7 +57083,9 @@ class Vec2(_BlipValue):
 
     @property
     def y(self) -> float:
-        """UserName: Y"""
+        """The y component of the vector.
+           
+           UserName: Y"""
         ...
 
     @y.setter
@@ -55609,6 +57211,7 @@ class Vec2(_BlipValue):
         ...
 
 class Vec2Box(ValueBox):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Vec2Box'
@@ -55617,6 +57220,7 @@ class Vec2Box(ValueBox):
         ...
 
 class Vec3Box(ValueBox):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Vec3Box'
@@ -55634,6 +57238,7 @@ class Vec3Box(ValueBox):
         ...
 
 class VecD(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -55733,6 +57338,7 @@ class VecD(_BlipValue):
         ...
 
 class VectorscopeComputeMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -55740,6 +57346,7 @@ class VectorscopeComputeMaterial(DxMaterial):
         ...
 
 class Venue(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Venue'
@@ -55759,6 +57366,7 @@ class Venue(Object):
         ...
 
 class Vert(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -55835,6 +57443,7 @@ class Vert(_BlipValue):
         ...
 
 class VertNormalVisualiser(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -55842,6 +57451,7 @@ class VertNormalVisualiser(_BlipValue):
         ...
 
 class VertScrollBar2(ScrollBar):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VertScrollBar2'
@@ -55855,6 +57465,7 @@ class VertScrollBar2(ScrollBar):
         ...
 
 class VertexNormalComputeMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -55862,6 +57473,7 @@ class VertexNormalComputeMaterial(DxMaterial):
         ...
 
 class ViconDataStreamDriver(ScreenPositionDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ViconDataStreamDriver'
@@ -55881,6 +57493,7 @@ class ViconDataStreamDriver(ScreenPositionDriver):
         ...
 
 class VideoAsset(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoAsset'
@@ -55994,6 +57607,7 @@ class VideoAsset(Resource):
         ...
 
 class VideoClip(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoClip'
@@ -56439,6 +58053,7 @@ class VideoClip(Resource):
         ...
 
 class VideoFile(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoFile'
@@ -56479,6 +58094,7 @@ class VideoFile(Resource):
         ...
 
 class VideoFileHeader(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoFileHeader'
@@ -56601,6 +58217,7 @@ class VideoFileHeader(Resource):
         ...
 
 class VideoFormat(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -56613,6 +58230,7 @@ class VideoFormat(_BlipValue):
         ...
 
 class VideoFragment(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoFragment'
@@ -56693,10 +58311,12 @@ class VideoFragment(Resource):
         ...
 
 class VideoFrame(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class VideoIn(_BlipValue):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -56740,6 +58360,7 @@ class VideoIn(_BlipValue):
         ...
 
 class VideoInCaptureProcess(Resource):
+    """Categories: ['Calibration', 'Video Input']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoInCaptureProcess'
@@ -56812,6 +58433,7 @@ class VideoInCaptureProcess(Resource):
         ...
 
 class VideoInCaptureSystem(Subsystem):
+    """Categories: ['System', 'Video Input']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -56828,6 +58450,7 @@ class VideoInCaptureSystem(Subsystem):
         ...
 
 class VideoInDeviceMap(DeviceMap):
+    """Categories: ['D3Net', 'Video Input']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoInDeviceMap'
@@ -56835,6 +58458,7 @@ class VideoInDeviceMap(DeviceMap):
     getLogicalDevices: Callable
 
 class VideoInFormat(Resource):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoInFormat'
@@ -56882,10 +58506,12 @@ class VideoInFormat(Resource):
         ...
 
 class VideoInMetrics(_BlipValue):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class VideoInSystem(Subsystem):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -56925,6 +58551,7 @@ class VideoInSystem(Subsystem):
         ...
 
 class VideoInTexture(PreCompTexture):
+    """Categories: ['Internal', 'Renderer', 'Video Input']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoInTexture'
@@ -56943,10 +58570,12 @@ class VideoInTexture(PreCompTexture):
         ...
 
 class VideoInThread(Thread):
+    """Categories: ['Internal', 'Video Input']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class VideoInfo(ImageSequenceInfo):
+    """Category: Video Input"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -56975,6 +58604,7 @@ class VideoInfo(ImageSequenceInfo):
         ...
 
 class VideoModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LegacyVideoModule'
@@ -57162,6 +58792,7 @@ class VideoModule(ProjectionAwareModule):
         ...
 
 class VideoMonitor(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoMonitor'
@@ -57176,6 +58807,7 @@ class VideoMonitor(Widget):
         ...
 
 class VideoMoveModule(VideoModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoMoveModule'
@@ -57184,6 +58816,7 @@ class VideoMoveModule(VideoModule):
         ...
 
 class VideoPlayer(_BlipValue):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57221,6 +58854,7 @@ class VideoPlayer(_BlipValue):
         ...
 
 class VideoPrefetcher(Subsystem):
+    """Categories: ['Internal', 'Media']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57228,6 +58862,7 @@ class VideoPrefetcher(Subsystem):
         ...
 
 class VideoRegion(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57248,6 +58883,7 @@ class VideoRegion(_BlipValue):
         ...
 
 class VideoRegionSet(Resource):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoRegionSet'
@@ -57262,6 +58898,7 @@ class VideoRegionSet(Resource):
         ...
 
 class VideoRegions(_BlipValue):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57285,6 +58922,7 @@ class VideoRegions(_BlipValue):
         ...
 
 class VideoSampler(Device):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoSampler'
@@ -57311,6 +58949,7 @@ class VideoSampler(Device):
         ...
 
 class VideoStitcher(Subsystem):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57332,6 +58971,7 @@ class VideoStitcher(Subsystem):
         ...
 
 class VideoTransitionModule(VideoModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'LegacyVideoTransitionModule'
@@ -57378,6 +59018,7 @@ class VideoTransitionModule(VideoModule):
         ...
 
 class VideoTriggerModule(ProjectionAwareModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VideoTriggerModule'
@@ -57527,6 +59168,7 @@ class VideoTriggerModule(ProjectionAwareModule):
         ...
 
 class Viewer(Object):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Viewer'
@@ -57545,6 +59187,7 @@ class Viewer(Object):
         ...
 
 class VirtualCamera(Camera):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VirtualCamera'
@@ -57676,6 +59319,7 @@ class VirtualCamera(Camera):
         ...
 
 class VirtualCameraCommunication(CameraCommunication):
+    """Category: Omnical"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57683,6 +59327,7 @@ class VirtualCameraCommunication(CameraCommunication):
         ...
 
 class VirtualCameraPosition(CameraPosition):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VirtualCameraPosition'
@@ -57702,6 +59347,7 @@ class VirtualCameraPosition(CameraPosition):
         ...
 
 class VirtualLineupModule(TestPatternModule):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VirtualLineupModule'
@@ -57710,6 +59356,7 @@ class VirtualLineupModule(TestPatternModule):
         ...
 
 class ViscaCamera(CameraDevice):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'ViscaCamera'
@@ -57748,19 +59395,23 @@ class ViscaCamera(CameraDevice):
         ...
 
 class VisibilityProxyLevels(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class VisualActDriver(UdpReceiverDriver):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VisualActDriver'
 
 class VisualActTrackerState(Tracking6DOFState):
+    """Category: Tracking"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class VisualizerSettings(Resource):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'VisualizerSettings'
@@ -57769,6 +59420,7 @@ class VisualizerSettings(Resource):
         ...
 
 class VpxFile(File):
+    """Category: Media"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57779,6 +59431,7 @@ class VpxFile(File):
         ...
 
 class WMISystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57789,6 +59442,7 @@ class WMISystem(Subsystem):
         ...
 
 class WaterJetController(Resource):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WaterJetController'
@@ -57797,6 +59451,7 @@ class WaterJetController(Resource):
         ...
 
 class WaterJetDriver(DmxDriver):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WaterJetDriver'
@@ -57805,11 +59460,13 @@ class WaterJetDriver(DmxDriver):
         ...
 
 class WaterJetDriverInfo(DmxDriverInfo):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WaterJetDriverInfo'
 
 class WaterJetFixture(Fixture):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WaterJetFixture'
@@ -57818,6 +59475,7 @@ class WaterJetFixture(Fixture):
         ...
 
 class WaterJetFixtureGroup(FixtureGroup):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'DmxWaterJets'
@@ -57826,6 +59484,7 @@ class WaterJetFixtureGroup(FixtureGroup):
         ...
 
 class WaterJetFixtureInstance(FixtureInstance):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WaterJetFixtureInstance'
@@ -57834,6 +59493,7 @@ class WaterJetFixtureInstance(FixtureInstance):
         ...
 
 class WaterScreen(Display):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WaterScreen'
@@ -57842,10 +59502,12 @@ class WaterScreen(Display):
         ...
 
 class Waveform(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class WaveformComputeMaterial(DxMaterial):
+    """Categories: ['Internal', 'Renderer']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57853,14 +59515,17 @@ class WaveformComputeMaterial(DxMaterial):
         ...
 
 class WaveformFragment(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class WaveformMetadataCache(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class WebBookmark(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebBookmark'
@@ -57897,6 +59562,7 @@ class WebBookmark(Resource):
         ...
 
 class WebBrowser(_BlipValue):
+    """Categories: ['App', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -57923,6 +59589,7 @@ class WebBrowser(_BlipValue):
         ...
 
 class WebBrowserWidget(Widget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebBrowserWidget'
@@ -57951,6 +59618,7 @@ class WebBrowserWidget(Widget):
         ...
 
 class WebCommand(Resource):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebCommand'
@@ -57968,6 +59636,7 @@ class WebCommand(Resource):
         ...
 
 class WebCommandJavascript(WebCommand):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebCommandJavascript'
@@ -57985,12 +59654,14 @@ class WebCommandJavascript(WebCommand):
         ...
 
 class WebCommandKeyboard(WebCommand):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebCommandKeyboard'
 
     @property
     def ascii(self) -> int:
+        """ASCII value of the current selected key."""
         ...
 
     @ascii.setter
@@ -57999,6 +59670,7 @@ class WebCommandKeyboard(WebCommand):
 
     @property
     def key(self) -> int:
+        """The currently selected key."""
         ...
 
     @key.setter
@@ -58007,6 +59679,7 @@ class WebCommandKeyboard(WebCommand):
 
     @property
     def keyState(self) -> int:
+        """The state of the selected key. 0 = up, 1 = down."""
         ...
 
     @keyState.setter
@@ -58015,6 +59688,7 @@ class WebCommandKeyboard(WebCommand):
 
     @property
     def modifierAlt(self) -> int:
+        """The state of the alt modifier key. 0 = up, 1 = down."""
         ...
 
     @modifierAlt.setter
@@ -58023,6 +59697,7 @@ class WebCommandKeyboard(WebCommand):
 
     @property
     def modifierCtrl(self) -> int:
+        """The state of the ctrl modifier key. 0 = up, 1 = down."""
         ...
 
     @modifierCtrl.setter
@@ -58031,6 +59706,7 @@ class WebCommandKeyboard(WebCommand):
 
     @property
     def modifierShift(self) -> int:
+        """The state of the shift modifier key. 0 = up, 1 = down."""
         ...
 
     @modifierShift.setter
@@ -58041,6 +59717,7 @@ class WebCommandKeyboard(WebCommand):
         ...
 
 class WebCommandMouse(WebCommand):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebCommandMouse'
@@ -58121,6 +59798,7 @@ class WebCommandMouse(WebCommand):
         ...
 
 class WebCommandNavigate(WebCommand):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebCommandNavigate'
@@ -58149,6 +59827,7 @@ class WebCommandNavigate(WebCommand):
         ...
 
 class WebModule(Module):
+    """Category: Modules"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebModule'
@@ -58659,6 +60338,7 @@ class WebModule(Module):
         ...
 
 class WebPluginWidget(ResizableWidget):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'WebPluginWidget'
@@ -58681,6 +60361,7 @@ class WebPluginWidget(ResizableWidget):
         ...
 
 class WebViewSystem(Subsystem):
+    """Categories: ['Internal', 'System']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -58691,6 +60372,7 @@ class WebViewSystem(Subsystem):
         ...
 
 class Widget(Resource):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Widget'
@@ -58760,9 +60442,9 @@ class Widget(Resource):
 
 # !!!!!! Error generating stub for property 'children'
 #Traceback (most recent call last):
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 458, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "C:\dev\d3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -59219,10 +60901,12 @@ class Widget(Resource):
         ...
 
 class WindowResizeParams(_BlipValue):
+    """Categories: ['GUI', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class WireframeRenderParams(_BlipValue):
+    """Category: Stage"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -59235,6 +60919,7 @@ class WireframeRenderParams(_BlipValue):
         ...
 
 class WorkloadCommand(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -59250,10 +60935,12 @@ class WorkloadCommand(_BlipValue):
         ...
 
 class WorkloadCommandResponseInfo(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class WorkloadHealth(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -59298,6 +60985,7 @@ class WorkloadHealth(_BlipValue):
         ...
 
 class WorkloadInstance(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -59380,14 +61068,17 @@ class WorkloadInstance(_BlipValue):
         ...
 
 class WorkloadInstanceID(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class WorkloadManager(_BlipValue):
+    """Category: Renderstream"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class XmlFile(Resource):
+    """Categories: ['System', 'Internal']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'XmlFile'
@@ -59396,7 +61087,8 @@ class XmlFile(Resource):
         ...
 
 class atomic_bool(_BlipValue):
-    """Reflection of the std::atomic_bool class from the C++ standard library"""
+    """Reflection of the std::atomic_bool class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -59412,6 +61104,7 @@ class atomic_bool(_BlipValue):
         ...
 
 class cEditor(Widget):
+    """Categories: ['Internal', 'GUI']"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'Editor'
@@ -59528,15 +61221,18 @@ class cEditor(Widget):
         ...
 
 class deprecated_CameraRegistrationLens(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class deprecated_CameraRegistrationObservation(_BlipValue):
+    """Category: Derogated"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class exception_ptr(_BlipValue):
-    """Reflection of the std::exception_ptr class from the C++ standard library"""
+    """Reflection of the std::exception_ptr class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -59544,6 +61240,7 @@ class exception_ptr(_BlipValue):
         ...
 
 class float4(_BlipValue):
+    """Category: Utility"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -59583,6 +61280,7 @@ class float4(_BlipValue):
         ...
 
 class netsys_NetworkAdaptor(_BlipValue):
+    """Category: D3Net"""
     null: Self
     _classInfo: 'ClassInfo'
 
@@ -59635,6 +61333,7 @@ class netsys_NetworkAdaptor(_BlipValue):
         ...
 
 class sACNDriverOptions(DmxDriverSpecificOptions):
+    """Category: Devices"""
     null: Self
     _classInfo: 'ClassInfo'
     __username__ = 'sACN Driver Options'
@@ -59695,12 +61394,14 @@ class sACNDriverOptions(DmxDriverSpecificOptions):
         ...
 
 class std_nullopt(_BlipValue):
-    """Reflection of the std::nullopt_t class from the C++ standard library"""
+    """Reflection of the std::nullopt_t class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
 class string_view(_BlipValue):
-    """Reflection of the std::string_view class from the C++ standard library"""
+    """Reflection of the std::string_view class from the C++ standard library
+Categories: ['Internal', 'Utility']"""
     null: Self
     _classInfo: 'ClassInfo'
 
