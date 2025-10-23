@@ -4425,7 +4425,9 @@ class Camera(SlcAwareDisplay):
 
     @property
     def frontplateFade(self) -> float:
-        """Category: Output
+        """The opacity of the camera's frontplate content. 0 is fully transparent, 1 is fully opaque.
+           
+           Category: Output
            UserName: AR fade"""
         ...
 
@@ -4463,7 +4465,9 @@ class Camera(SlcAwareDisplay):
 
     @property
     def lens(self) -> LensIntrinsics:
-        """Category: Lens"""
+        """The camera's lens intrinsics values.
+           
+           Category: Lens"""
         ...
 
     @lens.setter
@@ -4472,10 +4476,22 @@ class Camera(SlcAwareDisplay):
 
     @property
     def lensFocusMode(self) -> int:
+        """Disabled: No focus effects applied.
+           Manual: Use focus distance set manually or from tracking source.
+           Object Tracking: Set the focus distance based on a tracked object.
+           
+           Options: {0: 'Disabled', 1: 'Manual', 2: 'Object Tracking'}
+           Category: Focus
+           UserName: Focus mode"""
+        ...
+
+    @lensFocusMode.setter
+    def lensFocusMode(self, value: int) -> None:
         ...
 
     @property
     def lensFocusParams(self) -> LensFocusParams:
+        """The lens focus parameters of the camera. These parameters are used to define depth of field effects, such as aperture and focus distance."""
         ...
 
     @lensFocusParams.setter
@@ -4500,7 +4516,9 @@ class Camera(SlcAwareDisplay):
 
     @property
     def orthographicScale(self) -> float:
-        """Category: Stage Render
+        """Orthographic scale of the camera, when the camera is in orthographic mode.
+           
+           Category: Stage Render
            UserName: Orthographic scale"""
         ...
 
@@ -4616,6 +4634,11 @@ class Camera(SlcAwareDisplay):
 
     @property
     def spatialCalibration(self) -> SpatialCalibrationConfig:
+        """Calibrate the difference between d3-space and tracker space by adjusting the cameras position, zoom and focus.
+           This should always be calibrated after the Video Receive Delay.
+           
+           Category: Physical
+           UserName: Spatial calibration"""
         ...
 
     @spatialCalibration.setter
@@ -4636,7 +4659,9 @@ class Camera(SlcAwareDisplay):
 
     @property
     def takeResolutionFromGuiHead(self) -> int:
-        """Options: {0: 'Fixed', 1: 'Take from GUI'}
+        """Whether the camera resolution is fixed or should be taken from the GUI head.
+           
+           Options: {0: 'Fixed', 1: 'Take from GUI'}
            Category: Settings
            UserName: Resolution Source"""
         ...
@@ -4727,9 +4752,6 @@ class Camera(SlcAwareDisplay):
         ...
 
     def saveCurrentView(self, arg0: str) -> None:
-        ...
-
-    def updateTracking(self) -> None:
         ...
 
 class CameraAutoFocus(CameraCommand):
@@ -12030,6 +12052,7 @@ class DisplayImageSourceMapping(Resource):
 
     @property
     def display(self) -> Display:
+        """The display that will show the images"""
         ...
 
     @display.setter
@@ -12049,6 +12072,7 @@ class DisplayImageSourceMapping(Resource):
 
     @property
     def isTargetDisplay(self) -> bool:
+        """Whether this display will be used as a target for image capture"""
         ...
 
     @isTargetDisplay.setter
@@ -21706,9 +21730,9 @@ class KeySequence(KeyContainer):
 
 # !!!!!! Error generating stub for property 'keys'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 472, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 308, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -23070,6 +23094,7 @@ class LensIntrinsics(_BlipValue):
 
     @property
     def aspectRatio(self) -> float:
+        """Aspect ratio (X/Y) of lens image. This may be different to the aspect of the resolution if the pixels aren't square."""
         ...
 
     @aspectRatio.setter
@@ -23078,6 +23103,7 @@ class LensIntrinsics(_BlipValue):
 
     @property
     def centerShift(self) -> Vec2:
+        """Center shift of the lens. In normalised units, relative to a sensor width of 1"""
         ...
 
     @centerShift.setter
@@ -23094,6 +23120,7 @@ class LensIntrinsics(_BlipValue):
 
     @property
     def focalLength(self) -> float:
+        """Focal length of the lens. In normalised units, relative to a sensor width of 1"""
         ...
 
     @focalLength.setter
@@ -23110,6 +23137,7 @@ class LensIntrinsics(_BlipValue):
 
     @property
     def k1(self) -> float:
+        """The first radial distortion coefficient, which multiplies r^2. In normalised units, relative to a sensor width of 1"""
         ...
 
     @k1.setter
@@ -23126,6 +23154,7 @@ class LensIntrinsics(_BlipValue):
 
     @property
     def k2(self) -> float:
+        """The second radial distortion coefficient, which multiplies r^4. In normalised units, relative to a sensor width of 1"""
         ...
 
     @k2.setter
@@ -23134,6 +23163,7 @@ class LensIntrinsics(_BlipValue):
 
     @property
     def k3(self) -> float:
+        """The third radial distortion coefficient, which multiplies r^6. In normalised units, relative to a sensor width of 1."""
         ...
 
     @k3.setter
@@ -23142,6 +23172,7 @@ class LensIntrinsics(_BlipValue):
 
     @property
     def paWidthMM(self) -> float:
+        """Width of the sensor (projection area) in millimeters."""
         ...
 
     @paWidthMM.setter
@@ -25384,9 +25415,9 @@ class Mat(_BlipValue):
 
 # !!!!!! Error generating stub for property 'coefficient'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 472, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 308, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -26622,9 +26653,9 @@ class MidiControlSet(Resource):
 
 # !!!!!! Error generating stub for property 'objects'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 472, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 308, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -26726,9 +26757,9 @@ class MidiDevice(Device):
 
 # !!!!!! Error generating stub for property 'controlSets'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 472, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 308, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -29662,6 +29693,9 @@ class Object(Resource):
     def remove(self) -> None:
         ...
 
+    def updateTracking(self) -> None:
+        ...
+
 class ObjectBox(Resource):
     """Category: Derogated"""
     null: Self
@@ -30104,6 +30138,10 @@ class OcioColourSpace(_BlipValue):
 
     @overload
     def __init__(self, arg0: OcioColourSpace) -> None:
+        ...
+
+    def getActualSpace(self) -> OcioColourSpace:
+        """Return default OcioColourSpace object if it's set to default"""
         ...
 
     def set(self, arg0: str, arg1: str, arg2: bool) -> None:
@@ -47677,6 +47715,9 @@ class SockpuppetPersonality(Resource):
     def isSameAs(self, arg0: SockpuppetPersonality) -> bool:
         ...
 
+    def reset(self) -> None:
+        ...
+
 class SockpuppetPersonalityRegistry(Resource):
     """Category: Sockpuppet"""
     null: Self
@@ -48895,9 +48936,9 @@ class Stage(Object):
 
 # !!!!!! Error generating stub for property 'displays'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 472, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 308, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
@@ -50717,10 +50758,13 @@ class SuperTrack(Resource):
         null: Self
         _classInfo: 'ClassInfo'
 
+    DontTouchLayers: Final = 0
     EditEnd: Final = 1
     EditStart: Final = 0
+    MoveLayers: Final = 1
     Next: Final = 1
     Prev: Final = -1
+    StretchLayers: Final = 2
 
     @property
     def DMX_fixtures(self) -> int:
@@ -50900,6 +50944,18 @@ return: Whether the superlayer is found in the track"""
     def groupLayers(self, arg0: List[SuperLayer], arg1: str, arg2: bool) -> None:
         ...
 
+    def insertAudioBeats(self, arg0: float, arg1: float, arg2: int) -> None:
+        ...
+
+    def insertBeats(self, arg0: float, arg1: float, arg2: int) -> None:
+        ...
+
+    def insertBlank(self, arg0: float, arg1: float, arg2: int) -> None:
+        ...
+
+    def insertSilentAudioBeats(self, arg0: float, arg1: float, arg2: int) -> None:
+        ...
+
     def makeArrow(self, arg0: Layer, arg1: Layer) -> None:
         ...
 
@@ -50921,10 +50977,19 @@ return: Whether the superlayer is found in the track"""
     def removeArrow(self, arg0: Arrow) -> None:
         ...
 
+    def removeAudioBeats(self, arg0: float, arg1: float, arg2: bool) -> None:
+        ...
+
+    def removeBeats(self, arg0: float, arg1: float, arg2: int) -> None:
+        ...
+
     def removeInvalidLayers(self) -> None:
         ...
 
     def removeLayer(self, arg0: SuperLayer) -> int:
+        ...
+
+    def removeLayers(self, arg0: float, arg1: float) -> None:
         ...
 
     def splitLayersAtBeat(self, arg0: List[SuperLayer], arg1: float) -> List[SuperLayer]:
@@ -55126,6 +55191,7 @@ class TwoPoint5DPlate(Display):
 
     @property
     def depthMapMean(self) -> float:
+        """The mean value of the depth map. In inverse normalised coordinates, between 0 and 1."""
         ...
 
     @depthMapMean.setter
@@ -55145,6 +55211,7 @@ class TwoPoint5DPlate(Display):
 
     @property
     def offsetRatios(self) -> Vec:
+        """Ratios between the X/Y/Z offset and depth of the plate."""
         ...
 
     @offsetRatios.setter
@@ -55153,6 +55220,7 @@ class TwoPoint5DPlate(Display):
 
     @property
     def scaleRatios(self) -> Vec:
+        """Ratios between the X/Y/Z scale and depth of the plate."""
         ...
 
     @scaleRatios.setter
@@ -55419,6 +55487,14 @@ class UnitTypeAttribute(ReflectionAttributeT):
 
     @property
     def UnitType(self) -> int:
+        ...
+
+class UnityEngineDefinition(EngineDefinition):
+    """Category: Renderstream"""
+    null: Self
+    _classInfo: 'ClassInfo'
+
+    def __init__(self) -> None:
         ...
 
 class UnrealEngineDefinition(EngineDefinition):
@@ -56400,9 +56476,9 @@ class ValueBox(Widget):
 
 # !!!!!! Error generating stub for property 'property_'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 472, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 259, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 262, in _writeProp
 #    prop = self.cls._classInfo.property_(n) # type: d3.PropertyInfo
 #RuntimeError: Failed to find Property in class ValueBox or base classes! Property name = property_.
 
@@ -57252,7 +57328,9 @@ class VecD(_BlipValue):
 
     @property
     def x(self) -> float:
-        """UserName: X"""
+        """The x component of the vector.
+           
+           UserName: X"""
         ...
 
     @x.setter
@@ -57261,7 +57339,9 @@ class VecD(_BlipValue):
 
     @property
     def y(self) -> float:
-        """UserName: Y"""
+        """The y component of the vector.
+           
+           UserName: Y"""
         ...
 
     @y.setter
@@ -57270,7 +57350,9 @@ class VecD(_BlipValue):
 
     @property
     def z(self) -> float:
-        """UserName: Z"""
+        """The z component of the vector.
+           
+           UserName: Z"""
         ...
 
     @z.setter
@@ -60442,9 +60524,9 @@ class Widget(Resource):
 
 # !!!!!! Error generating stub for property 'children'
 #Traceback (most recent call last):
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 469, in _write
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 472, in _write
 #    self._writeProp(file, self._class_renames, n, v)
-#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 305, in _writeProp
+#  File "D:\dev\d3_git_3\scripts\util\stubgen\main.py", line 308, in _writeProp
 #    write_prop(propType, False, list=True)
 #TypeError: write_prop() got an unexpected keyword argument 'list'
 
