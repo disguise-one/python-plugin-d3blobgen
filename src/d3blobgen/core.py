@@ -117,6 +117,8 @@ def find_packages_in_current_file(caller_stack:int = 1) -> list[str]:
     function_name: str = current_frame.f_code.co_name
     # Skip any package from d3blobgen
     d3blobgen_package_name: str = "d3blobgen"
+    # typing not supported in python2.7
+    typing_package_name: str = "typing"
 
     def is_type_checking_block(node: ast.If) -> bool:
         """Check if an if statement is 'if TYPE_CHECKING:'"""
@@ -137,13 +139,19 @@ def find_packages_in_current_file(caller_stack:int = 1) -> list[str]:
             # Skip imports that include d3blobgen
             if any(d3blobgen_package_name in module for module in imported_modules):
                 continue
+            if any(typing_package_name in module for module in imported_modules):
+                continue
+
             imports.append(line_text)
         elif isinstance(node, ast.ImportFrom):
             imported_module: str | None = node.module
             imported_names: list[str] = [alias.name for alias in node.names]
             # Skip imports that include d3blobgen
-            if imported_module and d3blobgen_package_name in imported_module:
-                continue
+            if imported_module:
+                if d3blobgen_package_name in imported_module:
+                    continue
+                elif typing_package_name in imported_module:
+                    continue
             # Skip imports that include this function itself
             if function_name in imported_names:
                 continue
