@@ -6,7 +6,7 @@ import aiohttp
 import textwrap
 import json
 from dataclasses import dataclass
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, TypeAdapter
 from typing import TypeVar, ParamSpec, Callable, Any, Generic, DefaultDict, Type, get_type_hints
 import typing_extensions
 from types import FrameType, ModuleType
@@ -14,9 +14,14 @@ from collections import defaultdict
 
 
 ###############################################################################
-# Plugin response types
+# Plugin endpoint helpers
 D3_PLUGIN_ENDPOINT = "api/session/python/execute"
 
+def get_plugin_endpoint_url(hostname: str, port: int) -> str:
+    return f"http://{hostname}:{port}/{D3_PLUGIN_ENDPOINT}"
+
+###############################################################################
+# Plugin response types
 class PluginStatusDetail(BaseModel):
     type_url: str
     value: str
@@ -58,14 +63,19 @@ class PluginResponse(BaseModel, Generic[RetType]):
     
     def returnCastValue(self, castType: Type[RetCastType]) -> RetCastType:
         """
-        When `RetType` is `Any` by default, the typed return value
-        can be retrieved by this method.
+        Validate and return the typed return value.
+
+        Args:
+            castType: The type to validate and cast the return value to.
+
+        Returns:
+            The validated return value as the specified type.
+
+        Raises:
+            ValidationError: If the return value cannot be validated as the specified type.
         """
-        if not isinstance(self.returnValue, castType):
-            raise ValueError(
-                f"returnValue is not of type {castType.__name__}: {type(self.returnValue).__name__}"
-            )
-        return self.returnValue
+        adapter = TypeAdapter(castType)
+        return adapter.validate_python(self.returnValue)
 
 
 ###############################################################################

@@ -54,6 +54,7 @@ def main():
     print("7. get typed surface")
     typed_surface: Surface = get_typed_surface.execute(surface_name="surface 1")
     print(typed_surface)
+    print(typed_surface["name"])
     
 
 if __name__ == "__main__":
