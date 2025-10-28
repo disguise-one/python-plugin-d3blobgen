@@ -178,7 +178,7 @@ async def example_concurrent_requests():
         print(f"Completed {len(tasks)} requests concurrently in {(end_time - start_time)*1000:.2f}ms")
 
         for i, result in enumerate(results):
-            if isinstance(result, Exception):
+            if isinstance(result, BaseException):
                 print(f"Task {i+1} failed: {result}")
             else:
                 print(f"Task {i+1} result: {result.returnValue}")
