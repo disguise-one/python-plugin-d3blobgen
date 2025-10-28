@@ -30144,6 +30144,10 @@ class OcioColourSpace(_BlipValue):
         """Return default OcioColourSpace object if it's set to default"""
         ...
 
+    def getFamily(self) -> str:
+        """Return family of OcioColourSpace object"""
+        ...
+
     def set(self, arg0: str, arg1: str, arg2: bool) -> None:
         ...
 
