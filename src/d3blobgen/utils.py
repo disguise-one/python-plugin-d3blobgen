@@ -1,7 +1,8 @@
 import aiohttp
 import requests
 from typing import Unpack, TypeVar
-from .core import PluginResponse, TypedBlob, D3_PLUGIN_ENDPOINT
+from pydantic import ValidationError
+from .core import PluginResponse, PluginException, PluginError, TypedBlob, D3_PLUGIN_ENDPOINT
 
 
 RetType = TypeVar("RetType")
@@ -98,8 +99,7 @@ async def d3_api_aplugin(
     plugin_blob: dict,
     timeout_ms: float|None = None
 ) -> PluginResponse:
-    return PluginResponse.model_validate(
-        await d3_api_arequest(
+    response: dict = await d3_api_arequest(
             "POST",
             hostname,
             port,
@@ -107,17 +107,19 @@ async def d3_api_aplugin(
             json=plugin_blob,
             timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
         )
-    )
+    try:
+        return PluginResponse.model_validate(response)
+    except ValidationError:
+        error_response: PluginError = PluginError.model_validate(response)
+        raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog)
 
 async def d3_api_typed_aplugin(
     hostname: str,
     port: int,
-    plugin_blob:
-    TypedBlob[RetType],
+    plugin_blob: TypedBlob[RetType],
     timeout_ms: float|None = None
 ) -> PluginResponse[RetType]:
-    return PluginResponse[plugin_blob.return_type].model_validate(
-        await d3_api_arequest(
+    response: dict = await d3_api_arequest(
             "POST",
             hostname,
             port,
@@ -125,7 +127,11 @@ async def d3_api_typed_aplugin(
             json=plugin_blob.blob,
             timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
         )
-    )
+    try:
+        return PluginResponse[plugin_blob.return_type].model_validate(response)
+    except ValidationError:
+        error_response: PluginError = PluginError.model_validate(response)
+        raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog)
 
 
 ###############################################################################
@@ -181,22 +187,24 @@ def d3_api_put(
 def d3_api_plugin(
     hostname: str, port: int, plugin_blob: dict, timeout_ms: float|None = None
 ) -> PluginResponse:
-    return PluginResponse.model_validate(
-        d3_api_request(
-            "POST",
-            hostname,
-            port,
-            D3_PLUGIN_ENDPOINT,
-            json=plugin_blob,
-            timeout=timeout_ms / 1000 if timeout_ms else None,
-        )
+    response = d3_api_request(
+        "POST",
+        hostname,
+        port,
+        D3_PLUGIN_ENDPOINT,
+        json=plugin_blob,
+        timeout=timeout_ms / 1000 if timeout_ms else None,
     )
+    try:
+        return PluginResponse.model_validate(response)
+    except ValidationError:
+        error_response: PluginError = PluginError.model_validate(response)
+        raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog)
 
 def d3_api_typed_plugin(
     hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_ms: float|None = None
     ) -> PluginResponse[RetType]:
-    return PluginResponse[plugin_blob.return_type].model_validate(
-        d3_api_request(
+    response = d3_api_request(
             "POST",
             hostname,
             port,
@@ -204,4 +212,8 @@ def d3_api_typed_plugin(
             json=plugin_blob.blob,
             timeout=timeout_ms / 1000 if timeout_ms else None,
         )
-    )
+    try:
+        return PluginResponse[plugin_blob.return_type].model_validate(response)
+    except ValidationError:
+        error_response: PluginError = PluginError.model_validate(response)
+        raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog)

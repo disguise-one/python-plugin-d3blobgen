@@ -4,6 +4,7 @@ import functools
 import requests
 import aiohttp
 import textwrap
+import traceback
 import json
 from dataclasses import dataclass
 from pydantic import BaseModel, Field, field_validator, TypeAdapter
@@ -35,15 +36,33 @@ RetType = typing_extensions.TypeVar("RetType", default=Any)
 RetCastType = TypeVar("RetCastType")
 
 @dataclass
-class PluginError(Exception):
+class PluginException(Exception):
     status: PluginStatus
+    d3Log: str | None = None
+    pythonLog: str | None = None
+    
+    _traceback_str: str | None = None
+    _str: str | None = None
+
+    def __post_init__(self):
+        # Capture current stack trace if not already provided
+        if self._traceback_str is None:
+            self._traceback_str = "".join(traceback.format_stack()[:-1])
 
     def __str__(self) -> str:
-        details_str = ""
-        if self.status.details:
-            details_list = "\n".join([f"  - {d.type_url}: {d.value}" for d in self.status.details])
-            details_str = f"\nDetails:\n{details_list}"
-        return f"{Exception.__str__(self)}\nPluginError (code {self.status.code}): {self.status.message}{details_str}"
+        if self._str is None:
+            details_str = ""
+            if self.status.details:
+                details_list = "\n".join([f"  - {d.type_url}: {d.value}" for d in self.status.details])
+                details_str = f"\nDetails    :\n{details_list}"
+            self._str = "\n".join([
+                Exception.__str__(self),
+                f"PluginError: (code {self.status.code}){details_str}",
+                f"d3Log      : {self.d3Log}",
+                f"pythonLog  : {self.pythonLog}",
+                f"Traceback  : {self._traceback_str.strip() if self._traceback_str else str()}"
+            ])
+        return self._str
 
 class PluginResponse(BaseModel, Generic[RetType]):
     status: PluginStatus = Field(description="Status of plugin API call.")
@@ -77,6 +96,8 @@ class PluginResponse(BaseModel, Generic[RetType]):
         adapter = TypeAdapter(castType)
         return adapter.validate_python(self.returnValue)
 
+class PluginError(PluginResponse[None]):
+    returnValue: None = Field(default=None, description="When failed to get PluginResponse, return value will not exist")
 
 ###############################################################################
 # import package helpers
@@ -552,7 +573,7 @@ Designer API error:
             # Failed to parse plugin error status
             # Don't raise
             return None
-        raise PluginError(status=status)
+        raise PluginException(status=status)
 
     def execute(self, *args: P.args, **kwargs: P.kwargs) -> T:
         """Execute this function remotely on a D3 Designer instance.
