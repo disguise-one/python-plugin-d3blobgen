@@ -2,7 +2,7 @@ import aiohttp
 import requests
 from typing import Unpack, TypeVar
 from pydantic import ValidationError
-from .core import PluginResponse, PluginException, PluginError, TypedBlob, D3_PLUGIN_ENDPOINT
+from .core import PluginResponse, PluginException, PluginError, TypedBlob, D3_PLUGIN_ENDPOINT, D3_PLUGIN_MODULE_REG_ENDPOINT
 
 
 RetType = TypeVar("RetType")
@@ -133,6 +133,24 @@ async def d3_api_typed_aplugin(
         error_response: PluginError = PluginError.model_validate(response)
         raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog)
 
+async def d3_api_aregister_module(
+    hostname: str,
+    port: int,
+    json: dict | None = None,
+    timeout_ms: float|None = None
+) -> dict:
+    try:    
+        return await d3_api_arequest(
+            "POST",
+            hostname,
+            port,
+            D3_PLUGIN_MODULE_REG_ENDPOINT,
+            json=json,
+            timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
+        )
+    except Exception as e:
+        raise Exception(f"Failed to register module '{json.get('moduleName') if json else ''}': {e}") from e
+
 
 ###############################################################################
 # API sync interface
@@ -217,3 +235,21 @@ def d3_api_typed_plugin(
     except ValidationError:
         error_response: PluginError = PluginError.model_validate(response)
         raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog)
+
+def d3_api_register_module(
+    hostname: str,
+    port: int,
+    json: dict | None = None,
+    timeout_ms: float|None = None,
+) -> dict:
+    try:
+        return d3_api_request(
+            "POST",
+            hostname,
+            port,
+            D3_PLUGIN_MODULE_REG_ENDPOINT,
+            json=json,
+            timeout=timeout_ms / 1000 if timeout_ms else None,
+        )
+    except Exception as e:
+        raise Exception(f"Failed to register module '{json.get('moduleName') if json else ''}': {e}") from e

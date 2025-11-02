@@ -6,7 +6,7 @@ from d3blobgen.core import (
     D3Function,
     get_plugin_endpoint_url,
 )
-from d3blobgen.utils import d3_api_plugin, d3_api_typed_plugin
+from d3blobgen.utils import d3_api_typed_plugin, d3_api_typed_plugin
 from examples.e4_lower_level_api.lower_level_api_blob import (
     my_time,
     my_time_with_note,
@@ -101,7 +101,7 @@ def example_helper_utilities():
     print("\n=== Example 6: With helper utilities ===")
 
     # Using d3_api_plugin
-    response = d3_api_plugin("localhost", 80, my_time.get_execute_blob())
+    response = d3_api_typed_plugin("localhost", 80, my_time.get_execute_blob())
     returnValue = response.returnValue
     castReturnValue = response.returnCastValue(str)
     print(f"Response: {response}")

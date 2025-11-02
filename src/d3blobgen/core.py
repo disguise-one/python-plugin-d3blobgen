@@ -17,9 +17,14 @@ from collections import defaultdict
 ###############################################################################
 # Plugin endpoint helpers
 D3_PLUGIN_ENDPOINT = "api/session/python/execute"
+D3_PLUGIN_MODULE_REG_ENDPOINT = "api/session/python/registermodule"
 
 def get_plugin_endpoint_url(hostname: str, port: int) -> str:
     return f"http://{hostname}:{port}/{D3_PLUGIN_ENDPOINT}"
+
+def get_plugin_module_register_url(hostname: str, port: int) -> str:
+    return f"http://{hostname}:{port}/{D3_PLUGIN_MODULE_REG_ENDPOINT}"
+
 
 ###############################################################################
 # Plugin response types
@@ -257,7 +262,7 @@ def remove_type_hints_from_body(function_node: ast.FunctionDef) -> None:
     transformer = FastRemoveTypeHints()
     transformer.visit(function_node)
 
-def convert_to_py27(function_node: ast.FunctionDef) -> None:
+def convert_node_to_py27(function_node: ast.FunctionDef) -> None:
     """Convert a function AST node to Python 2.7 compatible format.
     
     This function removes all type annotations from a function definition,
@@ -343,7 +348,7 @@ def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
         args.append(arg.arg)
         arg.type_comment
     
-    convert_to_py27(first_node)
+    convert_node_to_py27(first_node)
     blob_py27:str = ast.unparse(first_node)
 
     body_py27 = ""
@@ -366,6 +371,7 @@ T = TypeVar('T')
 class TypedBlob(Generic[T]):
     blob: dict[str,str]
     return_type: Type[T]
+    module_name: str
 
 class D3Function(Generic[P, T]):
     """Wrapper class for Python functions to be executed in Designer environment.
@@ -434,7 +440,7 @@ class D3Function(Generic[P, T]):
         return self.name == other.name
 
     @staticmethod
-    def get_module_register_blob(module_name:str):
+    def get_module_register_blob(module_name:str) -> dict[str, str]:
         """Generate a registration blob for all functions in a specific module.
         
         Args:
@@ -537,13 +543,12 @@ class D3Function(Generic[P, T]):
             - The return type class/type from the function's type hints (or Any if not annotated)
         """
         type_hints = get_type_hints(self._function)
-        return_type = type_hints.get('return')
-        if not return_type:
-            raise RuntimeError("Invalid return type")
+        return_type = type_hints.get('return', Any)
 
         return TypedBlob(
             blob = self.get_execute_blob(*args, **kwargs),
-            return_type = return_type
+            return_type = return_type,
+            module_name=self.module_name
         )
     
     def _extract_retval(self, json_data: dict) -> T:
