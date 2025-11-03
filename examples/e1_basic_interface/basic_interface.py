@@ -1,3 +1,4 @@
+from d3blobgen.utils import d3_api_plugin
 from examples.e1_basic_interface.basic_interface_blobs import (
     my_add,
     custom_timeout_2ms,
@@ -9,6 +10,9 @@ from examples.e1_basic_interface.basic_interface_blobs import (
 
 
 def main():
+    DESIGNER_IP = "localhost"
+    DESIGNER_PORT = 80
+
     # normal function call
     ret_val: int = my_add(1, 2)
     print("1. normal function call")
@@ -16,19 +20,19 @@ def main():
 
     # execute over Designer plugin
     print("2. execute over plugin")
-    ret_val_from_plugin = my_add.execute(1, 2)
+    ret_val_from_plugin = d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, my_add.get_typed_execute_blob(1, 2)).returnValue
     print(f"- result: {ret_val_from_plugin}")
 
     print("3. custom timeout 2ms")
     try:
-        ret_str: str = custom_timeout_2ms.execute()
+        ret_str: str = d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, custom_timeout_2ms.get_typed_execute_blob(), timeout_ms=2).returnValue
         print(f"- result: {ret_str}")
     except Exception as e:
         print(e)
 
     print("4. custom timeout 1sec")
     try:
-        ret_str: str = custom_timeout_1sec.execute()
+        ret_str: str = d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, custom_timeout_1sec.get_typed_execute_blob(), timeout_ms=1000).returnValue
         print(f"- result: {ret_str}")
     except Exception as e:
         print(e)
@@ -36,22 +40,22 @@ def main():
     # test exception
     print("5. exception over execute")
     try:
-        my_exception.execute()
+        d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, my_exception.get_execute_blob())
     except Exception as e:
         print(e)
 
     # access resource in Designer
     print("6. get surface uid")
-    surface_uid: dict[str, str] = get_surface_uid.execute(surface_name="surface 1")
+    surface_uid: dict[str, str] = d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, get_surface_uid.get_typed_execute_blob(surface_name="surface 1")).returnValue
     print(surface_uid)
 
     # update resource in Designer
     print("7. rename surface")
-    rename_surface.execute(surface_name="surface 1", new_surface_name="surface 2")
-    surface_uid = get_surface_uid.execute(surface_name="surface 2")
+    d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, rename_surface.get_execute_blob(surface_name="surface 1", new_surface_name="surface 2"))
+    surface_uid = d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, get_surface_uid.get_typed_execute_blob(surface_name="surface 2")).returnValue
     print(surface_uid)
-    rename_surface.execute(surface_name="surface 2", new_surface_name="surface 1")
-    surface_uid = get_surface_uid.execute(surface_name="surface 1")
+    d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, rename_surface.get_execute_blob(surface_name="surface 2", new_surface_name="surface 1"))
+    surface_uid = d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, get_surface_uid.get_typed_execute_blob(surface_name="surface 1")).returnValue
     print(surface_uid)
 
 if __name__ == "__main__":

@@ -22,18 +22,12 @@ from collections.abc import Callable
 from types import FrameType, ModuleType
 from typing import Any, Generic, ParamSpec, TypeVar, get_type_hints
 
-import aiohttp
-import requests
 from pydantic import BaseModel, Field
 
 from d3blobgen.ast_utils import convert_function_node_to_py27
-from d3blobgen.models import (
-    D3_PLUGIN_ENDPOINT,
-    PluginException,
-    PluginResponse,
-    PluginStatus,
-    TypedBlob,
-)
+from d3blobgen.utils import d3_api_register_module, d3_api_aregister_module
+from d3blobgen.models import TypedBlob
+
 
 
 ###############################################################################
@@ -396,101 +390,11 @@ class D3Function(Generic[P, T]):
         type_hints = get_type_hints(self._function)
         return_type = type_hints.get("return", Any)
 
-        return TypedBlob(
+        return TypedBlob[T](
             blob=self.get_execute_blob(*args, **kwargs),
             return_type=return_type,
             module_name=self.module_name,
         )
-
-    def _extract_retval(self, json_data: dict) -> T:
-        try:
-            plugin_response = PluginResponse[T].model_validate(json_data)
-            return plugin_response.returnValue
-        except Exception as e:
-            status: dict = json_data.get("status", {})
-            raise RuntimeError(f"""Failed to parse plugin response: {e}
-Designer API error:
-- code      : {status.get("code")}
-- message   : {status.get("message")}
-- details   : {status.get("details")}
-- d3Log     : {json_data.get("d3Log")}
-- pythonLog : {json_data.get("pythonLog")}
-- retVal    : {json_data.get("returnValue")}
-""") from e
-
-    def raise_plugin_error(self, response_text: str) -> None:
-        status: PluginStatus | None = None
-        try:
-            status = PluginStatus.model_validate(json.loads(response_text).get("status"))
-        except Exception:
-            pass
-        if not status:
-            # Failed to parse plugin error status
-            # Don't raise
-            return None
-        raise PluginException(status=status)
-
-    def execute(self, *args: P.args, **kwargs: P.kwargs) -> T:
-        """Execute this function remotely on a D3 Designer instance.
-
-        This method sends the function and its arguments to the registered Designer
-        instance for remote execution, then returns the parsed result.
-
-        Args:
-            *args: Positional arguments to pass to the function.
-            **kwargs: Keyword arguments to pass to the function.
-
-        Returns:
-            The return value from the remote function execution.
-
-        Raises:
-            RuntimeError: If the HTTP request fails, Designer returns an error,
-                         or the return value is empty/invalid.
-        """
-        response: requests.Response = requests.post(
-            url=f"http://{D3Function._registered_ipaddr}/{D3_PLUGIN_ENDPOINT}",
-            json=self.get_execute_blob(*args, **kwargs),
-            timeout=self._timeout_ms / 1000.0 if self._timeout_ms else None,
-        )
-        if not response.ok:
-            if response.status_code == 500:
-                self.raise_plugin_error(response.text)
-            raise RuntimeError(f"HTTP error {response.status_code}: {response.text}")
-
-        data: dict = response.json()
-        return self._extract_retval(data)
-
-    async def aexecute(self, *args: P.args, **kwargs: P.kwargs) -> T:
-        """Asynchronously execute this function remotely on a D3 Designer instance.
-
-        This method sends the function and its arguments to the registered Designer
-        instance for remote execution, then returns the parsed result.
-
-        Args:
-            *args: Positional arguments to pass to the function.
-            **kwargs: Keyword arguments to pass to the function.
-
-        Returns:
-            The return value from the remote function execution.
-
-        Raises:
-            RuntimeError: If the HTTP request fails, Designer returns an error,
-                         or the return value is empty/invalid.
-        """
-        async with aiohttp.ClientSession() as session:
-            url: str = f"http://{D3Function._registered_ipaddr}/{D3_PLUGIN_ENDPOINT}"
-            async with session.post(
-                url,
-                json=self.get_execute_blob(*args, **kwargs),
-                timeout=aiohttp.ClientTimeout(self._timeout_ms) if self._timeout_ms else None,
-            ) as response:
-                if not response.ok:
-                    error_text = await response.text()
-                    if response.status == 500:
-                        self.raise_plugin_error(error_text)
-                    raise RuntimeError(f"HTTP error {response.status}: {error_text}")
-                data = await response.json()
-                return self._extract_retval(data)
 
 
 ###############################################################################
@@ -558,56 +462,13 @@ def add_packages_in_current_file(module_name: str) -> None:
     D3Function._available_packages[module_name].update(packages)
 
 
-def register_module_d3functions(ipaddr: str, module_name: str) -> tuple[bool, str]:
-    """Register all d3function in a module with a Designer instance.
+def get_module_register_blob(module_name: str) -> dict[str, str] | None:
+    if module_name in D3Function._available_d3functions:
+        return D3Function.get_module_register_blob(module_name)
+    else:
+        return None
 
-    Args:
-        ipaddr: IP address of the Designer instance.
-        module_name: Name of the module to register.
-
-    Returns:
-        Tuple containing success status and error message (empty if successful).
-    """
-    # function with no module shouldn't be registered
-    if len(module_name) == 0:
-        return (True, "")
-
-    try:
-        response = requests.post(
-            url=f"http://{ipaddr}/api/session/python/registermodule",
-            json=D3Function.get_module_register_blob(module_name),
-        )
-        return (response.ok, "")
-    except Exception as e:
-        return (False, str(e))
-
-
-async def aregister_module_d3functions(ipaddr: str, module_name: str) -> tuple[bool, str]:
-    """Asynchronously register all d3function in a module with a Designer instance.
-
-    Args:
-        ipaddr: IP address of the Designer instance.
-        module_name: Name of the module to register.
-
-    Returns:
-        Tuple containing success status and error message (empty if successful).
-    """
-    # function with no module shouldn't be registered
-    if len(module_name) == 0:
-        return (True, "")
-
-    try:
-        url = f"http://{ipaddr}/api/session/python/registermodule"
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
-                url, json=D3Function.get_module_register_blob(module_name)
-            ) as response:
-                return (response.ok, "")
-    except Exception as e:
-        return (False, str(e))
-
-
-def register_all_d3functions(ipaddr: str) -> dict[str, tuple[bool, str]]:
+def register_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[bool, str]]:
     """Register all available d3function across all modules with a Designer instance.
     If d3function was registered without module_name, it won't be registered.
 
@@ -620,11 +481,11 @@ def register_all_d3functions(ipaddr: str) -> dict[str, tuple[bool, str]]:
     responses: dict[str, tuple[bool, str]] = {}
     D3Function._registered_ipaddr = ipaddr
     for module_name in D3Function._available_d3functions.keys():
-        responses[module_name] = register_module_d3functions(ipaddr, module_name)
+        responses[module_name] = d3_api_register_module(ipaddr, port, D3Function.get_module_register_blob(module_name))
     return responses
 
 
-async def aregister_all_d3functions(ipaddr: str) -> dict[str, tuple[bool, str]]:
+async def aregister_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[bool, str]]:
     """Asynchronously register all available d3function across all modules with a Designer instance.
     If d3function was registered without module_name, it won't be registered.
 
@@ -637,7 +498,7 @@ async def aregister_all_d3functions(ipaddr: str) -> dict[str, tuple[bool, str]]:
     responses: dict[str, tuple[bool, str]] = {}
     D3Function._registered_ipaddr = ipaddr
     for module_name in D3Function._available_d3functions.keys():
-        responses[module_name] = await aregister_module_d3functions(ipaddr, module_name)
+        responses[module_name] = await d3_api_aregister_module(ipaddr, port, D3Function.get_module_register_blob(module_name))
     return responses
 
 
