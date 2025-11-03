@@ -5,8 +5,8 @@ from d3blobgen.core import (
     PluginResponse,
     D3_PLUGIN_ENDPOINT,
     D3Function,
-    get_plugin_endpoint_url,
 )
+from d3blobgen.models import get_plugin_endpoint_url
 from d3blobgen.utils import d3_api_aplugin, d3_api_typed_aplugin
 from examples.e4_lower_level_api.lower_level_api_blob import (
     my_time,

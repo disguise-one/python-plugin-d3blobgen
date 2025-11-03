@@ -4,7 +4,7 @@ import aiohttp
 import requests
 from pydantic import ValidationError
 
-from .core import (
+from .models import (
     D3_PLUGIN_ENDPOINT,
     D3_PLUGIN_MODULE_REG_ENDPOINT,
     PluginError,
@@ -58,7 +58,7 @@ async def d3_api_aget(
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float|None = None
+    timeout_ms: float | None = None,
 ) -> Any:
     return await d3_api_arequest(
         "GET",
@@ -66,15 +66,16 @@ async def d3_api_aget(
         port,
         url_endpoint,
         json=json,
-        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
+        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
     )
+
 
 async def d3_api_apost(
     hostname: str,
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float|None = None
+    timeout_ms: float | None = None,
 ) -> Any:
     return await d3_api_arequest(
         "POST",
@@ -82,15 +83,16 @@ async def d3_api_apost(
         port,
         url_endpoint,
         json=json,
-        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
+        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
     )
+
 
 async def d3_api_aput(
     hostname: str,
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float|None = None
+    timeout_ms: float | None = None,
 ) -> Any:
     return await d3_api_arequest(
         "PUT",
@@ -98,54 +100,56 @@ async def d3_api_aput(
         port,
         url_endpoint,
         json=json,
-        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
+        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
     )
 
+
 async def d3_api_aplugin(
-    hostname: str,
-    port: int,
-    plugin_blob: dict,
-    timeout_ms: float|None = None
+    hostname: str, port: int, plugin_blob: dict, timeout_ms: float | None = None
 ) -> PluginResponse:
     response: Any = await d3_api_arequest(
-            "POST",
-            hostname,
-            port,
-            D3_PLUGIN_ENDPOINT,
-            json=plugin_blob,
-            timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
-        )
+        "POST",
+        hostname,
+        port,
+        D3_PLUGIN_ENDPOINT,
+        json=plugin_blob,
+        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
+    )
     try:
         return PluginResponse.model_validate(response)
     except ValidationError:
         error_response: PluginError = PluginError.model_validate(response)
-        raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog) from None
+        raise PluginException(
+            status=error_response.status,
+            d3Log=error_response.d3Log,
+            pythonLog=error_response.pythonLog,
+        ) from None
+
 
 async def d3_api_typed_aplugin(
-    hostname: str,
-    port: int,
-    plugin_blob: TypedBlob[RetType],
-    timeout_ms: float|None = None
+    hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_ms: float | None = None
 ) -> PluginResponse[RetType]:
     response: Any = await d3_api_arequest(
-            "POST",
-            hostname,
-            port,
-            D3_PLUGIN_ENDPOINT,
-            json=plugin_blob.blob,
-            timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
-        )
+        "POST",
+        hostname,
+        port,
+        D3_PLUGIN_ENDPOINT,
+        json=plugin_blob.blob,
+        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
+    )
     try:
         return PluginResponse[RetType].model_validate(response)
     except ValidationError:
         error_response: PluginError = PluginError.model_validate(response)
-        raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog) from None
+        raise PluginException(
+            status=error_response.status,
+            d3Log=error_response.d3Log,
+            pythonLog=error_response.pythonLog,
+        ) from None
+
 
 async def d3_api_aregister_module(
-    hostname: str,
-    port: int,
-    json: dict | None = None,
-    timeout_ms: float|None = None
+    hostname: str, port: int, json: dict | None = None, timeout_ms: float | None = None
 ) -> Any:
     try:
         return await d3_api_arequest(
@@ -154,10 +158,12 @@ async def d3_api_aregister_module(
             port,
             D3_PLUGIN_MODULE_REG_ENDPOINT,
             json=json,
-            timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None
+            timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
         )
     except Exception as e:
-        raise Exception(f"Failed to register module '{json.get('moduleName') if json else ''}': {e}") from e
+        raise Exception(
+            f"Failed to register module '{json.get('moduleName') if json else ''}': {e}"
+        ) from e
 
 
 ###############################################################################
@@ -167,7 +173,7 @@ def d3_api_get(
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float|None = None,
+    timeout_ms: float | None = None,
 ) -> Any:
     return d3_api_request(
         "GET",
@@ -178,12 +184,13 @@ def d3_api_get(
         timeout=timeout_ms / 1000 if timeout_ms else None,
     )
 
+
 def d3_api_post(
     hostname: str,
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float|None = None,
+    timeout_ms: float | None = None,
 ) -> Any:
     return d3_api_request(
         "POST",
@@ -194,12 +201,13 @@ def d3_api_post(
         timeout=timeout_ms / 1000 if timeout_ms else None,
     )
 
+
 def d3_api_put(
     hostname: str,
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float|None = None,
+    timeout_ms: float | None = None,
 ) -> Any:
     return d3_api_request(
         "PUT",
@@ -210,8 +218,9 @@ def d3_api_put(
         timeout=timeout_ms / 1000 if timeout_ms else None,
     )
 
+
 def d3_api_plugin(
-    hostname: str, port: int, plugin_blob: dict, timeout_ms: float|None = None
+    hostname: str, port: int, plugin_blob: dict, timeout_ms: float | None = None
 ) -> PluginResponse:
     response = d3_api_request(
         "POST",
@@ -225,30 +234,40 @@ def d3_api_plugin(
         return PluginResponse.model_validate(response)
     except ValidationError:
         error_response: PluginError = PluginError.model_validate(response)
-        raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog) from None
+        raise PluginException(
+            status=error_response.status,
+            d3Log=error_response.d3Log,
+            pythonLog=error_response.pythonLog,
+        ) from None
+
 
 def d3_api_typed_plugin(
-    hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_ms: float|None = None
-    ) -> PluginResponse[RetType]:
+    hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_ms: float | None = None
+) -> PluginResponse[RetType]:
     response = d3_api_request(
-            "POST",
-            hostname,
-            port,
-            D3_PLUGIN_ENDPOINT,
-            json=plugin_blob.blob,
-            timeout=timeout_ms / 1000 if timeout_ms else None,
-        )
+        "POST",
+        hostname,
+        port,
+        D3_PLUGIN_ENDPOINT,
+        json=plugin_blob.blob,
+        timeout=timeout_ms / 1000 if timeout_ms else None,
+    )
     try:
         return PluginResponse[RetType].model_validate(response)
     except ValidationError:
         error_response: PluginError = PluginError.model_validate(response)
-        raise PluginException(status=error_response.status, d3Log=error_response.d3Log, pythonLog=error_response.pythonLog) from None
+        raise PluginException(
+            status=error_response.status,
+            d3Log=error_response.d3Log,
+            pythonLog=error_response.pythonLog,
+        ) from None
+
 
 def d3_api_register_module(
     hostname: str,
     port: int,
     json: dict | None = None,
-    timeout_ms: float|None = None,
+    timeout_ms: float | None = None,
 ) -> Any:
     try:
         return d3_api_request(
@@ -260,4 +279,6 @@ def d3_api_register_module(
             timeout=timeout_ms / 1000 if timeout_ms else None,
         )
     except Exception as e:
-        raise Exception(f"Failed to register module '{json.get('moduleName') if json else ''}': {e}") from e
+        raise Exception(
+            f"Failed to register module '{json.get('moduleName') if json else ''}': {e}"
+        ) from e

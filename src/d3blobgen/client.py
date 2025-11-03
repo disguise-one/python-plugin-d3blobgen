@@ -26,19 +26,25 @@ Example:
     async with MyPlugin("localhost", 8080, "config") as plugin:
         result = await plugin.process_data("hello")
 """
+
 import ast
 import functools
 import inspect
-import textwrap
 import types
 from collections.abc import Callable
 from typing import Any, ParamSpec, TypeVar, get_type_hints
 
-from d3blobgen.core import (
-    PluginResponse,
-    TypedBlob,
-    convert_node_to_py27,
+from d3blobgen.ast_utils import (
+    class_vars_to_exclude,
+    convert_class_to_py27,
+    filter_init_args,
+    get_class_node,
+    get_source,
+    init_args_to_exclude,
+    is_exclude_arg,
+    is_exclude_class_var,
 )
+from d3blobgen.models import PluginResponse, TypedBlob
 from d3blobgen.utils import (
     d3_api_aregister_module,
     d3_api_register_module,
@@ -47,158 +53,10 @@ from d3blobgen.utils import (
 )
 
 
-def get_source(frame: types.FrameType) -> str|None:
-    """Extract and dedent source code from a frame object.
+P = ParamSpec("P")
+T = TypeVar("T")
 
-    Args:
-        frame: The frame object to extract source code from
 
-    Returns:
-        Dedented source code as a string, or None if source cannot be found
-
-    Raises:
-        OSError: If the source file cannot be found or read
-    """
-    source_lines, _ = inspect.findsource(frame)
-    return textwrap.dedent(''.join(source_lines)) if source_lines else None
-
-def get_class_node(tree, class_name: str) -> ast.ClassDef|None:
-    """Find a class definition node by name in an AST.
-
-    Args:
-        tree: The AST tree to search
-        class_name: The name of the class to find
-
-    Returns:
-        The ClassDef node if found, None otherwise
-    """
-    for node in ast.walk(tree):
-        if isinstance(node, ast.ClassDef) and node.name == class_name:
-            return node
-    return None
-
-class_vars_to_exclude: set[str] = {"module_name"}
-"""Class variables that should be excluded from the source code sent to D3 Designer."""
-
-def is_exclude_class_var(node: ast.stmt) -> bool:
-    """Check if an AST node represents a class variable that should be excluded.
-
-    Args:
-        node: AST statement node to check
-
-    Returns:
-        True if the node is an excluded class variable, False otherwise
-    """
-    if isinstance(node, ast.AnnAssign):
-        if isinstance(node.target, ast.Name) and node.target.id in class_vars_to_exclude:
-            return True
-    elif isinstance(node, ast.Assign):
-        if any(isinstance(target, ast.Name) and target.id in class_vars_to_exclude for target in node.targets):
-            return True
-    return False
-
-init_args_to_exclude: set[str] = {"hostname", "port"}
-"""Arguments that should be excluded from __init__ when registering with D3 Designer.
-
-These arguments are client-side only and not needed by the remote plugin instance.
-"""
-
-def is_exclude_arg(arg: ast.expr) -> bool:
-    """Check if an AST expression node represents an excluded argument.
-
-    Args:
-        arg: AST expression node to check
-
-    Returns:
-        True if the argument is in the exclusion list, False otherwise
-    """
-    return isinstance(arg, ast.Name) and arg.id in init_args_to_exclude
-
-def filter_init_args(class_node: ast.ClassDef) -> list[str]:
-    """Remove excluded arguments from __init__ method and extract parameter names.
-
-    This function modifies the class_node in-place by:
-    1. Removing excluded parameters from __init__ signature
-    2. Removing excluded arguments from super().__init__() calls
-    3. Returning the list of remaining parameter names (excluding 'self')
-
-    Args:
-        class_node: The class definition node to process
-
-    Returns:
-        List of parameter names that remain after filtering (excluding 'self')
-    """
-    for node in class_node.body:
-        if not isinstance(node, ast.FunctionDef):
-            continue
-        if node.name != "__init__":
-            continue
-
-        # Filter out excluded arguments from the parameter list
-        node.args.args = [arg for arg in node.args.args if arg.arg not in init_args_to_exclude]
-
-        # Filter arguments in super().__init__() calls in the body
-        for body_node in ast.walk(node):
-            if not isinstance(body_node, ast.Call):
-                continue
-            # Check if this is super().__init__(...) call
-            if (isinstance(body_node.func, ast.Attribute) and
-                body_node.func.attr == "__init__" and
-                isinstance(body_node.func.value, ast.Call) and
-                isinstance(body_node.func.value.func, ast.Name) and
-                body_node.func.value.func.id == "super"):
-
-                # Filter out excluded positional arguments
-                body_node.args = [
-                    arg for arg in body_node.args
-                    if not is_exclude_arg(arg)
-                ]
-
-                # Filter out excluded keyword arguments
-                body_node.keywords = [
-                    kw for kw in body_node.keywords
-                    if kw.arg not in init_args_to_exclude
-                ]
-
-        # Filter keyword-only arguments if present (Python 3+ feature)
-        if node.args.kwonlyargs:
-            node.args.kwonlyargs = [arg for arg in node.args.kwonlyargs if arg.arg not in init_args_to_exclude]
-
-        # Return filtered parameter names (excluding 'self' which is implicit)
-        return [arg.arg for arg in node.args.args if arg.arg != "self"]
-
-    return []
-
-def convert_to_py27(class_node: ast.ClassDef) -> None:
-    """Convert async methods in a class to Python 2.7 compatible sync methods.
-
-    This function modifies the class_node in-place by:
-    1. Converting AsyncFunctionDef nodes to FunctionDef nodes
-    2. Recursively converting method bodies using convert_node_to_py27
-
-    Args:
-        class_node: The class definition node to convert
-    """
-    for i, node in enumerate(class_node.body):
-        if isinstance(node, ast.AsyncFunctionDef):
-            # Convert AsyncFunctionDef to FunctionDef by creating a new node
-            regular_func = ast.FunctionDef(
-                name=node.name,
-                args=node.args,
-                body=node.body,
-                decorator_list=node.decorator_list,
-                returns=node.returns,
-                type_comment=node.type_comment if hasattr(node, 'type_comment') else None,
-                lineno=node.lineno,
-                col_offset=node.col_offset
-            )
-            class_node.body[i] = regular_func
-
-        if isinstance(node, ast.FunctionDef):
-            convert_node_to_py27(node)
-
-P = ParamSpec('P')
-T = TypeVar('T')
 def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[P, T]):
     """Create a wrapper that executes a method remotely via D3 API calls.
 
@@ -223,23 +81,20 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
         # Serialize arguments to string representation for remote execution
         args_parts = [repr(arg) for arg in args]
         kwargs_parts = [f"{key}={repr(value)}" for key, value in kwargs.items()]
-        all_args = ', '.join(args_parts + kwargs_parts)
+        all_args = ", ".join(args_parts + kwargs_parts)
 
         # Build the Python script that will execute remotely on D3 Designer
         script = f"return plugin.{method_name}({all_args})"
 
         # Extract return type annotation from the original method for type safety
         type_hints = get_type_hints(original_method)
-        return_type = type_hints.get('return', Any)
+        return_type = type_hints.get("return", Any)
 
         # Create TypedBlob containing script, module info, and return type
         return TypedBlob[T](
-            blob={
-                "moduleName": self.module_name,
-                "script": script
-            },
+            blob={"moduleName": self.module_name, "script": script},
             return_type=return_type,
-            module_name=self.module_name
+            module_name=self.module_name,
         )
 
     # Determine whether to create async or sync wrapper based on original method
@@ -296,6 +151,7 @@ class D3PluginClientMeta(type):
         instance_code_template: Template string for instantiating the plugin remotely
         instance_code: Actual instantiation code with concrete argument values
     """
+
     # Type hints for dynamically set class attributes
     filtered_init_args: list[str]
     source_code: str
@@ -319,7 +175,7 @@ class D3PluginClientMeta(type):
             raise ValueError(f"D3PluginClientMeta: Failed to extract source code for {name}")
 
         # Extract full source code from the calling frame's file
-        source_code: str|None = get_source(caller_frame)
+        source_code: str | None = get_source(caller_frame)
         if not source_code:
             raise ValueError(f"D3PluginClientMeta: Failed to extract source code for {name}")
 
@@ -327,7 +183,7 @@ class D3PluginClientMeta(type):
         tree: ast.Module = ast.parse(source_code)
 
         # Locate the specific class definition node within the AST
-        class_node: ast.ClassDef|None = get_class_node(tree, name)
+        class_node: ast.ClassDef | None = get_class_node(tree, name)
         if not class_node:
             raise ValueError(f"D3PluginClientMeta: Failed to find class definition for {name}")
 
@@ -341,19 +197,23 @@ class D3PluginClientMeta(type):
         # Unparse modified AST back to Python 3 source code (clean, no comments)
         attrs["source_code"] = f"{ast.unparse(class_node)}"
         # Create template for instantiating the plugin remotely with placeholders
-        attrs["instance_code_template"] = f"plugin = {name}({','.join(formated_filtered_init_args)})"
+        attrs["instance_code_template"] = (
+            f"plugin = {name}({','.join(formated_filtered_init_args)})"
+        )
         attrs["filtered_init_args"] = filtered_init_args
 
         # Convert async methods to Python 2.7 compatible sync methods
-        convert_to_py27(class_node)
+        convert_class_to_py27(class_node)
         attrs["source_code_py27"] = f"{ast.unparse(class_node)}"
 
         # Wrap all user-defined public methods to execute remotely via D3 API
         # Skip private methods (_*) and internal framework methods
         for attr_name, attr_value in attrs.items():
-            if (callable(attr_value) and
-                not attr_name.startswith('_') and
-                attr_name not in ['get_register_module_blob', 'get_register_module_content']):
+            if (
+                callable(attr_value)
+                and not attr_name.startswith("_")
+                and attr_name not in ["get_register_module_blob", "get_register_module_content"]
+            ):
                 attrs[attr_name] = create_d3_plugin_method_wrapper(attr_name, attr_value)
 
         return super().__new__(cls, name, bases, attrs)
@@ -374,7 +234,7 @@ class D3PluginClientMeta(type):
         """
         # Build mapping from parameter names to their repr() values for remote instantiation
         param_names: list[str] = cls.filtered_init_args
-        arg_mapping: dict[str,str] = {}
+        arg_mapping: dict[str, str] = {}
 
         # Map positional arguments (skip first N args which are client-side only: hostname, port)
         for i, param_name in enumerate(param_names):
@@ -397,6 +257,7 @@ class D3PluginClientMeta(type):
         instance.instance_code = instance_code
 
         return instance
+
 
 class D3PluginClient(metaclass=D3PluginClientMeta):
     """Base class for creating D3 Designer plugin clients.
@@ -450,10 +311,7 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         Returns:
             Self for use in 'async with' statements
         """
-        await d3_api_aregister_module(
-            self.hostname,
-            self.port,
-            self.get_register_module_blob())
+        await d3_api_aregister_module(self.hostname, self.port, self.get_register_module_blob())
         print("Entering D3PluginModule context")
         return self
 
@@ -473,10 +331,7 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         Returns:
             Self for use in 'with' statements
         """
-        d3_api_register_module(
-            self.hostname,
-            self.port,
-            self.get_register_module_blob())
+        d3_api_register_module(self.hostname, self.port, self.get_register_module_blob())
         print("Entering D3PluginModule context")
         return self
 
@@ -498,7 +353,7 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         """
         return {
             "moduleName": self.module_name,  # type: ignore[attr-defined]
-            "contents": self.get_register_module_content()
+            "contents": self.get_register_module_content(),
         }
 
     def get_register_module_content(self) -> str:

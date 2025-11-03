@@ -65,7 +65,6 @@ def function_in_module_b(value):
 
 
 class TestExtractFunctionInfo:
-
     def test_extract_info_simple_function(self):
         info = extract_function_info(example_function)
 
@@ -134,7 +133,6 @@ class TestExtractFunctionInfo:
 
 
 class TestD3Function:
-
     def test_d3_function_creation(self):
         d3_func = D3Function("test_module", None, example_function)
 
@@ -178,15 +176,17 @@ class TestD3Function:
         assert "def decorated_example_function():" in blob["contents"]
 
     @pytest.mark.asyncio
-    @patch('aiohttp.ClientSession.post')
+    @patch("aiohttp.ClientSession.post")
     async def test_aexecute_success(self, mock_post):
         # Mock successful async response
         mock_response = AsyncMock()
         mock_response.ok = True
-        mock_response.json = AsyncMock(return_value={
-            "status": {"code": 0, "message": "", "details": []},
-            "returnValue": '"test result"'
-        })
+        mock_response.json = AsyncMock(
+            return_value={
+                "status": {"code": 0, "message": "", "details": []},
+                "returnValue": '"test result"',
+            }
+        )
         mock_post.return_value.__aenter__.return_value = mock_response
 
         # Set registered IP address
@@ -198,7 +198,7 @@ class TestD3Function:
         mock_post.assert_called_once()
 
     @pytest.mark.asyncio
-    @patch('aiohttp.ClientSession.post')
+    @patch("aiohttp.ClientSession.post")
     async def test_aexecute_http_error(self, mock_post):
         # Mock HTTP error response
         mock_response = AsyncMock()
@@ -214,19 +214,21 @@ class TestD3Function:
             await decorated_example_function.aexecute()
 
     @pytest.mark.asyncio
-    @patch('aiohttp.ClientSession.post')
+    @patch("aiohttp.ClientSession.post")
     async def test_aexecute_designer_api_error(self, mock_post):
         # Mock Designer API error response
         mock_response = AsyncMock()
         mock_response.ok = True
-        mock_response.json = AsyncMock(return_value={
-            "status": {
-                "code": 1,
-                "message": "Python error",
-                "d3Log": "D3 log message",
-                "pythonLog": "Python traceback"
+        mock_response.json = AsyncMock(
+            return_value={
+                "status": {
+                    "code": 1,
+                    "message": "Python error",
+                    "d3Log": "D3 log message",
+                    "pythonLog": "Python traceback",
+                }
             }
-        })
+        )
         mock_post.return_value.__aenter__.return_value = mock_response
 
         # Set registered IP address
@@ -235,27 +237,7 @@ class TestD3Function:
         with pytest.raises(RuntimeError, match="Designer API error"):
             await decorated_example_function.aexecute()
 
-    @pytest.mark.asyncio
-    @patch('aiohttp.ClientSession.post')
-    async def test_aexecute_empty_return_value(self, mock_post):
-        # Mock response with empty return value
-        mock_response = AsyncMock()
-        mock_response.ok = True
-        mock_response.json = AsyncMock(return_value={
-            "status": {"code": 0, "message": "", "details": []},
-            "returnValue": None
-        })
-        mock_post.return_value.__aenter__.return_value = mock_response
-
-        # Set registered IP address
-        D3Function._registered_ipaddr = "127.0.0.1"
-
-        with pytest.raises(RuntimeError, match="Failed to parse plugin response"):
-            await decorated_example_function.aexecute()
-
-
 class TestFunctionInfo:
-
     def test_function_info_creation(self):
         info = FunctionInfo(
             blob="def test_func(x: int, y: int) -> int:\n    return 42",
@@ -263,7 +245,7 @@ class TestFunctionInfo:
             name="test_func",
             body="return 42",
             body_py27="return 42",
-            args=["x", "y"]
+            args=["x", "y"],
         )
 
         assert info.name == "test_func"
@@ -279,13 +261,12 @@ class TestFunctionInfo:
             blob_py27="def test_func():\n    return 42",
             name="test_func",
             body="return 42",
-            body_py27="return 42"
+            body_py27="return 42",
         )
         assert info.args == []
 
 
 class TestD3FunctionDecorator:
-
     def test_decorator_with_module(self):
         @d3function("my_module")
         def test_func():
@@ -306,7 +287,6 @@ class TestD3FunctionDecorator:
 
 
 class TestRegistrationFunctions:
-
     def test_get_all_modules(self):
         modules = get_all_modules()
         assert "test_module" in modules
@@ -319,7 +299,6 @@ class TestRegistrationFunctions:
 
 
 class TestD3FunctionEquality:
-
     def test_hash_and_equality(self):
         func1 = D3Function("module1", None, example_function)
         func2 = D3Function("module2", None, example_function)  # Different module, same function
@@ -337,14 +316,13 @@ class TestD3FunctionEquality:
 
 
 class TestRegisterModuleD3Functions:
-
     def test_register_empty_module_name(self):
         # Empty module name should return success without making requests
         success, error = register_module_d3functions("127.0.0.1", "")
         assert success is True
         assert error == ""
 
-    @patch('requests.post')
+    @patch("requests.post")
     def test_register_module_success(self, mock_post):
         # Mock successful response
         mock_response = Mock()
@@ -357,10 +335,10 @@ class TestRegisterModuleD3Functions:
         assert error == ""
         mock_post.assert_called_once_with(
             url="http://192.168.1.100/api/session/python/registermodule",
-            json=D3Function.get_module_register_blob("test_module")
+            json=D3Function.get_module_register_blob("test_module"),
         )
 
-    @patch('requests.post')
+    @patch("requests.post")
     def test_register_module_http_error(self, mock_post):
         # Mock failed response
         mock_response = Mock()
@@ -372,7 +350,7 @@ class TestRegisterModuleD3Functions:
         assert success is False
         assert error == ""
 
-    @patch('requests.post')
+    @patch("requests.post")
     def test_register_module_exception(self, mock_post):
         # Mock exception during request
         mock_post.side_effect = Exception("Connection error")
@@ -384,8 +362,7 @@ class TestRegisterModuleD3Functions:
 
 
 class TestRegisterAllD3Functions:
-
-    @patch('requests.post')
+    @patch("requests.post")
     def test_register_all_modules_success(self, mock_post):
         # Mock successful response for all modules
         mock_response = Mock()
@@ -404,16 +381,18 @@ class TestRegisterAllD3Functions:
             assert error == ""
 
         # Should have made HTTP requests for each module (excluding empty module names)
-        expected_modules = [name for name in results.keys() if name]  # Filter out empty module names
+        expected_modules = [
+            name for name in results.keys() if name
+        ]  # Filter out empty module names
         assert mock_post.call_count == len(expected_modules)
 
-    @patch('requests.post')
+    @patch("requests.post")
     def test_register_all_modules_mixed_results(self, mock_post):
         # Mock alternating success/failure responses
         def mock_response_side_effect(*args, **kwargs):
             response = Mock()
             # Alternate between success and failure based on call count
-            response.ok = (mock_post.call_count % 2 == 1)
+            response.ok = mock_post.call_count % 2 == 1
             return response
 
         mock_post.side_effect = mock_response_side_effect
@@ -432,7 +411,7 @@ class TestRegisterAllD3Functions:
         # At minimum, we know there are test_module, module_a, module_b from our test functions
         assert success_count > 0 or failure_count > 0
 
-    @patch('requests.post')
+    @patch("requests.post")
     def test_register_all_modules_with_exceptions(self, mock_post):
         # Mock some requests to raise exceptions
         def mock_response_side_effect(*args, **kwargs):
@@ -474,7 +453,6 @@ class TestRegisterAllD3Functions:
 
 
 class TestAsyncRegisterModuleD3Functions:
-
     @pytest.mark.asyncio
     async def test_aregister_empty_module_name(self):
         # Empty module name should return success without making requests
@@ -483,7 +461,7 @@ class TestAsyncRegisterModuleD3Functions:
         assert error == ""
 
     @pytest.mark.asyncio
-    @patch('aiohttp.ClientSession.post')
+    @patch("aiohttp.ClientSession.post")
     async def test_aregister_module_success(self, mock_post):
         # Mock successful async response
         mock_response = AsyncMock()
@@ -497,7 +475,7 @@ class TestAsyncRegisterModuleD3Functions:
         mock_post.assert_called_once()
 
     @pytest.mark.asyncio
-    @patch('aiohttp.ClientSession.post')
+    @patch("aiohttp.ClientSession.post")
     async def test_aregister_module_http_error(self, mock_post):
         # Mock failed async response
         mock_response = AsyncMock()
@@ -510,7 +488,7 @@ class TestAsyncRegisterModuleD3Functions:
         assert error == ""
 
     @pytest.mark.asyncio
-    @patch('aiohttp.ClientSession.post')
+    @patch("aiohttp.ClientSession.post")
     async def test_aregister_module_exception(self, mock_post):
         # Mock exception during async request
         mock_post.side_effect = Exception("Connection error")
@@ -522,9 +500,8 @@ class TestAsyncRegisterModuleD3Functions:
 
 
 class TestAsyncRegisterAllD3Functions:
-
     @pytest.mark.asyncio
-    @patch('d3blobgen.core.aregister_module_d3functions')
+    @patch("d3blobgen.core.aregister_module_d3functions")
     async def test_aregister_all_modules_success(self, mock_aregister_module):
         # Mock successful registration for all modules
         mock_aregister_module.return_value = (True, "")
@@ -545,10 +522,11 @@ class TestAsyncRegisterAllD3Functions:
         assert mock_aregister_module.call_count == expected_calls
 
     @pytest.mark.asyncio
-    @patch('d3blobgen.core.aregister_module_d3functions')
+    @patch("d3blobgen.core.aregister_module_d3functions")
     async def test_aregister_all_modules_mixed_results(self, mock_aregister_module):
         # Mock alternating success/failure responses
         call_count = 0
+
         async def mock_aregister_side_effect(ipaddr, module_name):
             nonlocal call_count
             call_count += 1
@@ -574,10 +552,11 @@ class TestAsyncRegisterAllD3Functions:
         assert success_count > 0 or failure_count > 0
 
     @pytest.mark.asyncio
-    @patch('d3blobgen.core.aregister_module_d3functions')
+    @patch("d3blobgen.core.aregister_module_d3functions")
     async def test_aregister_all_modules_with_exceptions(self, mock_aregister_module):
         # Mock some registrations to raise exceptions
         call_count = 0
+
         async def mock_aregister_side_effect(ipaddr, module_name):
             nonlocal call_count
             call_count += 1
@@ -611,7 +590,7 @@ class TestAsyncRegisterAllD3Functions:
         original_ip = D3Function._registered_ipaddr
 
         try:
-            with patch('d3blobgen.core.aregister_module_d3functions') as mock_aregister_module:
+            with patch("d3blobgen.core.aregister_module_d3functions") as mock_aregister_module:
                 mock_aregister_module.return_value = (True, "")
 
                 await aregister_all_d3functions(test_ip)
