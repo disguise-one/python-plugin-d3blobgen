@@ -17,7 +17,6 @@ import inspect
 import textwrap
 import types
 
-
 ###############################################################################
 # Configuration for filtering client-side-only constructs
 

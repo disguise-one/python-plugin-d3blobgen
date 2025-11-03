@@ -237,6 +237,7 @@ class TestD3Function:
         with pytest.raises(RuntimeError, match="Designer API error"):
             await decorated_example_function.aexecute()
 
+
 class TestFunctionInfo:
     def test_function_info_creation(self):
         info = FunctionInfo(

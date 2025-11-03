@@ -7,7 +7,7 @@ from d3blobgen.core import (
     D3Function,
 )
 from d3blobgen.models import get_plugin_endpoint_url
-from d3blobgen.utils import d3_api_aplugin, d3_api_typed_aplugin
+from d3blobgen.utils import d3_api_aplugin
 from examples.e4_lower_level_api.lower_level_api_blob import (
     my_time,
     my_time_with_note,
@@ -120,8 +120,8 @@ async def example_helper_utilities_async():
         print(f"Cast value: {castReturnValue}")
         print(f"Cast value type: {type(castReturnValue)}")
 
-        # Using d3_api_typed_aplugin
-        typed_response = await d3_api_typed_aplugin("localhost", 80, my_time.get_typed_execute_blob())
+        # Using d3_api_aplugin
+        typed_response = await d3_api_aplugin("localhost", 80, my_time.get_typed_execute_blob())
         typed_returnValue = typed_response.returnValue
         print(f"Typed response: {typed_response}")
         print(f"Typed return value: {typed_returnValue}")
@@ -151,7 +151,7 @@ async def example_async_function_sleep():
     print("\n=== Example 8: Using async function with sleep (async) ===")
 
     try:
-        response = await d3_api_typed_aplugin("localhost", 80, sleep_50ms.get_typed_execute_blob())
+        response = await d3_api_aplugin("localhost", 80, sleep_50ms.get_typed_execute_blob())
         print(f"Response after 50ms sleep: {response.returnValue}")
     except Exception as e:
         print(f"Error: {e}")
@@ -164,9 +164,9 @@ async def example_concurrent_requests():
     try:
         # Create multiple tasks to run concurrently
         tasks = [
-            d3_api_typed_aplugin("localhost", 80, my_time.get_typed_execute_blob()),
-            d3_api_typed_aplugin("localhost", 80, my_time_module2.get_typed_execute_blob()),
-            d3_api_typed_aplugin("localhost", 80, sleep_50ms.get_typed_execute_blob()),
+            d3_api_aplugin("localhost", 80, my_time.get_typed_execute_blob()),
+            d3_api_aplugin("localhost", 80, my_time_module2.get_typed_execute_blob()),
+            d3_api_aplugin("localhost", 80, sleep_50ms.get_typed_execute_blob()),
         ]
 
         # Run all tasks concurrently and wait for all to complete
@@ -196,7 +196,7 @@ async def example_typed_dict_async():
 
     # This will only work if Designer is running with the surface available
     try:
-        response = await d3_api_typed_aplugin("localhost", 80, typed_blob)
+        response = await d3_api_aplugin("localhost", 80, typed_blob)
         print(f"Surface info (str uid): {response.returnValue}")
     except Exception as e:
         print(f"Error (expected if surface not available): {e}")
@@ -206,7 +206,7 @@ async def example_typed_dict_async():
     print(f"\nBlob for get_typed_surface: {typed_surface_blob.blob}")
 
     try:
-        surface_response = await d3_api_typed_aplugin("localhost", 80, typed_surface_blob)
+        surface_response = await d3_api_aplugin("localhost", 80, typed_surface_blob)
         print(f"Surface info (int uid): {surface_response.returnValue}")
     except Exception as e:
         print(f"Error (expected if surface not available): {e}")
@@ -225,7 +225,7 @@ async def example_cross_module_error_async():
     print("Attempting to call function from different module (will fail)...")
 
     try:
-        response = await d3_api_typed_aplugin("localhost", 80, typed_blob)
+        response = await d3_api_aplugin("localhost", 80, typed_blob)
         print(f"Response: {response.returnValue}")
     except Exception as e:
         print(f"Expected error - cannot call functions across modules: {e}")

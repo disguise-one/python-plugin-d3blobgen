@@ -19,7 +19,6 @@ import json
 import textwrap
 from collections import defaultdict
 from collections.abc import Callable
-from dataclasses import dataclass
 from types import FrameType, ModuleType
 from typing import Any, Generic, ParamSpec, TypeVar, get_type_hints
 
@@ -76,7 +75,6 @@ def find_packages_in_current_file(caller_stack: int = 1) -> list[str]:
         return []
 
     source: str = inspect.getsource(modules)
-    source_lines: list[str] = source.splitlines()
 
     # Parse the source code
     tree = ast.parse(source)

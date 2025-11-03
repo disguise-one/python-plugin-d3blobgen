@@ -17,7 +17,6 @@ from typing import Any, Generic, TypeVar
 import typing_extensions
 from pydantic import BaseModel, Field, TypeAdapter, field_validator
 
-
 ###############################################################################
 # Plugin endpoint constants
 D3_PLUGIN_ENDPOINT = "api/session/python/execute"

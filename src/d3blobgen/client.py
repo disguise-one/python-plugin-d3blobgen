@@ -35,23 +35,20 @@ from collections.abc import Callable
 from typing import Any, ParamSpec, TypeVar, get_type_hints
 
 from d3blobgen.ast_utils import (
-    class_vars_to_exclude,
     convert_class_to_py27,
     filter_init_args,
     get_class_node,
     get_source,
     init_args_to_exclude,
-    is_exclude_arg,
     is_exclude_class_var,
 )
 from d3blobgen.models import PluginResponse, TypedBlob
 from d3blobgen.utils import (
+    d3_api_aplugin,
     d3_api_aregister_module,
+    d3_api_plugin,
     d3_api_register_module,
-    d3_api_typed_aplugin,
-    d3_api_typed_plugin,
 )
-
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -64,7 +61,7 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
     1. Serializes the arguments using repr()
     2. Builds a script string in the form: "return plugin.{method_name}({args})"
     3. Creates a TypedBlob with the script and module information
-    4. Sends it to D3 Designer via d3_api_typed_plugin or d3_api_typed_aplugin
+    4. Sends it to D3 Designer via d3_api_plugin or d3_api_aplugin
     5. Returns the result from the remote execution
 
     Args:
@@ -103,7 +100,7 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
         @functools.wraps(original_method)
         async def async_wrapper(self, *args, **kwargs):
             blob = _build_blob(self, args, kwargs)
-            response: PluginResponse[T] = await d3_api_typed_aplugin(self.hostname, self.port, blob)
+            response: PluginResponse[T] = await d3_api_aplugin(self.hostname, self.port, blob)
             return response.returnValue
 
         return async_wrapper
@@ -112,7 +109,7 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
         @functools.wraps(original_method)
         def sync_wrapper(self, *args, **kwargs):
             blob = _build_blob(self, args, kwargs)
-            response: PluginResponse[T] = d3_api_typed_plugin(self.hostname, self.port, blob)
+            response: PluginResponse[T] = d3_api_plugin(self.hostname, self.port, blob)
             return response.returnValue
 
         return sync_wrapper

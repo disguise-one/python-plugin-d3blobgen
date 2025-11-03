@@ -6,7 +6,7 @@ from d3blobgen.core import (
     D3Function,
     get_plugin_endpoint_url,
 )
-from d3blobgen.utils import d3_api_typed_plugin, d3_api_typed_plugin
+from d3blobgen.utils import d3_api_plugin
 from examples.e4_lower_level_api.lower_level_api_blob import (
     my_time,
     my_time_with_note,
@@ -101,7 +101,7 @@ def example_helper_utilities():
     print("\n=== Example 6: With helper utilities ===")
 
     # Using d3_api_plugin
-    response = d3_api_typed_plugin("localhost", 80, my_time.get_execute_blob())
+    response = d3_api_plugin("localhost", 80, my_time.get_execute_blob())
     returnValue = response.returnValue
     castReturnValue = response.returnCastValue(str)
     print(f"Response: {response}")
@@ -110,8 +110,8 @@ def example_helper_utilities():
     print(f"Cast value: {castReturnValue}")
     print(f"Cast value type: {type(castReturnValue)}")
 
-    # Using d3_api_typed_plugin
-    typed_response = d3_api_typed_plugin("localhost", 80, my_time.get_typed_execute_blob())
+    # Using d3_api_plugin
+    typed_response = d3_api_plugin("localhost", 80, my_time.get_typed_execute_blob())
     typed_returnValue = typed_response.returnValue
     print(f"Typed response: {typed_response}")
     print(f"Typed return value: {typed_returnValue}")
@@ -139,7 +139,7 @@ def example_async_function():
     print("\n=== Example 8: Using async function with sleep ===")
 
     try:
-        response = d3_api_typed_plugin("localhost", 80, sleep_50ms.get_typed_execute_blob())
+        response = d3_api_plugin("localhost", 80, sleep_50ms.get_typed_execute_blob())
         print(f"Response after 50ms sleep: {response.returnValue}")
     except Exception as e:
         print(f"Error: {e}")
@@ -177,7 +177,7 @@ def example_cross_module_error():
     print("Attempting to call function from different module (will fail)...")
 
     try:
-        response = d3_api_typed_plugin("localhost", 80, typed_blob)
+        response = d3_api_plugin("localhost", 80, typed_blob)
         print(f"Response: {response.returnValue}")
     except Exception as e:
         print(f"Expected error - cannot call functions across modules: {e}")
@@ -193,7 +193,7 @@ def example_typed_dict():
 
     # This will only work if Designer is running with the surface available
     try:
-        response = d3_api_typed_plugin("localhost", 80, typed_blob)
+        response = d3_api_plugin("localhost", 80, typed_blob)
         print(f"Surface info (str uid): {response.returnValue}")
     except Exception as e:
         print(f"Error (expected if surface not available): {e}")
@@ -203,7 +203,7 @@ def example_typed_dict():
     print(f"\nBlob for get_typed_surface: {typed_surface_blob.blob}")
 
     try:
-        surface_response = d3_api_typed_plugin("localhost", 80, typed_surface_blob)
+        surface_response = d3_api_plugin("localhost", 80, typed_surface_blob)
         print(f"Surface info (int uid): {surface_response.returnValue}")
     except Exception as e:
         print(f"Error (expected if surface not available): {e}")

@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Unpack
+from typing import Any, TypeVar, Unpack, overload
 
 import aiohttp
 import requests
@@ -104,41 +104,46 @@ async def d3_api_aput(
     )
 
 
+@overload
 async def d3_api_aplugin(
     hostname: str, port: int, plugin_blob: dict, timeout_ms: float | None = None
-) -> PluginResponse:
-    response: Any = await d3_api_arequest(
-        "POST",
-        hostname,
-        port,
-        D3_PLUGIN_ENDPOINT,
-        json=plugin_blob,
-        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
-    )
-    try:
-        return PluginResponse.model_validate(response)
-    except ValidationError:
-        error_response: PluginError = PluginError.model_validate(response)
-        raise PluginException(
-            status=error_response.status,
-            d3Log=error_response.d3Log,
-            pythonLog=error_response.pythonLog,
-        ) from None
+) -> PluginResponse: ...
 
 
-async def d3_api_typed_aplugin(
+@overload
+async def d3_api_aplugin(
     hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_ms: float | None = None
-) -> PluginResponse[RetType]:
+) -> PluginResponse[RetType]: ...
+
+
+async def d3_api_aplugin(
+    hostname: str,
+    port: int,
+    plugin_blob: dict | TypedBlob[RetType],
+    timeout_ms: float | None = None,
+) -> PluginResponse | PluginResponse[RetType]:
+    # Extract blob from TypedBlob if necessary
+    if isinstance(plugin_blob, TypedBlob):
+        json_data = plugin_blob.blob
+        is_typed = True
+    else:
+        json_data = plugin_blob
+        is_typed = False
+
     response: Any = await d3_api_arequest(
         "POST",
         hostname,
         port,
         D3_PLUGIN_ENDPOINT,
-        json=plugin_blob.blob,
+        json=json_data,
         timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
     )
+
     try:
-        return PluginResponse[RetType].model_validate(response)
+        if is_typed:
+            return PluginResponse[RetType].model_validate(response)
+        else:
+            return PluginResponse.model_validate(response)
     except ValidationError:
         error_response: PluginError = PluginError.model_validate(response)
         raise PluginException(
@@ -219,41 +224,46 @@ def d3_api_put(
     )
 
 
+@overload
 def d3_api_plugin(
     hostname: str, port: int, plugin_blob: dict, timeout_ms: float | None = None
-) -> PluginResponse:
-    response = d3_api_request(
-        "POST",
-        hostname,
-        port,
-        D3_PLUGIN_ENDPOINT,
-        json=plugin_blob,
-        timeout=timeout_ms / 1000 if timeout_ms else None,
-    )
-    try:
-        return PluginResponse.model_validate(response)
-    except ValidationError:
-        error_response: PluginError = PluginError.model_validate(response)
-        raise PluginException(
-            status=error_response.status,
-            d3Log=error_response.d3Log,
-            pythonLog=error_response.pythonLog,
-        ) from None
+) -> PluginResponse: ...
 
 
-def d3_api_typed_plugin(
+@overload
+def d3_api_plugin(
     hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_ms: float | None = None
-) -> PluginResponse[RetType]:
+) -> PluginResponse[RetType]: ...
+
+
+def d3_api_plugin(
+    hostname: str,
+    port: int,
+    plugin_blob: dict | TypedBlob[RetType],
+    timeout_ms: float | None = None,
+) -> PluginResponse | PluginResponse[RetType]:
+    # Extract blob from TypedBlob if necessary
+    if isinstance(plugin_blob, TypedBlob):
+        json_data = plugin_blob.blob
+        is_typed = True
+    else:
+        json_data = plugin_blob
+        is_typed = False
+
     response = d3_api_request(
         "POST",
         hostname,
         port,
         D3_PLUGIN_ENDPOINT,
-        json=plugin_blob.blob,
+        json=json_data,
         timeout=timeout_ms / 1000 if timeout_ms else None,
     )
+
     try:
-        return PluginResponse[RetType].model_validate(response)
+        if is_typed:
+            return PluginResponse[RetType].model_validate(response)
+        else:
+            return PluginResponse.model_validate(response)
     except ValidationError:
         error_response: PluginError = PluginError.model_validate(response)
         raise PluginException(
@@ -279,6 +289,6 @@ def d3_api_register_module(
             timeout=timeout_ms / 1000 if timeout_ms else None,
         )
     except Exception as e:
-        raise Exception(
+        raise RuntimeError(
             f"Failed to register module '{json.get('moduleName') if json else ''}': {e}"
         ) from e
