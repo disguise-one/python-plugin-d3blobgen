@@ -27,24 +27,25 @@ Example:
         result = await plugin.process_data("hello")
 """
 import ast
-import inspect
-import types
-import textwrap
 import functools
+import inspect
+import textwrap
+import types
+from collections.abc import Callable
+from typing import Any, ParamSpec, TypeVar, get_type_hints
 
-from typing import TypeVar, ParamSpec, Callable, Any, get_type_hints
-
-from d3blobgen.utils import (
-    d3_api_typed_aplugin,
-    d3_api_typed_plugin,
-    d3_api_aregister_module,
-    d3_api_register_module,
-)
 from d3blobgen.core import (
     PluginResponse,
     TypedBlob,
     convert_node_to_py27,
 )
+from d3blobgen.utils import (
+    d3_api_aregister_module,
+    d3_api_register_module,
+    d3_api_typed_aplugin,
+    d3_api_typed_plugin,
+)
+
 
 def get_source(frame: types.FrameType) -> str|None:
     """Extract and dedent source code from a frame object.
@@ -165,7 +166,7 @@ def filter_init_args(class_node: ast.ClassDef) -> list[str]:
 
         # Return filtered parameter names (excluding 'self' which is implicit)
         return [arg.arg for arg in node.args.args if arg.arg != "self"]
-    
+
     return []
 
 def convert_to_py27(class_node: ast.ClassDef) -> None:
@@ -496,7 +497,7 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
             Dictionary containing moduleName and contents for registration
         """
         return {
-            "moduleName": self.module_name,
+            "moduleName": self.module_name,  # type: ignore[attr-defined]
             "contents": self.get_register_module_content()
         }
 
@@ -509,4 +510,4 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         Returns:
             String containing the full module code to execute on D3 Designer
         """
-        return f"{self.source_code_py27}\n\n{self.instance_code}"
+        return f"{self.source_code_py27}\n\n{self.instance_code}"  # type: ignore[attr-defined]

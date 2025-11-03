@@ -1,18 +1,19 @@
 import ast
-import inspect
 import functools
-import requests
-import aiohttp
+import inspect
+import json
 import textwrap
 import traceback
-import json
-from dataclasses import dataclass
-from pydantic import BaseModel, Field, field_validator, TypeAdapter
-from typing import TypeVar, ParamSpec, Callable, Any, Generic, DefaultDict, Type, get_type_hints
-import typing_extensions
-from types import FrameType, ModuleType
 from collections import defaultdict
+from collections.abc import Callable
+from dataclasses import dataclass
+from types import FrameType, ModuleType
+from typing import Any, Generic, ParamSpec, TypeVar, get_type_hints
 
+import aiohttp
+import requests
+import typing_extensions
+from pydantic import BaseModel, Field, TypeAdapter, field_validator
 
 ###############################################################################
 # Plugin endpoint helpers
@@ -45,7 +46,7 @@ class PluginException(Exception):
     status: PluginStatus
     d3Log: str | None = None
     pythonLog: str | None = None
-    
+
     _traceback_str: str | None = None
     _str: str | None = None
 
@@ -65,7 +66,7 @@ class PluginException(Exception):
                 f"PluginError: (code {self.status.code}){details_str}",
                 f"d3Log      : {self.d3Log}",
                 f"pythonLog  : {self.pythonLog}",
-                f"Traceback  : {self._traceback_str.strip() if self._traceback_str else str()}"
+                f"Traceback  : {self._traceback_str.strip() if self._traceback_str else ''}"
             ])
         return self._str
 
@@ -84,8 +85,8 @@ class PluginResponse(BaseModel, Generic[RetType]):
             else:
                 return json.loads(v)
         return v
-    
-    def returnCastValue(self, castType: Type[RetCastType]) -> RetCastType:
+
+    def returnCastValue(self, castType: type[RetCastType]) -> RetCastType:
         """
         Validate and return the typed return value.
 
@@ -130,8 +131,8 @@ def find_packages_in_current_file(caller_stack:int = 1) -> list[str]:
 
     # Get the caller's frame (file where this function is called)
     caller_frame: FrameType | None = current_frame
-    for i in range(caller_stack):
-        if not caller_frame.f_back:
+    for _i in range(caller_stack):
+        if not caller_frame or not caller_frame.f_back:
             return []
         caller_frame = caller_frame.f_back
 
@@ -194,7 +195,7 @@ def find_packages_in_current_file(caller_stack:int = 1) -> list[str]:
             # Handle multi-line imports by capturing from lineno to end_lineno
             start_line = node.lineno - 1
             end_line = node.end_lineno if node.end_lineno else node.lineno
-            line_text: str = " ".join([line.strip().strip("\\") for line in source_lines[start_line:end_line]]).strip()
+            line_text = " ".join([line.strip().strip("\\") for line in source_lines[start_line:end_line]]).strip()
             imports.append(line_text)
 
     return sorted(set(imports))
@@ -204,7 +205,7 @@ def find_packages_in_current_file(caller_stack:int = 1) -> list[str]:
 # Plugin function related implementations
 class FunctionInfo(BaseModel):
     """Container for parsed function information extracted from Python source code.
-    
+
     This model holds all the essential components of a function after parsing,
     including its complete definition, name, body statements, and argument list.
     """
@@ -217,19 +218,19 @@ class FunctionInfo(BaseModel):
 
 def convert_ann_assign_to_assign(ann_assign_node: ast.AnnAssign) -> ast.Assign|None:
     """Convert an annotated assignment node to a regular assignment node.
-    
-    This function transforms type-annotated variable assignments (e.g., 'x: int = 5') 
+
+    This function transforms type-annotated variable assignments (e.g., 'x: int = 5')
     into regular assignments (e.g., 'x = 5') for Python 2.7 compatibility.
-    
+
     Args:
         ann_assign_node: AST node representing an annotated assignment.
-        
+
     Returns:
         ast.Assign node without type annotation, or None if no value is assigned.
     """
     if ann_assign_node.value is None:
         return None
-    
+
     return ast.Assign(
         targets=[ann_assign_node.target],
         value=ann_assign_node.value,
@@ -238,13 +239,13 @@ def convert_ann_assign_to_assign(ann_assign_node: ast.AnnAssign) -> ast.Assign|N
 
 class FastRemoveTypeHints(ast.NodeTransformer):
     """AST transformer to remove type hints from Python code for 2.7 compatibility."""
-    
+
     def visit_AnnAssign(self, node):
         """Transform annotated assignment nodes to regular assignment nodes.
-        
+
         Args:
             node: The annotated assignment AST node to transform.
-            
+
         Returns:
             Regular assignment node without type annotation.
         """
@@ -252,10 +253,10 @@ class FastRemoveTypeHints(ast.NodeTransformer):
 
 def remove_type_hints_from_body(function_node: ast.FunctionDef) -> None:
     """Remove type hints from the body statements of a function.
-    
+
     This function applies the FastRemoveTypeHints transformer to remove
     annotated assignments from function body statements.
-    
+
     Args:
         function_node: The function AST node to process.
     """
@@ -264,70 +265,70 @@ def remove_type_hints_from_body(function_node: ast.FunctionDef) -> None:
 
 def convert_node_to_py27(function_node: ast.FunctionDef) -> None:
     """Convert a function AST node to Python 2.7 compatible format.
-    
+
     This function removes all type annotations from a function definition,
     including return type annotations, parameter type annotations, and
     type hints within the function body to ensure Python 2.7 compatibility.
-    
+
     Args:
         function_node: The function AST node to convert to Python 2.7 format.
     """
     # Strip type hints for Python 2 compatibility
     # Remove return type annotation
     function_node.returns = None
-    
+
     # Remove argument type annotations
     for arg in function_node.args.args:
         arg.annotation = None
-    
+
     # Remove keyword-only argument type annotations
     for arg in function_node.args.kwonlyargs:
         arg.annotation = None
-    
+
     # Remove vararg type annotation (*args)
     if function_node.args.vararg:
         function_node.args.vararg.annotation = None
-    
-    # Remove kwarg type annotation (**kwargs)  
+
+    # Remove kwarg type annotation (**kwargs)
     if function_node.args.kwarg:
         function_node.args.kwarg.annotation = None
-    
+
     # Remove type hints from function body
     remove_type_hints_from_body(function_node)
 
 def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
     """Parse function source code and extract name, body statements, and argument list.
-    
+
     This function uses AST parsing to extract function information from the source code
     of a callable Python function. It removes decorators and provides the clean function
     definition along with parsed components.
-    
+
     Args:
         func: A callable Python function to analyse.
-        
+
     Returns:
         FunctionInfo: Object containing function name, body code, and argument names.
-        
+
     Raises:
         ValueError: If the input is not a function or cannot be parsed.
     """
-    
+
     source_code = inspect.getsource(func)
     # Remove common leading whitespace to handle functions defined with indentation
     source_code = textwrap.dedent(source_code)
     tree: ast.Module = ast.parse(source_code)
-    
+
     # Check if first node exists and is a function
     if not tree.body:
         raise ValueError(f"Given input is not a function\ninput:{source_code}")
-    
+
     first_node = tree.body[0]
     if not isinstance(first_node, ast.FunctionDef):
         raise ValueError(f"Given input is not a function\ninput:{source_code}")
-    
+
     # Extract function blob without decorator
     first_node.decorator_list.clear()
-    
+
     # Extract blob in python 3 format
     blob:str = ast.unparse(first_node)
 
@@ -336,7 +337,7 @@ def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
 
     # Extract body statements
     body_nodes = first_node.body
-    
+
     # Convert back to source code
     body = ""
     for stmt in body_nodes:
@@ -346,8 +347,7 @@ def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
     args: list[str] = []
     for arg in first_node.args.args:
         args.append(arg.arg)
-        arg.type_comment
-    
+
     convert_node_to_py27(first_node)
     blob_py27:str = ast.unparse(first_node)
 
@@ -370,26 +370,26 @@ T = TypeVar('T')
 @dataclass
 class TypedBlob(Generic[T]):
     blob: dict[str,str]
-    return_type: Type[T]
+    return_type: type[T]
     module_name: str
 
 class D3Function(Generic[P, T]):
     """Wrapper class for Python functions to be executed in Designer environment.
-    
+
     This class transforms regular Python functions into Designer plugin compatible functions
     that can be registered as modules and executed remotely. It preserves function metadata
     and provides methods for generating execution blobs and registration data.
     """
 
-    _available_packages: DefaultDict[str, set[str]] = defaultdict(set)
-    _available_d3functions: DefaultDict[str, set["D3Function"]] = defaultdict(set)
+    _available_packages: defaultdict[str, set[str]] = defaultdict(set)
+    _available_d3functions: defaultdict[str, set["D3Function"]] = defaultdict(set)
     _registered_ipaddr:str = "localhost"
 
     def __init__(self, module_name: str, timeout_ms: float|None, func: Callable[P, T]):
         """Initialise a D3Function wrapper around a Python function.
-        
+
         Args:
-            module_name: Name of the module to register this function under. 
+            module_name: Name of the module to register this function under.
                         Empty string means standalone function execution.
             func: The Python function to wrap for D3 execution.
         """
@@ -398,7 +398,7 @@ class D3Function(Generic[P, T]):
         self._function: Callable[P, T] = func
         self._function_info: FunctionInfo = extract_function_info(func)
         self._is_module_function:bool = len(module_name) > 0
-        
+
         # Update wrapper to preserve function metadata for IDE
         functools.update_wrapper(self, func)
 
@@ -407,31 +407,31 @@ class D3Function(Generic[P, T]):
 
     def __call__(self, *args: P.args, **kwargs: P.kwargs) -> T:
         return self._function(*args, **kwargs)
-    
+
     def __getattr__(self, name: str) -> Any:
         """Proxy attribute access to the original function for IDE support.
-        
+
         Args:
             name: The attribute name to retrieve from the wrapped function.
-            
+
         Returns:
             The attribute value from the wrapped function.
         """
         return getattr(self._function, name)
-    
+
     def __hash__(self) -> int:
-        """Used to uniquely register d3function in D3Function._available_d3functions. 
+        """Used to uniquely register d3function in D3Function._available_d3functions.
         Function name in python is unique, so we can function name as uid.
-        
+
         Returns:
             Hash value of the function name.
         """
         return hash(self.name)
-    
+
     def __eq__(self, other) -> bool:
-        """Used to uniquely register d3function in D3Function._available_d3functions. 
+        """Used to uniquely register d3function in D3Function._available_d3functions.
         Function name in python is unique, so we can function name as uid.
-        
+
         Returns:
             True if both are D3Functions with the same name, False otherwise.
         """
@@ -442,33 +442,33 @@ class D3Function(Generic[P, T]):
     @staticmethod
     def get_module_register_blob(module_name:str) -> dict[str, str]:
         """Generate a registration blob for all functions in a specific module.
-        
+
         Args:
             module_name: The name of the module to generate the blob for.
-            
+
         Returns:
             Dictionary containing module name and all d3function registered under module.
         """
-        contents_packages: str = "\n".join([pkg for pkg in D3Function._available_packages[module_name]])
+        contents_packages: str = "\n".join(list(D3Function._available_packages[module_name]))
         contents_functions: str = "\n\n".join([func.function_info.blob_py27 for func in D3Function._available_d3functions[module_name]])
         return {
             "moduleName": module_name,
             "contents": f"{contents_packages}\n\n{contents_functions}"
         }
 
-    @property 
+    @property
     def __signature__(self) -> inspect.Signature:
         """Expose function signature for IDE introspection.
-        
+
         Returns:
             The signature of the wrapped function for IDE support.
         """
         return inspect.signature(self._function)
-    
+
     @property
     def name(self) -> str:
         """Get the name of the wrapped function.
-        
+
         Returns:
             The name of the wrapped function.
         """
@@ -477,7 +477,7 @@ class D3Function(Generic[P, T]):
     @property
     def module_name(self) -> str:
         """Get the module name this function is registered under.
-        
+
         Returns:
             The module name for this function.
         """
@@ -486,7 +486,7 @@ class D3Function(Generic[P, T]):
     @property
     def function_info(self) -> FunctionInfo:
         """Get the parsed function information.
-        
+
         Returns:
             FunctionInfo object containing parsed details about the wrapped function.
         """
@@ -494,13 +494,13 @@ class D3Function(Generic[P, T]):
 
     def _args_to_string(self, *args, **kwargs) -> str:
         """Convert function arguments to a string representation for D3 script generation.
-        
+
         Returns:
             String representation of all arguments suitable for function calls.
         """
         # Convert positional args
         args_parts = [repr(arg) for arg in args]
-        # Convert keyword args  
+        # Convert keyword args
         kwargs_parts = [f"{key}={repr(value)}" for key, value in kwargs.items()]
         # Combine them
         all_parts = args_parts + kwargs_parts
@@ -508,7 +508,7 @@ class D3Function(Generic[P, T]):
 
     def _args_to_assign(self, *args, **kwargs):
         """Convert function arguments to assignment statements for standalone execution.
-        
+
         Returns:
             String containing variable assignment statements, one per line.
         """
@@ -518,7 +518,7 @@ class D3Function(Generic[P, T]):
 
     def get_execute_blob(self, *args: P.args, **kwargs: P.kwargs) -> dict[str, str]:
         """Generate an execution blob for running this function in Designer.
-            
+
         Returns:
             - **module execute blob** if @d3function was registered with module_name
             - **script execute blob** if @d3function was registered without module_name
@@ -533,7 +533,7 @@ class D3Function(Generic[P, T]):
             return {
                 "script": f"{all_args}\n{self._function_info.body_py27}"
             }
-        
+
     def get_typed_execute_blob(self, *args: P.args, **kwargs: P.kwargs) -> TypedBlob[T]:
         """Generate an execution blob with the return type extracted from function annotations.
 
@@ -550,7 +550,7 @@ class D3Function(Generic[P, T]):
             return_type = return_type,
             module_name=self.module_name
         )
-    
+
     def _extract_retval(self, json_data: dict) -> T:
         try:
             plugin_response = PluginResponse[T].model_validate(json_data)
@@ -565,7 +565,7 @@ Designer API error:
 - d3Log     : {json_data.get("d3Log")}
 - pythonLog : {json_data.get("pythonLog")}
 - retVal    : {json_data.get("returnValue")}
-""")
+""") from e
 
     def raise_plugin_error(self, response_text: str) -> None:
         status: PluginStatus|None = None
@@ -582,23 +582,23 @@ Designer API error:
 
     def execute(self, *args: P.args, **kwargs: P.kwargs) -> T:
         """Execute this function remotely on a D3 Designer instance.
-        
+
         This method sends the function and its arguments to the registered Designer
         instance for remote execution, then returns the parsed result.
-        
+
         Args:
             *args: Positional arguments to pass to the function.
             **kwargs: Keyword arguments to pass to the function.
-            
+
         Returns:
             The return value from the remote function execution.
-            
+
         Raises:
             RuntimeError: If the HTTP request fails, Designer returns an error,
                          or the return value is empty/invalid.
         """
         response: requests.Response = requests.post(
-            url=f"http://{D3Function._registered_ipaddr}/{D3_PLUGIN_ENDPOINT}", 
+            url=f"http://{D3Function._registered_ipaddr}/{D3_PLUGIN_ENDPOINT}",
             json=self.get_execute_blob(*args, **kwargs),
             timeout= self._timeout_ms / 1000.0 if self._timeout_ms else None
         )
@@ -606,23 +606,23 @@ Designer API error:
             if response.status_code == 500:
                 self.raise_plugin_error(response.text)
             raise RuntimeError(f"HTTP error {response.status_code}: { response.text}")
-        
+
         data: dict = response.json()
         return self._extract_retval(data)
-    
+
     async def aexecute(self, *args: P.args, **kwargs: P.kwargs) -> T:
         """Asynchronously execute this function remotely on a D3 Designer instance.
-        
+
         This method sends the function and its arguments to the registered Designer
         instance for remote execution, then returns the parsed result.
-        
+
         Args:
             *args: Positional arguments to pass to the function.
             **kwargs: Keyword arguments to pass to the function.
-            
+
         Returns:
             The return value from the remote function execution.
-            
+
         Raises:
             RuntimeError: If the HTTP request fails, Designer returns an error,
                          or the return value is empty/invalid.
@@ -647,17 +647,17 @@ Designer API error:
 # d3function API
 def d3function(module_name: str = "", timeout_ms: float|None = None) -> Callable[[Callable[P, T]], D3Function[P, T]]:
     """Decorator to wrap a Python function for D3 Designer execution.
-    
+
     This decorator transforms a regular Python function into a D3Function that can be
     registered with D3 Designer and executed remotely.
-    
+
     Args:
-        module_name: Optional module name to register the function under. 
+        module_name: Optional module name to register the function under.
                     If empty, the function will be treated as standalone script and won't be registered.
-                    
+
     Returns:
         A decorator function that wraps the target function in a D3Function.
-        
+
     Example:
         ```
         @d3function("my_d3module")
@@ -704,21 +704,21 @@ def add_packages_in_current_file(module_name: str) -> None:
 
 def register_module_d3functions(ipaddr: str, module_name: str) -> tuple[bool, str]:
     """Register all d3function in a module with a Designer instance.
-    
+
     Args:
         ipaddr: IP address of the Designer instance.
         module_name: Name of the module to register.
-        
+
     Returns:
         Tuple containing success status and error message (empty if successful).
     """
     # function with no module shouldn't be registered
     if len(module_name) == 0:
         return (True, "")
-    
+
     try:
         response = requests.post(
-            url=f"http://{ipaddr}/api/session/python/registermodule", 
+            url=f"http://{ipaddr}/api/session/python/registermodule",
             json=D3Function.get_module_register_blob(module_name)
         )
         return (response.ok, "")
@@ -727,18 +727,18 @@ def register_module_d3functions(ipaddr: str, module_name: str) -> tuple[bool, st
 
 async def aregister_module_d3functions(ipaddr: str, module_name: str) -> tuple[bool, str]:
     """Asynchronously register all d3function in a module with a Designer instance.
-    
+
     Args:
         ipaddr: IP address of the Designer instance.
         module_name: Name of the module to register.
-        
+
     Returns:
         Tuple containing success status and error message (empty if successful).
     """
     # function with no module shouldn't be registered
     if len(module_name) == 0:
         return (True, "")
-    
+
     try:
         url=f"http://{ipaddr}/api/session/python/registermodule"
         async with aiohttp.ClientSession() as session:
@@ -749,11 +749,11 @@ async def aregister_module_d3functions(ipaddr: str, module_name: str) -> tuple[b
 
 def register_all_d3functions(ipaddr:str) -> dict[str, tuple[bool, str]]:
     """Register all available d3function across all modules with a Designer instance.
-    If d3function was registered without module_name, it won't be registered. 
-    
+    If d3function was registered without module_name, it won't be registered.
+
     Args:
         ipaddr: IP address of the Designer instance.
-        
+
     Returns:
         Dictionary mapping module names to registration results (success status and error message).
     """
@@ -766,10 +766,10 @@ def register_all_d3functions(ipaddr:str) -> dict[str, tuple[bool, str]]:
 async def aregister_all_d3functions(ipaddr:str) -> dict[str, tuple[bool, str]]:
     """Asynchronously register all available d3function across all modules with a Designer instance.
     If d3function was registered without module_name, it won't be registered.
-    
+
     Args:
         ipaddr: IP address of the Designer instance.
-        
+
     Returns:
         Dictionary mapping module names to registration results (success status and error message).
     """
@@ -781,7 +781,7 @@ async def aregister_all_d3functions(ipaddr:str) -> dict[str, tuple[bool, str]]:
 
 def get_all_d3functions() -> list[tuple[str, str]]:
     """Retrieve all available d3function as module_name-function_name pairs.
-    
+
     Returns:
         List of tuples containing (module_name, function_name) for all registered D3 functions.
     """
@@ -793,8 +793,8 @@ def get_all_d3functions() -> list[tuple[str, str]]:
 
 def get_all_modules() -> list[str]:
     """Retrieve name of all module registered with @d3function decorator
-    
+
     Returns:
         List of module names
     """
-    return [module_name for module_name in D3Function._available_d3functions.keys()]
+    return list(D3Function._available_d3functions.keys())
