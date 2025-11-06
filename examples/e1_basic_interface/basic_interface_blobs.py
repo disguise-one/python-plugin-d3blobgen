@@ -16,11 +16,11 @@ def my_print():
 def my_exception():
     raise RuntimeError("My Runtime Error")
 
-@d3function(timeout_ms=2)
+@d3function(timeout_sec=0.002)
 def custom_timeout_2ms():
     return "Hello world in 2ms"
 
-@d3function(timeout_ms=1000)
+@d3function(timeout_sec=1)
 def custom_timeout_1sec():
     return "Hello world in 1sec"
 

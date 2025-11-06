@@ -247,7 +247,7 @@ asyncio.run(register_modules())
 ```
 
 **Available async methods:**
-- `d3_api_aplugin(hostname, port, blob, timeout_ms)` - Async function execution
+- `d3_api_aplugin(hostname, port, blob, timeout_sec)` - Async function execution
 - `aregister_module_d3functions(ipaddr, module_name)` - Async module registration
 - `aregister_all_d3functions(ipaddr)` - Async registration of all modules
 

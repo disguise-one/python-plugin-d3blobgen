@@ -1,4 +1,4 @@
-from d3blobgen.utils import d3_api_plugin
+from d3blobgen.utils import d3_api_plugin, d3_api_plugin_raw
 from examples.e1_basic_interface.basic_interface_blobs import (
     my_add,
     custom_timeout_2ms,
@@ -40,7 +40,7 @@ def main():
     # test exception
     print("5. exception over execute")
     try:
-        d3_api_plugin(DESIGNER_IP, DESIGNER_PORT, my_exception.json())
+        d3_api_plugin_raw(DESIGNER_IP, DESIGNER_PORT, my_exception.json())
     except Exception as e:
         print(e)
 
