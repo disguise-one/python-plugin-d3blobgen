@@ -18,106 +18,13 @@ import inspect
 import textwrap
 from collections import defaultdict
 from collections.abc import Callable
-from types import FrameType, ModuleType
-from typing import Any, Generic, ParamSpec, TypeVar, get_type_hints
+from typing import Any, Generic, ParamSpec, TypeVar, get_type_hints, overload
 
 from pydantic import BaseModel, Field
 
-from d3blobgen.ast_utils import convert_function_node_to_py27
+from d3blobgen.ast_utils import convert_function_node_to_py27, find_packages_in_current_file
 from d3blobgen.utils import d3_api_register_module, d3_api_aregister_module
 from d3blobgen.models import TypedBlob
-
-
-
-###############################################################################
-# import package helpers
-def find_packages_in_current_file(caller_stack: int = 1) -> list[str]:
-    """Find all import statements in the caller's file by inspecting the call stack.
-
-    This function walks up the call stack to find the module where it was called from,
-    then parses that module's source code to extract all import statements.
-
-    Args:
-        caller_stack: Number of frames to go up the call stack. Default is 1 (immediate caller).
-                     Use higher values to inspect files further up the call chain.
-
-    Returns:
-        Sorted list of unique import statement strings (e.g., "import ast", "from pathlib import Path").
-
-    Filters applied:
-        - Excludes imports inside `if TYPE_CHECKING:` blocks
-        - Excludes imports of this function itself to avoid circular references
-    """
-    # Get the this file frame
-    current_frame: FrameType | None = inspect.currentframe()
-    if not current_frame:
-        return []
-
-    # Get the caller's frame (file where this function is called)
-    caller_frame: FrameType | None = current_frame
-    for _i in range(caller_stack):
-        if not caller_frame or not caller_frame.f_back:
-            return []
-        caller_frame = caller_frame.f_back
-
-    if not caller_frame:
-        return []
-
-    modules: ModuleType | None = inspect.getmodule(caller_frame)
-    if not modules:
-        return []
-
-    source: str = inspect.getsource(modules)
-
-    # Parse the source code
-    tree = ast.parse(source)
-
-    # Get the name of this function to filter it out
-    # For example, we don't want `from core import find_packages_in_current_file`
-    function_name: str = current_frame.f_code.co_name
-    # Skip any package from d3blobgen
-    d3blobgen_package_name: str = "d3blobgen"
-    # typing not supported in python2.7
-    typing_package_name: str = "typing"
-
-    def is_type_checking_block(node: ast.If) -> bool:
-        """Check if an if statement is 'if TYPE_CHECKING:'"""
-        return isinstance(node.test, ast.Name) and node.test.id == "TYPE_CHECKING"
-
-    imports: list[str] = []
-    for node in tree.body:
-        # Skip TYPE_CHECKING blocks entirely
-        if isinstance(node, ast.If) and is_type_checking_block(node):
-            continue
-
-        if isinstance(node, ast.Import):
-            imported_modules: list[str] = [alias.name for alias in node.names]
-            # Skip imports that include d3blobgen
-            if any(d3blobgen_package_name in module for module in imported_modules):
-                continue
-            if any(typing_package_name in module for module in imported_modules):
-                continue
-            import_text: str = f"import {', '.join(imported_modules)}"
-            imports.append(import_text)
-
-        elif isinstance(node, ast.ImportFrom):
-            imported_module: str | None = node.module
-            imported_names: list[str] = [alias.name for alias in node.names]
-            if not imported_module:
-                continue
-            # Skip imports that include d3blobgen
-            if d3blobgen_package_name in imported_module:
-                continue
-            elif typing_package_name in imported_module:
-                continue
-            # Skip imports that include this function itself
-            if function_name in imported_names:
-                continue
-
-            line_text = f"from {imported_module} import {', '.join(imported_names)}"
-            imports.append(line_text)
-
-    return sorted(set(imports))
 
 
 ###############################################################################
@@ -280,7 +187,7 @@ class D3Function(Generic[P, T]):
         return self.name == other.name
 
     @staticmethod
-    def get_module_register_blob(module_name: str) -> dict[str, str]:
+    def get_module_register_json(module_name: str) -> dict[str, str] | None:
         """Generate a registration blob for all functions in a specific module.
 
         Args:
@@ -289,6 +196,9 @@ class D3Function(Generic[P, T]):
         Returns:
             Dictionary containing module name and all d3function registered under module.
         """
+        if module_name not in D3Function._available_packages:
+            return None
+
         contents_packages: str = "\n".join(list(D3Function._available_packages[module_name]))
         contents_functions: str = "\n\n".join(
             [
@@ -397,38 +307,69 @@ class D3Function(Generic[P, T]):
 
 ###############################################################################
 # d3function API
+
+# Overload for when used without parentheses: @d3function
+@overload
+def d3function(module_name: Callable[P, T]) -> D3Function[P, T]: ...
+
+# Overload for when used with parentheses: @d3function() or @d3function("module_name")
+@overload
+def d3function(module_name: str = "") -> Callable[[Callable[P, T]], D3Function[P, T]]: ...
+
+# Actual implementation
 def d3function(
-    module_name: str = ""
-) -> Callable[[Callable[P, T]], D3Function[P, T]]:
+    module_name: str | Callable[P, T] = ""
+) -> D3Function[P, T] | Callable[[Callable[P, T]], D3Function[P, T]]:
     """Decorator to wrap a Python function for D3 Designer execution.
 
     This decorator transforms a regular Python function into a D3Function that can be
-    registered with D3 Designer and executed remotely.
+    registered with D3 Designer and executed remotely. It can be used with or without
+    parentheses.
 
     Args:
         module_name: Optional module name to register the function under.
                     If empty, the function will be treated as standalone script and won't be registered.
+                    When used without parentheses (@d3function), this parameter receives the decorated function.
 
     Returns:
-        A decorator function that wraps the target function in a D3Function.
+        A D3Function instance or a decorator function that wraps the target function in a D3Function.
 
-    Example:
+    Examples:
         ```
+        # With module name
         @d3function("my_d3module")
-        def capture_image(self, cam_name: str) -> str:
+        def capture_image(cam_name: str) -> str:
             import d3
             camera = d3.resourceManager.load(
                 d3.Path('objects/camera/{cam_name}.apx'),
                 d3.Camera
             )
             return camera.uid
+
+        # Without parentheses (standalone)
+        @d3function
+        def my_add(a: int, b: int) -> int:
+            return a + b
+
+        # With empty parentheses (standalone)
+        @d3function()
+        def my_subtract(a: int, b: int) -> int:
+            return a - b
         ```
     """
 
     def decorator(func: Callable[P, T]) -> D3Function[P, T]:
-        return D3Function(module_name, func)
+        return D3Function(actual_module_name, func)
 
-    return decorator
+    # Check if module_name is actually a function (decorator used without parentheses)
+    if callable(module_name):
+        # @d3function (without parentheses)
+        actual_module_name = ""
+        return D3Function(actual_module_name, module_name)
+    else:
+        # @d3function() or @d3function("module_name")
+        actual_module_name = module_name
+        return decorator
 
 
 def add_packages_in_current_file(module_name: str) -> None:
@@ -461,10 +402,7 @@ def add_packages_in_current_file(module_name: str) -> None:
 
 
 def get_module_register_blob(module_name: str) -> dict[str, str] | None:
-    if module_name in D3Function._available_d3functions:
-        return D3Function.get_module_register_blob(module_name)
-    else:
-        return None
+    return D3Function.get_module_register_json(module_name)
 
 def register_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[bool, str]]:
     """Register all available d3function across all modules with a Designer instance.
@@ -479,7 +417,10 @@ def register_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[bool, st
     responses: dict[str, tuple[bool, str]] = {}
     D3Function._registered_ipaddr = ipaddr
     for module_name in D3Function._available_d3functions.keys():
-        responses[module_name] = d3_api_register_module(ipaddr, port, D3Function.get_module_register_blob(module_name))
+        register_blob: dict[str, str] | None = D3Function.get_module_register_json(module_name)
+        if register_blob:
+            responses[module_name] = d3_api_register_module(ipaddr, port,register_blob)
+
     return responses
 
 
@@ -496,7 +437,7 @@ async def aregister_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[b
     responses: dict[str, tuple[bool, str]] = {}
     D3Function._registered_ipaddr = ipaddr
     for module_name in D3Function._available_d3functions.keys():
-        responses[module_name] = await d3_api_aregister_module(ipaddr, port, D3Function.get_module_register_blob(module_name))
+        responses[module_name] = await d3_api_aregister_module(ipaddr, port, D3Function.get_module_register_json(module_name))
     return responses
 
 

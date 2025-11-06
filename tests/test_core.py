@@ -168,7 +168,7 @@ class TestD3Function:
         assert "return x + y" in blob["script"]
 
     def test_get_module_register_blob(self):
-        blob = D3Function.get_module_register_blob("test_module")
+        blob = D3Function.get_module_register_json("test_module")
 
         assert blob["moduleName"] == "test_module"
         assert "def decorated_example_function():" in blob["contents"]
@@ -222,6 +222,30 @@ class TestD3FunctionDecorator:
         assert isinstance(test_func, D3Function)
         assert test_func.module_name == ""
         assert test_func.name == "test_func"
+
+    def test_decorator_without_parentheses(self):
+        """Test that @d3function works without parentheses"""
+        @d3function
+        def test_func():
+            return "test result"
+
+        assert isinstance(test_func, D3Function)
+        assert test_func.module_name == ""
+        assert test_func.name == "test_func"
+        # Verify it can be called
+        assert test_func() == "test result"
+
+    def test_decorator_without_parentheses_with_args(self):
+        """Test that @d3function works without parentheses for functions with arguments"""
+        @d3function
+        def test_func_with_args(a: int, b: int) -> int:
+            return a + b
+
+        assert isinstance(test_func_with_args, D3Function)
+        assert test_func_with_args.module_name == ""
+        assert test_func_with_args.name == "test_func_with_args"
+        # Verify it can be called
+        assert test_func_with_args(3, 4) == 7
 
 
 class TestRegistrationFunctions:

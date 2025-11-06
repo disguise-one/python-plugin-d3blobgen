@@ -129,14 +129,16 @@ class PluginException(Exception):
                 details_list = "\n".join(
                     [f"  - {d.type_url}: {d.value}" for d in self.status.details]
                 )
-                details_str = f"\nDetails    :\n{details_list}"
+                details_str = f"\ndetails    :\n{details_list}"
             self._str = "\n".join(
                 [
                     Exception.__str__(self),
-                    f"PluginError: (code {self.status.code}){details_str}",
-                    f"d3Log      : {self.d3Log}",
-                    f"pythonLog  : {self.pythonLog}",
-                    f"Traceback  : {self._traceback_str.strip() if self._traceback_str else ''}",
+                    f"D3PluginError:",
+                    f"- code       : {self.status.code}",
+                    f"- messages   :\n{self.status.message}{details_str}",
+                    f"- d3Log      : {self.d3Log}",
+                    f"- pythonLog  : {self.pythonLog}",
+                    f"- Traceback  :\n{self._traceback_str.strip() if self._traceback_str else ''}",
                 ]
             )
         return self._str

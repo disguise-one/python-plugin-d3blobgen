@@ -1,20 +1,19 @@
 from enum import StrEnum
-from typing import Any, TypeVar, Unpack
+from typing import Any, Unpack
 
 import aiohttp
 import requests
 from pydantic import ValidationError
 
-from .models import (
+from d3blobgen.models import (
     D3_PLUGIN_ENDPOINT,
     D3_PLUGIN_MODULE_REG_ENDPOINT,
     PluginError,
     PluginException,
     PluginResponse,
     TypedBlob,
+    RetType,
 )
-
-RetType = TypeVar("RetType")
 
 
 ###############################################################################
@@ -82,6 +81,7 @@ async def d3_api_aplugin_raw(
     json: dict[str, str],
     timeout_sec: float | None = None,
 ) -> PluginResponse:
+
     response: Any = await d3_api_arequest(
         Method.POST,
         hostname,
@@ -107,7 +107,7 @@ async def d3_api_aplugin(
     port: int,
     plugin_blob: TypedBlob[RetType],
     timeout_sec: float | None = None,
-) -> PluginResponse | PluginResponse[RetType]:
+) -> PluginResponse[RetType]:
 
     response: Any = await d3_api_arequest(
         Method.POST,
@@ -117,7 +117,7 @@ async def d3_api_aplugin(
         json=plugin_blob.json,
         timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
     )
-
+    # print(f"!response: {response}")
     try:
         return PluginResponse[RetType].model_validate(response)
     except ValidationError:
@@ -209,6 +209,7 @@ def d3_api_register_module(
     json: dict | None = None,
     timeout_sec: float | None = None,
 ) -> Any:
+
     try:
         return d3_api_request(
             Method.POST,

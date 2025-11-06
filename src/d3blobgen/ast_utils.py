@@ -17,6 +17,7 @@ import inspect
 import textwrap
 import types
 
+
 ###############################################################################
 # Configuration for filtering client-side-only constructs
 
@@ -278,3 +279,96 @@ def convert_class_to_py27(class_node: ast.ClassDef) -> None:
 
         if isinstance(node, ast.FunctionDef):
             convert_function_node_to_py27(node)
+
+
+###############################################################################
+# Python package finder utility
+
+
+def find_packages_in_current_file(caller_stack: int = 1) -> list[str]:
+    """Find all import statements in the caller's file by inspecting the call stack.
+
+    This function walks up the call stack to find the module where it was called from,
+    then parses that module's source code to extract all import statements.
+
+    Args:
+        caller_stack: Number of frames to go up the call stack. Default is 1 (immediate caller).
+                     Use higher values to inspect files further up the call chain.
+
+    Returns:
+        Sorted list of unique import statement strings (e.g., "import ast", "from pathlib import Path").
+
+    Filters applied:
+        - Excludes imports inside `if TYPE_CHECKING:` blocks
+        - Excludes imports of this function itself to avoid circular references
+    """
+    # Get the this file frame
+    current_frame: types.FrameType | None = inspect.currentframe()
+    if not current_frame:
+        return []
+
+    # Get the caller's frame (file where this function is called)
+    caller_frame: types.FrameType | None = current_frame
+    for _i in range(caller_stack):
+        if not caller_frame or not caller_frame.f_back:
+            return []
+        caller_frame = caller_frame.f_back
+
+    if not caller_frame:
+        return []
+
+    modules: types.ModuleType | None = inspect.getmodule(caller_frame)
+    if not modules:
+        return []
+
+    source: str = inspect.getsource(modules)
+
+    # Parse the source code
+    tree = ast.parse(source)
+
+    # Get the name of this function to filter it out
+    # For example, we don't want `from core import find_packages_in_current_file`
+    function_name: str = current_frame.f_code.co_name
+    # Skip any package from d3blobgen
+    d3blobgen_package_name: str = "d3blobgen"
+    # typing not supported in python2.7
+    typing_package_name: str = "typing"
+
+    def is_type_checking_block(node: ast.If) -> bool:
+        """Check if an if statement is 'if TYPE_CHECKING:'"""
+        return isinstance(node.test, ast.Name) and node.test.id == "TYPE_CHECKING"
+
+    imports: list[str] = []
+    for node in tree.body:
+        # Skip TYPE_CHECKING blocks entirely
+        if isinstance(node, ast.If) and is_type_checking_block(node):
+            continue
+
+        if isinstance(node, ast.Import):
+            imported_modules: list[str] = [alias.name for alias in node.names]
+            # Skip imports that include d3blobgen
+            if any(d3blobgen_package_name in module for module in imported_modules):
+                continue
+            if any(typing_package_name in module for module in imported_modules):
+                continue
+            import_text: str = f"import {', '.join(imported_modules)}"
+            imports.append(import_text)
+
+        elif isinstance(node, ast.ImportFrom):
+            imported_module: str | None = node.module
+            imported_names: list[str] = [alias.name for alias in node.names]
+            if not imported_module:
+                continue
+            # Skip imports that include d3blobgen
+            if d3blobgen_package_name in imported_module:
+                continue
+            elif typing_package_name in imported_module:
+                continue
+            # Skip imports that include this function itself
+            if function_name in imported_names:
+                continue
+
+            line_text = f"from {imported_module} import {', '.join(imported_names)}"
+            imports.append(line_text)
+
+    return sorted(set(imports))
