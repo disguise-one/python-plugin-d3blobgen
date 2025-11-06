@@ -23,16 +23,6 @@ D3_PLUGIN_ENDPOINT = "api/session/python/execute"
 D3_PLUGIN_MODULE_REG_ENDPOINT = "api/session/python/registermodule"
 
 
-def get_plugin_endpoint_url(hostname: str, port: int) -> str:
-    """Get the full URL for the plugin execution endpoint."""
-    return f"http://{hostname}:{port}/{D3_PLUGIN_ENDPOINT}"
-
-
-def get_plugin_module_register_url(hostname: str, port: int) -> str:
-    """Get the full URL for the module registration endpoint."""
-    return f"http://{hostname}:{port}/{D3_PLUGIN_MODULE_REG_ENDPOINT}"
-
-
 ###############################################################################
 # Plugin response types
 class PluginStatusDetail(BaseModel):
@@ -52,48 +42,6 @@ class PluginStatus(BaseModel):
 
 RetType = typing_extensions.TypeVar("RetType", default=Any)
 RetCastType = TypeVar("RetCastType")
-
-
-@dataclass
-class PluginException(Exception):
-    """Exception raised when plugin execution fails.
-
-    Attributes:
-        status: The status information from the failed plugin call
-        d3Log: D3 Designer console log output
-        pythonLog: Python-specific log output
-    """
-
-    status: PluginStatus
-    d3Log: str | None = None
-    pythonLog: str | None = None
-
-    _traceback_str: str | None = None
-    _str: str | None = None
-
-    def __post_init__(self):
-        # Capture current stack trace if not already provided
-        if self._traceback_str is None:
-            self._traceback_str = "".join(traceback.format_stack()[:-1])
-
-    def __str__(self) -> str:
-        if self._str is None:
-            details_str = ""
-            if self.status.details:
-                details_list = "\n".join(
-                    [f"  - {d.type_url}: {d.value}" for d in self.status.details]
-                )
-                details_str = f"\nDetails    :\n{details_list}"
-            self._str = "\n".join(
-                [
-                    Exception.__str__(self),
-                    f"PluginError: (code {self.status.code}){details_str}",
-                    f"d3Log      : {self.d3Log}",
-                    f"pythonLog  : {self.pythonLog}",
-                    f"Traceback  : {self._traceback_str.strip() if self._traceback_str else ''}",
-                ]
-            )
-        return self._str
 
 
 class PluginResponse(BaseModel, Generic[RetType]):
@@ -150,6 +98,48 @@ class PluginError(PluginResponse[None]):
     returnValue: None = Field(
         default=None, description="When failed to get PluginResponse, return value will not exist"
     )
+
+
+@dataclass
+class PluginException(Exception):
+    """Exception raised when plugin execution fails.
+
+    Attributes:
+        status: The status information from the failed plugin call
+        d3Log: D3 Designer console log output
+        pythonLog: Python-specific log output
+    """
+
+    status: PluginStatus
+    d3Log: str | None = None
+    pythonLog: str | None = None
+
+    _traceback_str: str | None = None
+    _str: str | None = None
+
+    def __post_init__(self):
+        # Capture current stack trace if not already provided
+        if self._traceback_str is None:
+            self._traceback_str = "".join(traceback.format_stack()[:-1])
+
+    def __str__(self) -> str:
+        if self._str is None:
+            details_str = ""
+            if self.status.details:
+                details_list = "\n".join(
+                    [f"  - {d.type_url}: {d.value}" for d in self.status.details]
+                )
+                details_str = f"\nDetails    :\n{details_list}"
+            self._str = "\n".join(
+                [
+                    Exception.__str__(self),
+                    f"PluginError: (code {self.status.code}){details_str}",
+                    f"d3Log      : {self.d3Log}",
+                    f"pythonLog  : {self.pythonLog}",
+                    f"Traceback  : {self._traceback_str.strip() if self._traceback_str else ''}",
+                ]
+            )
+        return self._str
 
 
 ###############################################################################

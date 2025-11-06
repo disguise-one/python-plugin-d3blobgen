@@ -1,12 +1,13 @@
 import requests
 from d3blobgen.core import (
     register_all_d3functions,
+    D3Function,
+)
+from d3blobgen.models import (
     PluginResponse,
     D3_PLUGIN_ENDPOINT,
-    D3Function,
-    get_plugin_endpoint_url,
 )
-from d3blobgen.utils import d3_api_plugin
+from d3blobgen.utils import d3_api_plugin, get_plugin_endpoint_url
 from examples.e4_lower_level_api.lower_level_api_blob import (
     my_time,
     my_time_with_note,
@@ -23,7 +24,7 @@ from examples.e4_lower_level_api.lower_level_api_blob import (
 def example_basic_blob():
     """Example 1: Get blob for requests"""
     print("\n=== Example 1: Get blob for requests ===")
-    blob = my_time.get_execute_blob()
+    blob = my_time.json()
     print(f"Blob: {blob}")
     print(f"Script:\n{blob['script']}")
 
@@ -39,7 +40,7 @@ def example_plugin_url():
 def example_send_request(endpoint_url: str):
     """Example 3: Send execute blob to plugin endpoint"""
     print("\n=== Example 3: Send execute blob to plugin endpoint ===")
-    blob = my_time.get_execute_blob()
+    blob = my_time.json()
 
     try:
         response = requests.post(endpoint_url, json=blob)
@@ -55,7 +56,7 @@ def example_send_request(endpoint_url: str):
 def example_parse_response(endpoint_url: str):
     """Example 4: Parse response to retrieve return value"""
     print("\n=== Example 4: Parse response to retrieve return value ===")
-    blob = my_time_with_note.get_execute_blob("Hello World")
+    blob = my_time_with_note.json("Hello World")
 
     try:
         response = requests.post(endpoint_url, json=blob)
@@ -75,7 +76,7 @@ def example_typed_blob(endpoint_url: str):
     print("\n=== Example 5: With typed execute blob ===")
 
     # Using regular blob
-    blob = my_time_module2.get_execute_blob()
+    blob = my_time_module2.json()
     try:
         response = requests.post(endpoint_url, json=blob)
         plugin_response = PluginResponse.model_validate(response.json())
@@ -85,7 +86,7 @@ def example_typed_blob(endpoint_url: str):
         print(f"Error: {e}")
 
     # Using typed blob
-    typed_blob = my_time_module2.get_typed_execute_blob()
+    typed_blob = my_time_module2.blob()
     try:
         response = requests.post(endpoint_url, json=typed_blob.blob)
         typed_plugin_response = PluginResponse[typed_blob.return_type].model_validate(response.json())
@@ -101,7 +102,7 @@ def example_helper_utilities():
     print("\n=== Example 6: With helper utilities ===")
 
     # Using d3_api_plugin
-    response = d3_api_plugin("localhost", 80, my_time.get_execute_blob())
+    response = d3_api_plugin("localhost", 80, my_time.json())
     returnValue = response.returnValue
     castReturnValue = response.returnCastValue(str)
     print(f"Response: {response}")
@@ -111,7 +112,7 @@ def example_helper_utilities():
     print(f"Cast value type: {type(castReturnValue)}")
 
     # Using d3_api_plugin
-    typed_response = d3_api_plugin("localhost", 80, my_time.get_typed_execute_blob())
+    typed_response = d3_api_plugin("localhost", 80, my_time.blob())
     typed_returnValue = typed_response.returnValue
     print(f"Typed response: {typed_response}")
     print(f"Typed return value: {typed_returnValue}")
@@ -123,7 +124,7 @@ def example_module_functions():
     print("\n=== Example 7: Module functions and registration ===")
 
     # Get typed blob from module function
-    typed_blob = my_time_with_note.get_typed_execute_blob("Example note")
+    typed_blob = my_time_with_note.blob("Example note")
     print(f"Blob: {typed_blob.blob}")
 
     # Get register blob for modules
@@ -139,7 +140,7 @@ def example_async_function():
     print("\n=== Example 8: Using async function with sleep ===")
 
     try:
-        response = d3_api_plugin("localhost", 80, sleep_50ms.get_typed_execute_blob())
+        response = d3_api_plugin("localhost", 80, sleep_50ms.blob())
         print(f"Response after 50ms sleep: {response.returnValue}")
     except Exception as e:
         print(f"Error: {e}")
@@ -172,7 +173,7 @@ def example_cross_module_error():
     # but tries to call my_time() which is in mymodule
     # This will raise an error because modules cannot call functions from other modules
 
-    typed_blob = will_raise_if_call_different_module_function.get_typed_execute_blob()
+    typed_blob = will_raise_if_call_different_module_function.blob()
     print(f"Blob: {typed_blob.blob}")
     print("Attempting to call function from different module (will fail)...")
 
@@ -188,7 +189,7 @@ def example_typed_dict():
     print("\n=== Example 9: Using TypedDict return type ===")
 
     # get_surface_uid_with_time returns dict[str, str]
-    typed_blob = get_surface_uid_with_time.get_typed_execute_blob("surface 1")
+    typed_blob = get_surface_uid_with_time.blob("surface 1")
     print(f"Blob for get_surface_uid_with_time: {typed_blob.blob}")
 
     # This will only work if Designer is running with the surface available
@@ -199,7 +200,7 @@ def example_typed_dict():
         print(f"Error (expected if surface not available): {e}")
 
     # get_typed_surface returns Surface TypedDict with int uid
-    typed_surface_blob = get_typed_surface.get_typed_execute_blob("surface 1")
+    typed_surface_blob = get_typed_surface.blob("surface 1")
     print(f"\nBlob for get_typed_surface: {typed_surface_blob.blob}")
 
     try:
@@ -211,9 +212,10 @@ def example_typed_dict():
 
 def main():
     DESIGNER_IP = "localhost"
+    DESIGNER_PORT = 80
 
     # Register module functions (needed for module functions)
-    register_all_d3functions(DESIGNER_IP)
+    register_all_d3functions(DESIGNER_IP, DESIGNER_PORT)
 
     print("=" * 60)
     print("d3blobgen Lower Level API Examples")

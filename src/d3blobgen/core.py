@@ -15,7 +15,6 @@ to execute remotely on D3 Designer instances.
 import ast
 import functools
 import inspect
-import json
 import textwrap
 from collections import defaultdict
 from collections.abc import Callable
@@ -363,7 +362,7 @@ class D3Function(Generic[P, T]):
         kwargs_parts = [f"{name}={repr(value)}" for name, value in kwargs.items()]
         return "\n".join(args_parts + kwargs_parts)
 
-    def get_execute_blob(self, *args: P.args, **kwargs: P.kwargs) -> dict[str, str]:
+    def json(self, *args: P.args, **kwargs: P.kwargs) -> dict[str, str]:
         """Generate an execution blob for running this function in Designer.
 
         Returns:
@@ -379,7 +378,7 @@ class D3Function(Generic[P, T]):
             all_args: str = self._args_to_assign(*args, **kwargs)
             return {"script": f"{all_args}\n{self._function_info.body_py27}"}
 
-    def get_typed_execute_blob(self, *args: P.args, **kwargs: P.kwargs) -> TypedBlob[T]:
+    def blob(self, *args: P.args, **kwargs: P.kwargs) -> TypedBlob[T]:
         """Generate an execution blob with the return type extracted from function annotations.
 
         Returns:
@@ -391,7 +390,7 @@ class D3Function(Generic[P, T]):
         return_type = type_hints.get("return", Any)
 
         return TypedBlob[T](
-            blob=self.get_execute_blob(*args, **kwargs),
+            blob=self.json(*args, **kwargs),
             return_type=return_type,
             module_name=self.module_name,
         )
