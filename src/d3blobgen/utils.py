@@ -17,6 +17,18 @@ RetType = TypeVar("RetType")
 
 
 ###############################################################################
+# Plugin endpoint constants
+def get_plugin_endpoint_url(hostname: str, port: int) -> str:
+    """Get the full URL for the plugin execution endpoint."""
+    return f"http://{hostname}:{port}/{D3_PLUGIN_ENDPOINT}"
+
+
+def get_plugin_module_register_url(hostname: str, port: int) -> str:
+    """Get the full URL for the module registration endpoint."""
+    return f"http://{hostname}:{port}/{D3_PLUGIN_MODULE_REG_ENDPOINT}"
+
+
+###############################################################################
 # Low level request
 def d3_api_request(
     method: str,
@@ -58,7 +70,7 @@ async def d3_api_aget(
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float | None = None,
+    timeout_sec: float | None = None,
 ) -> Any:
     return await d3_api_arequest(
         "GET",
@@ -66,7 +78,7 @@ async def d3_api_aget(
         port,
         url_endpoint,
         json=json,
-        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
+        timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
     )
 
 
@@ -75,7 +87,7 @@ async def d3_api_apost(
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float | None = None,
+    timeout_sec: float | None = None,
 ) -> Any:
     return await d3_api_arequest(
         "POST",
@@ -83,7 +95,7 @@ async def d3_api_apost(
         port,
         url_endpoint,
         json=json,
-        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
+        timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
     )
 
 
@@ -92,7 +104,7 @@ async def d3_api_aput(
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float | None = None,
+    timeout_sec: float | None = None,
 ) -> Any:
     return await d3_api_arequest(
         "PUT",
@@ -100,27 +112,27 @@ async def d3_api_aput(
         port,
         url_endpoint,
         json=json,
-        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
+        timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
     )
 
 
 @overload
 async def d3_api_aplugin(
-    hostname: str, port: int, plugin_blob: dict, timeout_ms: float | None = None
+    hostname: str, port: int, plugin_blob: dict[str, str], timeout_sec: float | None = None
 ) -> PluginResponse: ...
 
 
 @overload
 async def d3_api_aplugin(
-    hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_ms: float | None = None
+    hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_sec: float | None = None
 ) -> PluginResponse[RetType]: ...
 
 
 async def d3_api_aplugin(
     hostname: str,
     port: int,
-    plugin_blob: dict | TypedBlob[RetType],
-    timeout_ms: float | None = None,
+    plugin_blob: dict[str, str] | TypedBlob[RetType],
+    timeout_sec: float | None = None,
 ) -> PluginResponse | PluginResponse[RetType]:
     # Extract blob from TypedBlob if necessary
     if isinstance(plugin_blob, TypedBlob):
@@ -136,7 +148,7 @@ async def d3_api_aplugin(
         port,
         D3_PLUGIN_ENDPOINT,
         json=json_data,
-        timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
+        timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
     )
 
     try:
@@ -154,7 +166,7 @@ async def d3_api_aplugin(
 
 
 async def d3_api_aregister_module(
-    hostname: str, port: int, json: dict | None = None, timeout_ms: float | None = None
+    hostname: str, port: int, json: dict | None = None, timeout_sec: float | None = None
 ) -> Any:
     try:
         return await d3_api_arequest(
@@ -163,7 +175,7 @@ async def d3_api_aregister_module(
             port,
             D3_PLUGIN_MODULE_REG_ENDPOINT,
             json=json,
-            timeout=aiohttp.ClientTimeout(timeout_ms) if timeout_ms else None,
+            timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
         )
     except Exception as e:
         raise Exception(
@@ -178,7 +190,7 @@ def d3_api_get(
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float | None = None,
+    timeout_sec: float | None = None,
 ) -> Any:
     return d3_api_request(
         "GET",
@@ -186,7 +198,7 @@ def d3_api_get(
         port,
         url_endpoint,
         json=json,
-        timeout=timeout_ms / 1000 if timeout_ms else None,
+        timeout=timeout_sec if timeout_sec else None,
     )
 
 
@@ -195,7 +207,7 @@ def d3_api_post(
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float | None = None,
+    timeout_sec: float | None = None,
 ) -> Any:
     return d3_api_request(
         "POST",
@@ -203,7 +215,7 @@ def d3_api_post(
         port,
         url_endpoint,
         json=json,
-        timeout=timeout_ms / 1000 if timeout_ms else None,
+        timeout=timeout_sec if timeout_sec else None,
     )
 
 
@@ -212,7 +224,7 @@ def d3_api_put(
     port: int,
     url_endpoint: str,
     json: dict | None = None,
-    timeout_ms: float | None = None,
+    timeout_sec: float | None = None,
 ) -> Any:
     return d3_api_request(
         "PUT",
@@ -220,19 +232,19 @@ def d3_api_put(
         port,
         url_endpoint,
         json=json,
-        timeout=timeout_ms / 1000 if timeout_ms else None,
+        timeout=timeout_sec if timeout_sec else None,
     )
 
 
 @overload
 def d3_api_plugin(
-    hostname: str, port: int, plugin_blob: dict, timeout_ms: float | None = None
+    hostname: str, port: int, plugin_blob: dict, timeout_sec: float | None = None
 ) -> PluginResponse: ...
 
 
 @overload
 def d3_api_plugin(
-    hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_ms: float | None = None
+    hostname: str, port: int, plugin_blob: TypedBlob[RetType], timeout_sec: float | None = None
 ) -> PluginResponse[RetType]: ...
 
 
@@ -240,7 +252,7 @@ def d3_api_plugin(
     hostname: str,
     port: int,
     plugin_blob: dict | TypedBlob[RetType],
-    timeout_ms: float | None = None,
+    timeout_sec: float | None = None,
 ) -> PluginResponse | PluginResponse[RetType]:
     # Extract blob from TypedBlob if necessary
     if isinstance(plugin_blob, TypedBlob):
@@ -256,7 +268,7 @@ def d3_api_plugin(
         port,
         D3_PLUGIN_ENDPOINT,
         json=json_data,
-        timeout=timeout_ms / 1000 if timeout_ms else None,
+        timeout=timeout_sec if timeout_sec else None,
     )
 
     try:
@@ -277,7 +289,7 @@ def d3_api_register_module(
     hostname: str,
     port: int,
     json: dict | None = None,
-    timeout_ms: float | None = None,
+    timeout_sec: float | None = None,
 ) -> Any:
     try:
         return d3_api_request(
@@ -286,7 +298,7 @@ def d3_api_register_module(
             port,
             D3_PLUGIN_MODULE_REG_ENDPOINT,
             json=json,
-            timeout=timeout_ms / 1000 if timeout_ms else None,
+            timeout=timeout_sec if timeout_sec else None,
         )
     except Exception as e:
         raise RuntimeError(
