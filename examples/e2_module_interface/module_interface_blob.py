@@ -8,13 +8,13 @@ if TYPE_CHECKING:
 def my_add(a: int, b: int) -> int:
     return a + b
 
-@d3function("mymodule", timeout_sec=0.002)
+@d3function("mymodule")
 def custom_timeout_2ms() -> str:
     import time
     time.sleep(0.1)
     return "success"
 
-@d3function("mymodule", timeout_sec=1)
+@d3function("mymodule")
 def custom_timeout_1sec() -> str:
     import time
     time.sleep(0.1)

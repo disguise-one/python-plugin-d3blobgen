@@ -226,7 +226,7 @@ class D3Function(Generic[P, T]):
     _available_d3functions: defaultdict[str, set["D3Function"]] = defaultdict(set)
     _registered_ipaddr: str = "localhost"
 
-    def __init__(self, module_name: str, timeout_sec: float | None, func: Callable[P, T]):
+    def __init__(self, module_name: str, func: Callable[P, T]):
         """Initialise a D3Function wrapper around a Python function.
 
         Args:
@@ -235,7 +235,6 @@ class D3Function(Generic[P, T]):
             func: The Python function to wrap for D3 execution.
         """
         self._module_name: str = module_name
-        self._timeout_sec: float | None = timeout_sec
         self._function: Callable[P, T] = func
         self._function_info: FunctionInfo = extract_function_info(func)
         self._is_module_function: bool = len(module_name) > 0
@@ -399,7 +398,7 @@ class D3Function(Generic[P, T]):
 ###############################################################################
 # d3function API
 def d3function(
-    module_name: str = "", timeout_sec: float | None = None
+    module_name: str = ""
 ) -> Callable[[Callable[P, T]], D3Function[P, T]]:
     """Decorator to wrap a Python function for D3 Designer execution.
 
@@ -427,7 +426,7 @@ def d3function(
     """
 
     def decorator(func: Callable[P, T]) -> D3Function[P, T]:
-        return D3Function(module_name, timeout_sec, func)
+        return D3Function(module_name, func)
 
     return decorator
 
