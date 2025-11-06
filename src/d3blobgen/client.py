@@ -89,7 +89,7 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
 
         # Create TypedBlob containing script, module info, and return type
         return TypedBlob[T](
-            blob={"moduleName": self.module_name, "script": script},
+            json={"moduleName": self.module_name, "script": script},
             return_type=return_type,
             module_name=self.module_name,
         )

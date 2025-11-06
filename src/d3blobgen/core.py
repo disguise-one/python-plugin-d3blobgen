@@ -390,7 +390,7 @@ class D3Function(Generic[P, T]):
         return_type = type_hints.get("return", Any)
 
         return TypedBlob[T](
-            blob=self.json(*args, **kwargs),
+            json=self.json(*args, **kwargs),
             return_type=return_type,
             module_name=self.module_name,
         )

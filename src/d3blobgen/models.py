@@ -157,6 +157,6 @@ class TypedBlob(Generic[RetType]):
         module_name: The name of the module this execution belongs to
     """
 
-    blob: dict[str, str]
+    json: dict[str, str]
     return_type: type[RetType]
     module_name: str

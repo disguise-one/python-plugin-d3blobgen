@@ -88,7 +88,7 @@ def example_typed_blob(endpoint_url: str):
     # Using typed blob
     typed_blob = my_time_module2.blob()
     try:
-        response = requests.post(endpoint_url, json=typed_blob.blob)
+        response = requests.post(endpoint_url, json=typed_blob.json)
         typed_plugin_response = PluginResponse[typed_blob.return_type].model_validate(response.json())
         typed_returnValue = typed_plugin_response.returnValue
         print(f"Typed blob return value: {typed_returnValue}")
@@ -125,7 +125,7 @@ def example_module_functions():
 
     # Get typed blob from module function
     typed_blob = my_time_with_note.blob("Example note")
-    print(f"Blob: {typed_blob.blob}")
+    print(f"Blob: {typed_blob.json}")
 
     # Get register blob for modules
     register_blob_mymodule = D3Function.get_module_register_blob("mymodule")
@@ -174,7 +174,7 @@ def example_cross_module_error():
     # This will raise an error because modules cannot call functions from other modules
 
     typed_blob = will_raise_if_call_different_module_function.blob()
-    print(f"Blob: {typed_blob.blob}")
+    print(f"Blob: {typed_blob.json}")
     print("Attempting to call function from different module (will fail)...")
 
     try:
@@ -190,7 +190,7 @@ def example_typed_dict():
 
     # get_surface_uid_with_time returns dict[str, str]
     typed_blob = get_surface_uid_with_time.blob("surface 1")
-    print(f"Blob for get_surface_uid_with_time: {typed_blob.blob}")
+    print(f"Blob for get_surface_uid_with_time: {typed_blob.json}")
 
     # This will only work if Designer is running with the surface available
     try:
@@ -201,7 +201,7 @@ def example_typed_dict():
 
     # get_typed_surface returns Surface TypedDict with int uid
     typed_surface_blob = get_typed_surface.blob("surface 1")
-    print(f"\nBlob for get_typed_surface: {typed_surface_blob.blob}")
+    print(f"\nBlob for get_typed_surface: {typed_surface_blob.json}")
 
     try:
         surface_response = d3_api_plugin("localhost", 80, typed_surface_blob)
