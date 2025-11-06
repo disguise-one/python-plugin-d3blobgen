@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field
 
 from d3blobgen.ast_utils import convert_function_node_to_py27, find_packages_in_current_file
 from d3blobgen.utils import d3_api_register_module, d3_api_aregister_module
-from d3blobgen.models import TypedBlob
+from d3blobgen.models import TypedBlob, PluginRegisterResponse
 
 
 ###############################################################################
@@ -196,7 +196,7 @@ class D3Function(Generic[P, T]):
         Returns:
             Dictionary containing module name and all d3function registered under module.
         """
-        if module_name not in D3Function._available_packages:
+        if module_name not in D3Function._available_d3functions:
             return None
 
         contents_packages: str = "\n".join(list(D3Function._available_packages[module_name]))
@@ -401,10 +401,10 @@ def add_packages_in_current_file(module_name: str) -> None:
     D3Function._available_packages[module_name].update(packages)
 
 
-def get_module_register_blob(module_name: str) -> dict[str, str] | None:
+def get_module_register_json(module_name: str) -> dict[str, str] | None:
     return D3Function.get_module_register_json(module_name)
 
-def register_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[bool, str]]:
+def register_all_d3functions(ipaddr: str, port: int) -> dict[str, PluginRegisterResponse]:
     """Register all available d3function across all modules with a Designer instance.
     If d3function was registered without module_name, it won't be registered.
 
@@ -414,7 +414,7 @@ def register_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[bool, st
     Returns:
         Dictionary mapping module names to registration results (success status and error message).
     """
-    responses: dict[str, tuple[bool, str]] = {}
+    responses: dict[str, PluginRegisterResponse] = {}
     D3Function._registered_ipaddr = ipaddr
     for module_name in D3Function._available_d3functions.keys():
         register_blob: dict[str, str] | None = D3Function.get_module_register_json(module_name)
@@ -424,7 +424,7 @@ def register_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[bool, st
     return responses
 
 
-async def aregister_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[bool, str]]:
+async def aregister_all_d3functions(ipaddr: str, port: int) -> dict[str, PluginRegisterResponse]:
     """Asynchronously register all available d3function across all modules with a Designer instance.
     If d3function was registered without module_name, it won't be registered.
 
@@ -434,7 +434,7 @@ async def aregister_all_d3functions(ipaddr: str, port: int) -> dict[str, tuple[b
     Returns:
         Dictionary mapping module names to registration results (success status and error message).
     """
-    responses: dict[str, tuple[bool, str]] = {}
+    responses: dict[str, PluginRegisterResponse] = {}
     D3Function._registered_ipaddr = ipaddr
     for module_name in D3Function._available_d3functions.keys():
         responses[module_name] = await d3_api_aregister_module(ipaddr, port, D3Function.get_module_register_json(module_name))

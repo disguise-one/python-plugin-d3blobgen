@@ -11,6 +11,7 @@ from d3blobgen.models import (
     PluginError,
     PluginException,
     PluginResponse,
+    PluginRegisterResponse,
     TypedBlob,
     RetType,
 )
@@ -117,7 +118,6 @@ async def d3_api_aplugin(
         json=plugin_blob.json,
         timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
     )
-    # print(f"!response: {response}")
     try:
         return PluginResponse[RetType].model_validate(response)
     except ValidationError:
@@ -131,9 +131,10 @@ async def d3_api_aplugin(
 
 async def d3_api_aregister_module(
     hostname: str, port: int, json: dict | None = None, timeout_sec: float | None = None
-) -> Any:
+) -> PluginRegisterResponse:
+
     try:
-        return await d3_api_arequest(
+        response: Any = await d3_api_arequest(
             Method.POST,
             hostname,
             port,
@@ -143,8 +144,17 @@ async def d3_api_aregister_module(
         )
     except Exception as e:
         raise Exception(
-            f"Failed to register module '{json.get('moduleName') if json else ''}': {e}"
+            f"Failed to register module '{json.get('moduleName') if json else ''}'"
         ) from e
+
+    plugin_response: PluginRegisterResponse = PluginRegisterResponse.model_validate(response)
+
+    # if we fail to register module, all d3functions plugin will fail.
+    # therefore, we should raise exception
+    if plugin_response.status.code != 0:
+        raise PluginException(status = plugin_response.status)
+
+    return plugin_response
 
 
 ###############################################################################
@@ -208,10 +218,10 @@ def d3_api_register_module(
     port: int,
     json: dict | None = None,
     timeout_sec: float | None = None,
-) -> Any:
+) -> PluginRegisterResponse:
 
     try:
-        return d3_api_request(
+        response: Any = d3_api_request(
             Method.POST,
             hostname,
             port,
@@ -220,6 +230,15 @@ def d3_api_register_module(
             timeout=timeout_sec if timeout_sec else None,
         )
     except Exception as e:
-        raise RuntimeError(
-            f"Failed to register module '{json.get('moduleName') if json else ''}': {e}"
+        raise Exception(
+            f"Failed to register module '{json.get('moduleName') if json else ''}'"
         ) from e
+
+    plugin_response: PluginRegisterResponse = PluginRegisterResponse.model_validate(response)
+
+    # if we fail to register module, all d3functions plugin will fail.
+    # therefore, we should raise exception
+    if plugin_response.status.code != 0:
+        raise PluginException(status = plugin_response.status)
+
+    return plugin_response

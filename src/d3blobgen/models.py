@@ -100,6 +100,15 @@ class PluginError(PluginResponse[None]):
     )
 
 
+class PluginRegisterResponse(BaseModel):
+    """Response from a plugin module register API call.
+
+    Attributes:
+        status: Status of the plugin API call
+    """
+    status: PluginStatus = Field(description="Status of plugin module register API call.")
+
+
 @dataclass
 class PluginException(Exception):
     """Exception raised when plugin execution fails.

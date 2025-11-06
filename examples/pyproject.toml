@@ -1,0 +1,45 @@
+[project]
+name = "d3blobgen-examples"
+version = "0.1.0"
+description = "Examples for d3blobgen"
+requires-python = ">=3.11"
+dependencies = [
+    "disguise-designer-d3blobgen",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.3",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.uv.sources]
+disguise-designer-d3blobgen = { path = "..", editable = true }
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

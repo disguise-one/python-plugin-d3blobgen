@@ -140,10 +140,10 @@ async def example_module_functions_async():
     print(f"Blob: {typed_blob.json}")
 
     # Get register blob for modules
-    register_blob_mymodule = D3Function.get_module_register_blob("mymodule")
+    register_blob_mymodule = D3Function.get_module_register_json("mymodule")
     print(f"\nMymodule register blob:\n{register_blob_mymodule['contents']}")
 
-    register_blob_module2 = D3Function.get_module_register_blob("module2")
+    register_blob_module2 = D3Function.get_module_register_json("module2")
     print(f"\nModule2 register blob:\n{register_blob_module2['contents']}")
 
 
