@@ -7,13 +7,19 @@ from e2_module_interface.module_interface_blob import (
     use_my_add,
     get_surface_uid,
     rename_surface,
+    my_time,
+    my_time_with_note,
+    sleep_50ms,
+    my_time_module2,
+    get_surface_uid_with_time,
+    get_typed_surface,
 )
 
 DESIGNER_IP = "localhost"
 DESIGNER_PORT = 80
 
 async def with_context():
-    async with D3AsyncSession(DESIGNER_IP, DESIGNER_PORT, ["mymodule"]) as session:
+    async with D3AsyncSession(DESIGNER_IP, DESIGNER_PORT, ["mymodule", "module2"]) as session:
         # mymodule will be register by context __aenter__
         print("1. execute over plugin (async)")
         ret_val: int = await session.rpc(my_add.blob(1, 2))
@@ -50,6 +56,32 @@ async def with_context():
         await session.rpc(rename_surface.blob(surface_name="surface 2", new_surface_name="surface 1"))
         surface_uid = await session.rpc(get_surface_uid.blob(surface_name="surface 1"))
         print(surface_uid)
+
+        # time-related functions
+        print("7. get current time (mymodule) (async)")
+        current_time: str = await session.rpc(my_time.blob())
+        print(f"- result: {current_time}")
+
+        print("8. get current time with note (mymodule) (async)")
+        time_with_note: str = await session.rpc(my_time_with_note.blob(note="test note"))
+        print(f"- result: {time_with_note}")
+
+        # module2 functions
+        print("9. sleep 50ms (module2) (async)")
+        result: str = await session.rpc(sleep_50ms.blob())
+        print(f"- result: {result}")
+
+        print("10. get current time (module2) (async)")
+        time_module2: str = await session.rpc(my_time_module2.blob())
+        print(f"- result: {time_module2}")
+
+        print("11. get surface uid with time (module2) (async)")
+        surface_with_time: dict[str, str] = await session.rpc(get_surface_uid_with_time.blob(surface_name="surface 1"))
+        print(surface_with_time)
+
+        print("12. get typed surface (module2) (async)")
+        typed_surface = await session.rpc(get_typed_surface.blob(surface_name="surface 1"))
+        print(typed_surface)
 
 
 async def without_context():
@@ -95,6 +127,32 @@ async def without_context():
     await session.rpc(rename_surface.blob(surface_name="surface 2", new_surface_name="surface 1"))
     surface_uid = await session.rpc(get_surface_uid.blob(surface_name="surface 1"))
     print(surface_uid)
+
+    # time-related functions
+    print("7. get current time (mymodule) (async)")
+    current_time: str = await session.rpc(my_time.blob())
+    print(f"- result: {current_time}")
+
+    print("8. get current time with note (mymodule) (async)")
+    time_with_note: str = await session.rpc(my_time_with_note.blob(note="test note"))
+    print(f"- result: {time_with_note}")
+
+    # module2 functions
+    print("9. sleep 50ms (module2) (async)")
+    result: str = await session.rpc(sleep_50ms.blob())
+    print(f"- result: {result}")
+
+    print("10. get current time (module2) (async)")
+    time_module2: str = await session.rpc(my_time_module2.blob())
+    print(f"- result: {time_module2}")
+
+    print("11. get surface uid with time (module2) (async)")
+    surface_with_time: dict[str, str] = await session.rpc(get_surface_uid_with_time.blob(surface_name="surface 1"))
+    print(surface_with_time)
+
+    print("12. get typed surface (module2) (async)")
+    typed_surface = await session.rpc(get_typed_surface.blob(surface_name="surface 1"))
+    print(typed_surface)
 
 async def main():
     print("")

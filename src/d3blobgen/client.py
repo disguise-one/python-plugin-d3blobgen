@@ -36,6 +36,7 @@ from typing import Any, ParamSpec, TypeVar, get_type_hints
 
 from d3blobgen.ast_utils import (
     convert_class_to_py27,
+    filter_base_classes,
     filter_init_args,
     get_class_node,
     get_source,
@@ -186,6 +187,9 @@ class D3PluginClientMeta(type):
 
         # Remove client-side-only class variables (e.g., module_name) from the AST
         class_node.body = [node for node in class_node.body if not is_exclude_class_var(node)]
+
+        # Remove all base class for now as we don't support inheritance
+        filter_base_classes(class_node)
 
         # Filter out client-side-only __init__ arguments and get remaining params
         filtered_init_args: list[str] = filter_init_args(class_node)

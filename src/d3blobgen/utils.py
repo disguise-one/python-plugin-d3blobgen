@@ -231,7 +231,7 @@ def d3_api_register_module(
         )
     except Exception as e:
         raise Exception(
-            f"Failed to register module '{json.get('moduleName') if json else ''}'"
+            f"Failed to register module: '{json.get('moduleName') if json else ''}'"
         ) from e
 
     plugin_response: PluginRegisterResponse = PluginRegisterResponse.model_validate(response)

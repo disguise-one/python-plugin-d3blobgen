@@ -103,6 +103,13 @@ def is_exclude_arg(arg: ast.expr) -> bool:
     """
     return isinstance(arg, ast.Name) and arg.id in init_args_to_exclude
 
+def filter_base_classes(class_node: ast.ClassDef):
+    """Remove all base classes as we won't support the inheritance at the moment.
+    
+    Args:
+        class_node: The class definition node to process
+    """
+    class_node.bases = []
 
 def filter_init_args(class_node: ast.ClassDef) -> list[str]:
     """Remove excluded arguments from __init__ method and extract parameter names.
@@ -124,28 +131,22 @@ def filter_init_args(class_node: ast.ClassDef) -> list[str]:
         if node.name != "__init__":
             continue
 
+        # Remove super().__init__() calls from the body
+        node.body = [
+            stmt for stmt in node.body
+            if not (
+                isinstance(stmt, ast.Expr)
+                and isinstance(stmt.value, ast.Call)
+                and isinstance(stmt.value.func, ast.Attribute)
+                and stmt.value.func.attr == "__init__"
+                and isinstance(stmt.value.func.value, ast.Call)
+                and isinstance(stmt.value.func.value.func, ast.Name)
+                and stmt.value.func.value.func.id == "super"
+            )
+        ]
+
         # Filter out excluded arguments from the parameter list
         node.args.args = [arg for arg in node.args.args if arg.arg not in init_args_to_exclude]
-
-        # Filter arguments in super().__init__() calls in the body
-        for body_node in ast.walk(node):
-            if not isinstance(body_node, ast.Call):
-                continue
-            # Check if this is super().__init__(...) call
-            if (
-                isinstance(body_node.func, ast.Attribute)
-                and body_node.func.attr == "__init__"
-                and isinstance(body_node.func.value, ast.Call)
-                and isinstance(body_node.func.value.func, ast.Name)
-                and body_node.func.value.func.id == "super"
-            ):
-                # Filter out excluded positional arguments
-                body_node.args = [arg for arg in body_node.args if not is_exclude_arg(arg)]
-
-                # Filter out excluded keyword arguments
-                body_node.keywords = [
-                    kw for kw in body_node.keywords if kw.arg not in init_args_to_exclude
-                ]
 
         # Filter keyword-only arguments if present (Python 3+ feature)
         if node.args.kwonlyargs:
@@ -276,6 +277,7 @@ def convert_class_to_py27(class_node: ast.ClassDef) -> None:
                 col_offset=node.col_offset,
             )
             class_node.body[i] = regular_func
+            node = class_node.body[i]
 
         if isinstance(node, ast.FunctionDef):
             convert_function_node_to_py27(node)
