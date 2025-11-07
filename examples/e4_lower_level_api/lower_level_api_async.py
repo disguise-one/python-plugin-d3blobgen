@@ -1,173 +1,191 @@
+"""
+d3blobgen Low Level API Examples (Asynchronous)
+
+This module demonstrates the asynchronous low-level interface for d3blobgen, showing how to:
+1. Create blobs for requests
+2. Register modules with Designer (async)
+3. Execute functions via the plugin endpoint (async)
+4. Handle exceptions (async)
+5. Run concurrent requests
+
+For sync examples, see lower_level_api.py
+"""
+
 import asyncio
 import aiohttp
-from d3blobgen.core import (
-    register_all_d3functions,
-    D3Function,
-)
-from d3blobgen.models import (
-    PluginResponse,
-    D3_PLUGIN_ENDPOINT,
-)
-from d3blobgen.utils import d3_api_aplugin, get_plugin_endpoint_url
-from examples.e4_lower_level_api.lower_level_api_blob import (
-    my_time,
-    my_time_with_note,
-    will_raise_if_call_different_module_function,
-    sleep_50ms,
-    same_module_function_access,
-    my_time_module2,
-    get_surface_uid_with_time,
-    get_typed_surface,
-    Surface,
+from d3blobgen.core import d3function, D3Function, TypedBlob
+from d3blobgen.models import PluginResponse, PluginException
+from d3blobgen.api import (
+    get_plugin_module_register_url,
+    get_plugin_endpoint_url,
+    d3_api_aregister_module,
+    d3_api_aplugin_raw,
+    d3_api_aplugin,
 )
 
 
-async def example_basic_blob_async():
-    """Example 1: Get blob for requests (async)"""
-    print("\n=== Example 1: Get blob for requests (async) ===")
-    blob = my_time.json()
-    print(f"Blob: {blob}")
-    print(f"Script:\n{blob['script']}")
+async def example_blob_without_module():
+    """Example 1: Get blob for requests (without module)"""
+    print("\n" + "=" * 60)
+    print("Example 1: Get blob for requests (without module)")
+    print("=" * 60)
+
+    @d3function
+    def my_add(a: int, b: int) -> int:
+        return a + b
+
+    blob: TypedBlob[int] = my_add.blob(1, 2)
+    print(f"blob: {blob}")
+    print(f"\nScript:\n{blob.json['script']}")
 
 
-async def example_plugin_url_async():
-    """Example 2: Get plugin URL for requests (async)"""
-    print("\n=== Example 2: Get plugin URL for requests (async) ===")
-    endpoint_url = get_plugin_endpoint_url("localhost", 80)
-    print(f"Endpoint URL: {endpoint_url}")
-    return endpoint_url
+async def example_blob_with_module():
+    """Example 2: Get blob for requests (with module)"""
+    print("\n" + "=" * 60)
+    print("Example 2: Get blob for requests (with module)")
+    print("=" * 60)
+
+    @d3function(module_name="mymodule")
+    def my_add(a: int, b: int) -> int:
+        return a + b
+
+    blob: TypedBlob[int] = my_add.blob(1, 2)
+    print(f"blob: {blob}")
+    print(f"\nScript:\n{blob.json['script']}")
+
+    return my_add
 
 
-async def example_send_request_async(endpoint_url: str):
-    """Example 3: Send execute blob to plugin endpoint (async)"""
-    print("\n=== Example 3: Send execute blob to plugin endpoint (async) ===")
-    blob = my_time.json()
+async def example_register_module(designer_ip: str, designer_port: int):
+    """Example 3: Registering d3function module (async)"""
+    print("\n" + "=" * 60)
+    print("Example 3: Registering d3function module (async)")
+    print("=" * 60)
+
+    @d3function(module_name="mymodule")
+    def my_add(a: int, b: int) -> int:
+        return a + b
+
+    json_data: dict[str, str] | None = D3Function.get_module_register_json("mymodule")
+    print("json:")
+    print(json_data)
 
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(endpoint_url, json=blob) as response:
-                print(f"Response status: {response.status}")
-                json_response = await response.json()
-                print(f"JSON: {json_response}")
-                return json_response
+        response = await d3_api_aregister_module(designer_ip, designer_port, json_data)
+        print("\nresponse:")
+        print(response)
+        return my_add
     except Exception as e:
         print(f"Error: {e}")
         print("Make sure Designer is running!")
         return None
 
 
-async def example_parse_response_async(endpoint_url: str):
-    """Example 4: Parse response to retrieve return value (async)"""
-    print("\n=== Example 4: Parse response to retrieve return value (async) ===")
-    blob = my_time_with_note.json("Hello Async World")
+async def example_execute_raw_json(designer_ip: str, designer_port: int, my_add):
+    """Example 4: Execute with raw json (no type information) - async"""
+    print("\n" + "=" * 60)
+    print("Example 4: Execute with raw json (no type information) - async")
+    print("=" * 60)
+
+    json_data = my_add.json(1, 2)
+    print("json:")
+    print(json_data)
 
     try:
+        # Using d3_api_aplugin_raw
+        response: PluginResponse = await d3_api_aplugin_raw(designer_ip, designer_port, json_data)
+        print("\nresponse:")
+        print(response)
+        print("\nreturnValue:")
+        print(response.returnValue)
+
+        print("\nreturnValue with type check:")
+        returnValue: int = response.returnCastValue(int)
+        print(f"type: {type(returnValue)}")
+        print(f"value: {returnValue}")
+
+        # Using aiohttp directly
+        plugin_url: str = get_plugin_endpoint_url(designer_ip, designer_port)
+        print(f"\nplugin_url: {plugin_url}")
         async with aiohttp.ClientSession() as session:
-            async with session.post(endpoint_url, json=blob) as response:
-                json_response = await response.json()
-                plugin_response = PluginResponse.model_validate(json_response)
-
-                print(f"Response: {plugin_response}")
-                print(f"Return value: {plugin_response.returnValue}")
-                print(f"Return value type: {type(plugin_response.returnValue)}")
-                print(f"Cast return value: {plugin_response.returnCastValue(str)}")
-                print(f"Cast return value type: {type(plugin_response.returnCastValue(str))}")
+            async with session.post(plugin_url, json=json_data) as aiohttp_response:
+                response_text = await aiohttp_response.text()
+                response_json = await aiohttp_response.json()
+                print("response:")
+                print(response_text)
+                print("returnValue:")
+                print(response_json.get("returnValue"))
     except Exception as e:
         print(f"Error: {e}")
 
 
-async def example_typed_blob_async(endpoint_url: str):
-    """Example 5: With typed execute blob (async)"""
-    print("\n=== Example 5: With typed execute blob (async) ===")
+async def example_execute_typed_blob(designer_ip: str, designer_port: int, my_add):
+    """Example 5: Execute with blob (type information) - async"""
+    print("\n" + "=" * 60)
+    print("Example 5: Execute with blob (type information) - async")
+    print("=" * 60)
 
-    # Using regular blob
-    blob = my_time_module2.json()
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(endpoint_url, json=blob) as response:
-                json_response = await response.json()
-                plugin_response = PluginResponse.model_validate(json_response)
-                print(f"Regular blob return value: {plugin_response.returnValue}")
-                print(f"Regular blob return type: {type(plugin_response.returnValue)}")
-    except Exception as e:
-        print(f"Error: {e}")
-
-    # Using typed blob
-    typed_blob = my_time_module2.blob()
-    try:
-        async with aiohttp.ClientSession() as session:
-            async with session.post(endpoint_url, json=typed_blob.json) as response:
-                json_response = await response.json()
-                typed_plugin_response = PluginResponse[typed_blob.return_type].model_validate(json_response)
-                typed_returnValue = typed_plugin_response.returnValue
-                print(f"Typed blob return value: {typed_returnValue}")
-                print(f"Typed blob return type: {type(typed_returnValue)}")
-    except Exception as e:
-        print(f"Error: {e}")
-
-
-async def example_helper_utilities_async():
-    """Example 6: With helper utilities (async)"""
-    print("\n=== Example 6: With helper utilities (async) ===")
+    blob: TypedBlob[int] = my_add.blob(1, 2)
+    print("blob:")
+    print(blob)
 
     try:
-        # Using d3_api_aplugin
-        response = await d3_api_aplugin("localhost", 80, my_time.json())
-        returnValue = response.returnValue
-        castReturnValue = response.returnCastValue(str)
-        print(f"Response: {response}")
-        print(f"Return value: {returnValue}")
-        print(f"Return value type: {type(returnValue)}")
-        print(f"Cast value: {castReturnValue}")
-        print(f"Cast value type: {type(castReturnValue)}")
-
-        # Using d3_api_aplugin
-        typed_response = await d3_api_aplugin("localhost", 80, my_time.blob())
-        typed_returnValue = typed_response.returnValue
-        print(f"Typed response: {typed_response}")
-        print(f"Typed return value: {typed_returnValue}")
-        print(f"Typed return value type: {type(typed_returnValue)}")
+        response: PluginResponse[int] = await d3_api_aplugin(designer_ip, designer_port, blob)
+        print("\nresponse:")
+        print(response)
+        print("\nreturnValue:")
+        print(response.returnValue)
     except Exception as e:
         print(f"Error: {e}")
 
 
-async def example_module_functions_async():
-    """Example 7: Module functions and registration (async)"""
-    print("\n=== Example 7: Module functions and registration (async) ===")
+async def example_exception_handling(designer_ip: str, designer_port: int):
+    """Example 6: Exception handling - async"""
+    print("\n" + "=" * 60)
+    print("Example 6: Exception handling - async")
+    print("=" * 60)
 
-    # Get typed blob from module function
-    typed_blob = my_time_with_note.blob("Async example note")
-    print(f"Blob: {typed_blob.json}")
+    @d3function
+    def my_exception_handling():
+        raise RuntimeError("This is my exception!")
 
-    # Get register blob for modules
-    register_blob_mymodule = D3Function.get_module_register_json("mymodule")
-    print(f"\nMymodule register blob:\n{register_blob_mymodule['contents']}")
-
-    register_blob_module2 = D3Function.get_module_register_json("module2")
-    print(f"\nModule2 register blob:\n{register_blob_module2['contents']}")
-
-
-async def example_async_function_sleep():
-    """Example 8: Using async function with sleep"""
-    print("\n=== Example 8: Using async function with sleep (async) ===")
+    blob: TypedBlob = my_exception_handling.blob()
+    print("blob:")
+    print(blob)
 
     try:
-        response = await d3_api_aplugin("localhost", 80, sleep_50ms.blob())
-        print(f"Response after 50ms sleep: {response.returnValue}")
-    except Exception as e:
-        print(f"Error: {e}")
+        response: PluginResponse[int] = await d3_api_aplugin(designer_ip, designer_port, blob)
+        print("response:")
+        print(response)
+    except PluginException as e:
+        print("\nCaught PluginException:")
+        print(e)
 
 
-async def example_concurrent_requests():
-    """Example 9: Concurrent async requests"""
-    print("\n=== Example 9: Concurrent async requests ===")
+async def example_concurrent_requests(designer_ip: str, designer_port: int):
+    """Example 7: Concurrent async requests"""
+    print("\n" + "=" * 60)
+    print("Example 7: Concurrent async requests")
+    print("=" * 60)
+
+    @d3function(module_name="mymodule")
+    def add_1_2(a: int, b: int) -> int:
+        return a + b
+
+    @d3function(module_name="mymodule")
+    def add_3_4(a: int, b: int) -> int:
+        return a + b
+
+    @d3function(module_name="mymodule")
+    def add_5_6(a: int, b: int) -> int:
+        return a + b
 
     try:
         # Create multiple tasks to run concurrently
         tasks = [
-            d3_api_aplugin("localhost", 80, my_time.blob()),
-            d3_api_aplugin("localhost", 80, my_time_module2.blob()),
-            d3_api_aplugin("localhost", 80, sleep_50ms.blob()),
+            d3_api_aplugin(designer_ip, designer_port, add_1_2.blob(1, 2)),
+            d3_api_aplugin(designer_ip, designer_port, add_3_4.blob(3, 4)),
+            d3_api_aplugin(designer_ip, designer_port, add_5_6.blob(5, 6)),
         ]
 
         # Run all tasks concurrently and wait for all to complete
@@ -187,81 +205,34 @@ async def example_concurrent_requests():
         print(f"Error: {e}")
 
 
-async def example_typed_dict_async():
-    """Example 10: Using TypedDict return type (async)"""
-    print("\n=== Example 10: Using TypedDict return type (async) ===")
-
-    # get_surface_uid_with_time returns dict[str, str]
-    typed_blob = get_surface_uid_with_time.blob("surface 1")
-    print(f"Blob for get_surface_uid_with_time: {typed_blob.json}")
-
-    # This will only work if Designer is running with the surface available
-    try:
-        response = await d3_api_aplugin("localhost", 80, typed_blob)
-        print(f"Surface info (str uid): {response.returnValue}")
-    except Exception as e:
-        print(f"Error (expected if surface not available): {e}")
-
-    # get_typed_surface returns Surface TypedDict with int uid
-    typed_surface_blob = get_typed_surface.blob("surface 1")
-    print(f"\nBlob for get_typed_surface: {typed_surface_blob.json}")
-
-    try:
-        surface_response = await d3_api_aplugin("localhost", 80, typed_surface_blob)
-        print(f"Surface info (int uid): {surface_response.returnValue}")
-    except Exception as e:
-        print(f"Error (expected if surface not available): {e}")
-
-
-async def example_cross_module_error_async():
-    """Example 11: Cross-module function call error (async)"""
-    print("\n=== Example 11: Cross-module function call error (async) ===")
-
-    # will_raise_if_call_different_module_function is in module2
-    # but tries to call my_time() which is in mymodule
-    # This will raise an error because modules cannot call functions from other modules
-
-    typed_blob = will_raise_if_call_different_module_function.blob()
-    print(f"Blob: {typed_blob.json}")
-    print("Attempting to call function from different module (will fail)...")
-
-    try:
-        response = await d3_api_aplugin("localhost", 80, typed_blob)
-        print(f"Response: {response.returnValue}")
-    except Exception as e:
-        print(f"Expected error - cannot call functions across modules: {e}")
-
-
-async def main_async():
-    """Main async function to run all examples"""
+async def main():
+    """Run all async examples"""
     DESIGNER_IP = "localhost"
     DESIGNER_PORT = 80
 
-    # Register module functions (needed for module functions)
-    register_all_d3functions(DESIGNER_IP, DESIGNER_PORT)
-
     print("=" * 60)
-    print("d3blobgen Lower Level API Async Examples")
+    print("d3blobgen Low Level API Examples (Async)")
     print("=" * 60)
 
-    # Run examples that don't require Designer
-    await example_basic_blob_async()
-    endpoint_url = await example_plugin_url_async()
-    await example_module_functions_async()
-
-    # Examples that require Designer to be running
+    # Examples that don't require Designer
     print("\n" + "=" * 60)
-    print("Examples requiring Designer (will show errors if not running)")
+    print("Examples without Designer connection")
     print("=" * 60)
 
-    await example_send_request_async(endpoint_url)
-    await example_parse_response_async(endpoint_url)
-    await example_typed_blob_async(endpoint_url)
-    await example_helper_utilities_async()
-    await example_async_function_sleep()
-    await example_concurrent_requests()
-    await example_typed_dict_async()
-    await example_cross_module_error_async()
+    await example_blob_without_module()
+    my_add = await example_blob_with_module()
+
+    # Examples that require Designer
+    print("\n" + "=" * 60)
+    print("Examples requiring Designer connection")
+    print("=" * 60)
+
+    my_add = await example_register_module(DESIGNER_IP, DESIGNER_PORT)
+    if my_add:
+        await example_execute_raw_json(DESIGNER_IP, DESIGNER_PORT, my_add)
+        await example_execute_typed_blob(DESIGNER_IP, DESIGNER_PORT, my_add)
+        await example_exception_handling(DESIGNER_IP, DESIGNER_PORT)
+        await example_concurrent_requests(DESIGNER_IP, DESIGNER_PORT)
 
     print("\n" + "=" * 60)
     print("Async examples completed!")
@@ -269,4 +240,4 @@ async def main_async():
 
 
 if __name__ == "__main__":
-    asyncio.run(main_async())
+    asyncio.run(main())

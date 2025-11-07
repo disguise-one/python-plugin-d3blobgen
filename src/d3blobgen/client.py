@@ -44,7 +44,7 @@ from d3blobgen.ast_utils import (
     is_exclude_class_var,
 )
 from d3blobgen.models import PluginResponse, TypedBlob
-from d3blobgen.utils import (
+from d3blobgen.api import (
     d3_api_aplugin,
     d3_api_aregister_module,
     d3_api_plugin,

@@ -3,7 +3,7 @@ from typing import Any, Unpack
 
 from d3blobgen.core import D3Function
 from d3blobgen.models import PluginResponse, TypedBlob, RetType
-from d3blobgen.utils import (
+from d3blobgen.api import (
     Method,
     d3_api_plugin,
     d3_api_aplugin,

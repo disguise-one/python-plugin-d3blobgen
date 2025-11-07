@@ -23,7 +23,7 @@ from typing import Any, Generic, ParamSpec, TypeVar, get_type_hints, overload
 from pydantic import BaseModel, Field
 
 from d3blobgen.ast_utils import convert_function_node_to_py27, find_packages_in_current_file
-from d3blobgen.utils import d3_api_register_module, d3_api_aregister_module
+from d3blobgen.api import d3_api_register_module, d3_api_aregister_module
 from d3blobgen.models import TypedBlob, PluginRegisterResponse
 
 

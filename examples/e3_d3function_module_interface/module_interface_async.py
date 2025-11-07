@@ -1,6 +1,6 @@
 import asyncio
 from d3blobgen.session import D3AsyncSession
-from e2_module_interface.module_interface_blob import (
+from e3_d3function_module_interface.module_interface_blob import (
     my_add,
     custom_timeout_2ms,
     custom_timeout_1sec,
