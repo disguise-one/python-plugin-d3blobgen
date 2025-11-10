@@ -1,0 +1,244 @@
+from enum import StrEnum
+from typing import Any, Unpack
+
+import aiohttp
+import requests
+from pydantic import ValidationError
+
+from d3blobgen.models import (
+    D3_PLUGIN_ENDPOINT,
+    D3_PLUGIN_MODULE_REG_ENDPOINT,
+    PluginError,
+    PluginException,
+    PluginResponse,
+    PluginRegisterResponse,
+    TypedBlob,
+    RetType,
+)
+
+
+###############################################################################
+# Plugin endpoint constants
+def get_plugin_endpoint_url(hostname: str, port: int) -> str:
+    """Get the full URL for the plugin execution endpoint."""
+    return f"http://{hostname}:{port}/{D3_PLUGIN_ENDPOINT}"
+
+
+def get_plugin_module_register_url(hostname: str, port: int) -> str:
+    """Get the full URL for the module registration endpoint."""
+    return f"http://{hostname}:{port}/{D3_PLUGIN_MODULE_REG_ENDPOINT}"
+
+
+###############################################################################
+# Low level request
+class Method(StrEnum):
+    GET = "GET"
+    OPTIONS = "OPTIONS"
+    HEAD = "HEAD"
+    POST = "POST"
+    PUT = "PUT"
+    PATCH = "PATCH"
+    DELETE = "DELETE"
+
+
+def d3_api_request(
+    method: Method,
+    hostname: str,
+    port: int,
+    url_endpoint: str,
+    **kwargs,
+) -> Any:
+    url: str = f"http://{hostname}:{port}/{url_endpoint.lstrip('/')}"
+    response = requests.request(
+        method,
+        url,
+        **kwargs,
+    )
+    return response.json()
+
+
+async def d3_api_arequest(
+    method: Method,
+    hostname: str,
+    port: int,
+    url_endpoint: str,
+    **kwargs: Unpack[aiohttp.client._RequestOptions],
+) -> Any:
+    url: str = f"http://{hostname}:{port}/{url_endpoint.lstrip('/')}"
+    async with aiohttp.ClientSession() as session:
+        async with session.request(
+            method,
+            url,
+            **kwargs,
+        ) as response:
+            return await response.json()
+
+
+###############################################################################
+# API async interface
+async def d3_api_aplugin_raw(
+    hostname: str,
+    port: int,
+    json: dict[str, str],
+    timeout_sec: float | None = None,
+) -> PluginResponse:
+
+    response: Any = await d3_api_arequest(
+        Method.POST,
+        hostname,
+        port,
+        D3_PLUGIN_ENDPOINT,
+        json=json,
+        timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
+    )
+
+    try:
+        return PluginResponse.model_validate(response)
+    except ValidationError:
+        error_response: PluginError = PluginError.model_validate(response)
+        raise PluginException(
+            status=error_response.status,
+            d3Log=error_response.d3Log,
+            pythonLog=error_response.pythonLog,
+        ) from None
+
+
+async def d3_api_aplugin(
+    hostname: str,
+    port: int,
+    plugin_blob: TypedBlob[RetType],
+    timeout_sec: float | None = None,
+) -> PluginResponse[RetType]:
+
+    response: Any = await d3_api_arequest(
+        Method.POST,
+        hostname,
+        port,
+        D3_PLUGIN_ENDPOINT,
+        json=plugin_blob.json,
+        timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
+    )
+    try:
+        return PluginResponse[RetType].model_validate(response)
+    except ValidationError:
+        error_response: PluginError = PluginError.model_validate(response)
+        raise PluginException(
+            status=error_response.status,
+            d3Log=error_response.d3Log,
+            pythonLog=error_response.pythonLog,
+        ) from None
+
+
+async def d3_api_aregister_module(
+    hostname: str, port: int, json: dict | None = None, timeout_sec: float | None = None
+) -> PluginRegisterResponse:
+
+    try:
+        response: Any = await d3_api_arequest(
+            Method.POST,
+            hostname,
+            port,
+            D3_PLUGIN_MODULE_REG_ENDPOINT,
+            json=json,
+            timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
+        )
+    except Exception as e:
+        raise Exception(
+            f"Failed to register module '{json.get('moduleName') if json else ''}'"
+        ) from e
+
+    plugin_response: PluginRegisterResponse = PluginRegisterResponse.model_validate(response)
+
+    # if we fail to register module, all d3functions plugin will fail.
+    # therefore, we should raise exception
+    if plugin_response.status.code != 0:
+        raise PluginException(status = plugin_response.status)
+
+    return plugin_response
+
+
+###############################################################################
+# API sync interface
+def d3_api_plugin_raw(
+    hostname: str,
+    port: int,
+    json: dict[str, str],
+    timeout_sec: float | None = None,
+) -> PluginResponse:
+
+    response: Any = d3_api_request(
+        Method.POST,
+        hostname,
+        port,
+        D3_PLUGIN_ENDPOINT,
+        json=json,
+        timeout=timeout_sec if timeout_sec else None,
+    )
+
+    try:
+        return PluginResponse.model_validate(response)
+    except ValidationError:
+        error_response: PluginError = PluginError.model_validate(response)
+        raise PluginException(
+            status=error_response.status,
+            d3Log=error_response.d3Log,
+            pythonLog=error_response.pythonLog,
+        ) from None
+
+
+def d3_api_plugin(
+    hostname: str,
+    port: int,
+    plugin_blob: TypedBlob[RetType],
+    timeout_sec: float | None = None,
+) -> PluginResponse[RetType]:
+    
+    response = d3_api_request(
+        Method.POST,
+        hostname,
+        port,
+        D3_PLUGIN_ENDPOINT,
+        json=plugin_blob.json,
+        timeout=timeout_sec if timeout_sec else None,
+    )
+
+    try:
+        return PluginResponse[RetType].model_validate(response)
+    except ValidationError:
+        error_response: PluginError = PluginError.model_validate(response)
+        raise PluginException(
+            status=error_response.status,
+            d3Log=error_response.d3Log,
+            pythonLog=error_response.pythonLog,
+        ) from None
+
+
+def d3_api_register_module(
+    hostname: str,
+    port: int,
+    json: dict | None = None,
+    timeout_sec: float | None = None,
+) -> PluginRegisterResponse:
+
+    try:
+        response: Any = d3_api_request(
+            Method.POST,
+            hostname,
+            port,
+            D3_PLUGIN_MODULE_REG_ENDPOINT,
+            json=json,
+            timeout=timeout_sec if timeout_sec else None,
+        )
+    except Exception as e:
+        raise Exception(
+            f"Failed to register module: '{json.get('moduleName') if json else ''}'"
+        ) from e
+
+    plugin_response: PluginRegisterResponse = PluginRegisterResponse.model_validate(response)
+
+    # if we fail to register module, all d3functions plugin will fail.
+    # therefore, we should raise exception
+    if plugin_response.status.code != 0:
+        raise PluginException(status = plugin_response.status)
+
+    return plugin_response

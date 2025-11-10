@@ -25,12 +25,12 @@ import io,\
     time
 
 # This import should be handled correctly
-from typing import Dict,\
-    Tuple
+from os import scandir,\
+    sched_get_priority_max
 
-from typing import (
-    List,
-    Set,
+from os import (
+    abort,
+    access,
 )
 
 class TestFindPackagesInCurrentFile:
@@ -63,8 +63,8 @@ class TestFindPackagesInCurrentFile:
         assert "from typing import Optional" not in packages
         assert "import typing_extensions" not in packages
 
-        # But the TYPE_CHECKING import itself should be detected
-        assert "from typing import TYPE_CHECKING" in packages
+        # All typing related packages should not be detected
+        assert "from typing import TYPE_CHECKING" not in packages
 
     def test_d3blobgen_imports_filtered(self):
         """Test that imports from d3blobgen package are filtered out."""
@@ -86,11 +86,11 @@ class TestFindPackagesInCurrentFile:
 
     def test_from_import_with_reverse_slash(self):
         packages = find_packages_in_current_file()
-        assert "from typing import Dict, Tuple" in packages
+        assert "from os import scandir, sched_get_priority_max" in packages
 
     def test_reverse_import_with_parenthesis(self):
         packages = find_packages_in_current_file()
-        assert "from typing import ( List, Set, )" in packages
+        assert "from os import abort, access" in packages
 
     def test_return_type_is_list(self):
         """Test that the function returns a list."""

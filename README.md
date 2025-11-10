@@ -205,6 +205,7 @@ d3blobgen provides full async support for all remote operations, allowing for no
 ```python
 import asyncio
 from d3blobgen import d3function
+from d3blobgen.utils import d3_api_aplugin
 
 @d3function(module_name="my_d3_module")
 def get_mrset_uid(mrset_name: str) -> dict[str, str]:
@@ -215,7 +216,8 @@ def get_mrset_uid(mrset_name: str) -> dict[str, str]:
 
 async def main():
     # Async execution - non-blocking
-    result = await get_mrset_uid.aexecute("my_mrset")
+    response = await d3_api_aplugin("localhost", 80, get_mrset_uid.get_typed_execute_blob("my_mrset"))
+    result = response.returnValue
     print(f"MRSet UID: {result['uid']}")
 
 # Run the async function
@@ -231,10 +233,10 @@ from d3blobgen import aregister_all_d3functions, aregister_module_d3functions
 async def register_modules():
     # Register all modules asynchronously
     results = await aregister_all_d3functions("localhost")
-    
+
     # Or register a specific module
     success, error = await aregister_module_d3functions("localhost", "my_d3_module")
-    
+
     for module_name, (success, error) in results.items():
         if success:
             print(f"Module '{module_name}' registered successfully")
@@ -245,7 +247,7 @@ asyncio.run(register_modules())
 ```
 
 **Available async methods:**
-- `D3Function.aexecute(*args, **kwargs)` - Async function execution
+- `d3_api_aplugin(hostname, port, blob, timeout_sec)` - Async function execution
 - `aregister_module_d3functions(ipaddr, module_name)` - Async module registration
 - `aregister_all_d3functions(ipaddr)` - Async registration of all modules
 

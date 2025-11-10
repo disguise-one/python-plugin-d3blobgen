@@ -1,0 +1,20 @@
+# Include essential documentation
+include README.md
+include LICENSE
+include pyproject.toml
+
+# Include package marker and type stubs
+include src/d3blobgen/py.typed
+include src/d3blobgen/scripts/d3.pyi
+
+# Exclude development and build files
+exclude .gitignore
+exclude .python-version
+exclude pytest.ini
+exclude plan.md
+recursive-exclude examples *
+recursive-exclude tests *
+recursive-exclude .github *
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude .DS_Store

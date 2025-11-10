@@ -1,15 +1,64 @@
 from d3blobgen.core import d3function, add_packages_in_current_file
-from typing import TYPE_CHECKING, TypedDict
+from typing import TypedDict, TYPE_CHECKING
 if TYPE_CHECKING:
     from d3blobgen.scripts.d3 import *
 
 import datetime
 import time
 
-# all packages in this file will be registered to module
-# so all d3function can access them as well
+"""
+!!! Note: 
+It's very important to put `add_packages_in_current_file` with
+the module name to use it on Designer side.
+
+For example, `my_time` will only work if
+- `import datetime` exists in this file
+- `add_packages_in_current_file` exists with proper module name  
+"""
 add_packages_in_current_file("mymodule")
 add_packages_in_current_file("module2")
+
+# Simple d3function examples
+@d3function("mymodule")
+def my_add(a: int, b: int) -> int:
+    return a + b
+
+@d3function("mymodule")
+def custom_timeout_2ms() -> str:
+    import time
+    time.sleep(0.1)
+    return "success"
+
+@d3function("mymodule")
+def custom_timeout_1sec() -> str:
+    import time
+    time.sleep(0.1)
+    return "success"
+
+@d3function("mymodule")
+def use_my_add(a: int, b: int) -> int:
+    return my_add(a, b)
+
+@d3function("mymodule")
+def get_surface_uid(surface_name: str) -> dict[str, str]:
+    surface: Screen2 = resourceManager.load(
+        Path('objects/screen2/{}.apx'.format(surface_name)),
+        Screen2
+    )
+    return {
+        "name": surface.path.filename,
+        "uid": str(surface.uid)
+    }
+
+
+# d3function with builtin packages examples
+@d3function("mymodule")
+def rename_surface(surface_name: str, new_surface_name: str):
+    surface: Screen2 = resourceManager.load(
+        Path('objects/screen2/{}.apx'.format(surface_name)),
+        Screen2
+    )
+    surface.rename(surface.path.replaceFilename(new_surface_name))
 
 @d3function("mymodule")
 def my_time() -> str:
@@ -19,7 +68,7 @@ def my_time() -> str:
 def my_time_with_note(note: str) -> str:
     return "{}, Note: {}".format(my_time(), note)
 
-@d3function("module2")
+@d3function("module2") # module name is `module2` not `mymodule`
 def will_raise_if_call_different_module_function() -> str:
     return my_time()
 
@@ -27,9 +76,6 @@ def will_raise_if_call_different_module_function() -> str:
 def sleep_50ms() -> str:
     time.sleep(0.05)
     return "after 50ms"
-
-def same_module_function_access(note: str) -> str:
-    return "{}, Note: {}".format(sleep_50ms(), note)
 
 @d3function("module2")
 def my_time_module2() -> str:
@@ -64,3 +110,4 @@ def get_typed_surface(surface_name: str) -> Surface:
         "uid": surface.uid,
         "time": my_time_module2()
     }
+
