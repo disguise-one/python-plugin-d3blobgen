@@ -55,7 +55,7 @@ class MyCustomAsyncPlugin(D3PluginClient):
         return {
             "name": surface.path.filename,
             "uid": surface.uid,
-            "time": self.my_time()
+            "time": await self.my_time()
         }
 
     async def rename_surface(self, surface_name: str, new_surface_name: str):
@@ -85,13 +85,18 @@ async def main():
     print(client_to_visualise.get_register_module_content())
 
     print_title("Client class module examples")
+
+    async with PlugFactory(MyCustomAsyncPlugin, ip, port) as client:
+        # client: MyCustomAsyncPlugin
     async with MyCustomAsyncPlugin(DESIGNER_IP, DESIGNER_PORT) as client:
+
+
         print("1. get persist state of MyCustomPlugin")
         my_id: int = await client.get_my_id()
         print(f"id: {my_id}")
 
         print("2. update persist state of MyCustomPlugin")
-        await client.set_my_id(2)
+        await client.set_my_id(new_id=2)
         my_id: int = await client.get_my_id()
         print(f"id: {my_id}")
 
