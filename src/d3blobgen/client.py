@@ -310,9 +310,9 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         """Async context manager entry: registers the module with D3 Designer.
 
         Returns:
-            Self for use in 'async with' statements
+            self for use in 'async with' statements
         """
-        await d3_api_aregister_module(self.hostname, self.port, self.get_register_module_blob())
+        await self.aregister()
         print("Entering D3PluginModule context")
         return self
 
@@ -332,7 +332,7 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         Returns:
             Self for use in 'with' statements
         """
-        d3_api_register_module(self.hostname, self.port, self.get_register_module_blob())
+        self.register()
         print("Entering D3PluginModule context")
         return self
 
@@ -346,8 +346,14 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         """
         print("Exiting D3PluginModule context")
 
+    async def aregister(self) -> None:
+        await d3_api_aregister_module(self.hostname, self.port, self.get_register_module_blob())
+
+    def register(self) -> None:
+        d3_api_register_module(self.hostname, self.port, self.get_register_module_blob())
+
     def get_register_module_blob(self) -> dict[str, str]:
-        """Build the module registration blob for D3 Designer.
+        """Build the module registration blob for Designer.
 
         Returns:
             Dictionary containing moduleName and contents for registration
@@ -358,12 +364,12 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         }
 
     def get_register_module_content(self) -> str:
-        """Generate the complete module content to register with D3 Designer.
+        """Generate the complete module content to register with Designer.
 
         This combines the Python 2.7 compatible class definition with the
         instance creation code.
 
         Returns:
-            String containing the full module code to execute on D3 Designer
+            String containing the full module code to execute on Designer
         """
         return f"{self.source_code_py27}\n\n{self.instance_code}"  # type: ignore[attr-defined]
