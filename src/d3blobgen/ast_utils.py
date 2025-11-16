@@ -104,8 +104,11 @@ def is_exclude_arg(arg: ast.expr) -> bool:
     return isinstance(arg, ast.Name) and arg.id in init_args_to_exclude
 
 def filter_base_classes(class_node: ast.ClassDef):
-    """Remove all base classes as we won't support the inheritance at the moment.
-    
+    """Remove all base classes from a class definition for Python 2.7 compatibility.
+
+    This function modifies the class_node in-place by clearing its base class list.
+    Inheritance is not supported in the current D3 Designer plugin system.
+
     Args:
         class_node: The class definition node to process
     """
@@ -162,136 +165,161 @@ def filter_init_args(class_node: ast.ClassDef) -> list[str]:
 
 ###############################################################################
 # Type hint removal utilities
+class ConvertToPython27(ast.NodeTransformer):
+    """AST transformer to convert Python 3 code to Python 2.7 compatible format.
 
-
-def convert_ann_assign_to_assign(ann_assign_node: ast.AnnAssign) -> ast.Assign | None:
-    """Convert an annotated assignment node to a regular assignment node.
-
-    This function transforms type-annotated variable assignments (e.g., 'x: int = 5')
-    into regular assignments (e.g., 'x = 5') for Python 2.7 compatibility.
-
-    Args:
-        ann_assign_node: AST node representing an annotated assignment.
-
-    Returns:
-        ast.Assign node without type annotation, or None if no value is assigned.
+    This transformer performs the following conversions:
+    - Removes function return type annotations (def func() -> int)
+    - Removes argument type annotations (def func(x: int))
+    - Converts annotated assignments to regular assignments (x: int = 5 → x = 5)
+    - Removes await keywords from async expressions (await func() → func())
     """
-    if ann_assign_node.value is None:
-        return None
 
-    return ast.Assign(
-        targets=[ann_assign_node.target],
-        value=ann_assign_node.value,
-        lineno=ann_assign_node.lineno,
-        col_offset=ann_assign_node.col_offset,
-    )
+    def visit_FunctionDef(self, node: ast.FunctionDef):
+        """Remove return type annotation from function definitions.
 
+        Transforms 'def func() -> int:' to 'def func():' for Python 2.7 compatibility.
 
-class FastRemoveTypeHints(ast.NodeTransformer):
-    """AST transformer to remove type hints from Python code for 2.7 compatibility."""
+        Args:
+            node: The function definition AST node to transform.
 
-    def visit_AnnAssign(self, node):
-        """Transform annotated assignment nodes to regular assignment nodes.
+        Returns:
+            The function node without return type annotation.
+        """
+        node.returns = None
+        self.generic_visit(node)
+        return node
+
+    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
+        """Convert async function to regular function for Python 2.7 compatibility.
+
+        Transforms 'async def func() -> int:' to 'def func():' by:
+        1. Creating a new FunctionDef node with the same properties
+        2. Removing return type annotation via visit_FunctionDef
+        3. Returning the FunctionDef to replace the AsyncFunctionDef in the AST
+
+        Args:
+            node: The async function definition AST node to transform.
+
+        Returns:
+            A regular FunctionDef node without async keyword or return type annotation.
+        """
+        # Build the replacement FunctionDef
+        new = ast.FunctionDef(
+            name=node.name,
+            args=node.args,
+            body=node.body,
+            decorator_list=node.decorator_list,
+            returns=node.returns,
+            type_comment=getattr(node, "type_comment", None),
+        )
+
+        # Preserve source location
+        new = ast.copy_location(new, node)
+
+        # Now run normal FunctionDef logic + recurse
+        return self.visit_FunctionDef(new)
+
+    def visit_arg(self, node: ast.arg):
+        """Remove type annotation from argument.
+
+        Args:
+            node: The argument AST node to transform.
+
+        Returns:
+            The argument node without type annotation.
+        """
+        node.annotation = None
+        return node
+
+    def visit_AnnAssign(self, node: ast.AnnAssign):
+        """Remove type hint.
+
+        Converts type-annotated variable assignments (e.g., 'x: int = 5') into regular
+        assignments (e.g., 'x = 5'). If the annotated assignment has no value (e.g., 'x: int'),
+        it is removed entirely as Python 2.7 does not support variable declarations without values.
 
         Args:
             node: The annotated assignment AST node to transform.
 
         Returns:
-            Regular assignment node without type annotation.
+            Regular Assign node without type annotation if value exists, None otherwise.
         """
-        return convert_ann_assign_to_assign(node)
+        if node.value is None:
+            return None
 
+        return ast.Assign(
+            targets=[node.target],
+            value=node.value,
+            lineno=node.lineno,
+            col_offset=node.col_offset,
+        )
+    
+    def visit_Await(self, node: ast.Await):
+        """Remove await keyword.
 
-def remove_type_hints_from_body(function_node: ast.FunctionDef) -> None:
-    """Remove type hints from the body statements of a function.
+        Remove await keyword and return the underlying expression.
+        Transforms 'await expr()' to 'expr()'.
 
-    This function applies the FastRemoveTypeHints transformer to remove
-    annotated assignments from function body statements.
+        Args:
+            node: The await AST node to transform.
 
-    Args:
-        function_node: The function AST node to process.
-    """
-    transformer = FastRemoveTypeHints()
-    transformer.visit(function_node)
+        Returns:
+            The underlying expression without the await wrapper.
+        """
+        return self.visit(node.value)
 
 
 ###############################################################################
 # Python 2.7 conversion utilities
-
-
-def convert_function_node_to_py27(function_node: ast.FunctionDef) -> None:
+def convert_function_to_py27(
+    function_node: ast.FunctionDef | ast.AsyncFunctionDef
+) -> ast.FunctionDef:
     """Convert a function AST node to Python 2.7 compatible format.
 
     This function removes all type annotations from a function definition,
     including return type annotations, parameter type annotations, and
     type hints within the function body to ensure Python 2.7 compatibility.
 
+    WARNING: This function modifies the input node in-place for FunctionDef nodes.
+    For AsyncFunctionDef nodes, a new FunctionDef node is created.
+
     Args:
         function_node: The function AST node to convert to Python 2.7 format.
+                      This node will be modified in-place if it's a FunctionDef.
+
+    Returns:
+        The converted FunctionDef node. For FunctionDef input, returns the same
+        (modified) node. For AsyncFunctionDef input, returns a new FunctionDef node.
     """
-    # Strip type hints for Python 2 compatibility
-    # Remove return type annotation
-    function_node.returns = None
-
-    # Remove argument type annotations
-    for arg in function_node.args.args:
-        arg.annotation = None
-
-    # Remove keyword-only argument type annotations
-    for arg in function_node.args.kwonlyargs:
-        arg.annotation = None
-
-    # Remove vararg type annotation (*args)
-    if function_node.args.vararg:
-        function_node.args.vararg.annotation = None
-
-    # Remove kwarg type annotation (**kwargs)
-    if function_node.args.kwarg:
-        function_node.args.kwarg.annotation = None
-
-    # Remove type hints from function body
-    remove_type_hints_from_body(function_node)
-
+    transformer = ConvertToPython27()
+    return transformer.visit(function_node)
 
 def convert_class_to_py27(class_node: ast.ClassDef) -> None:
-    """Convert async methods in a class to Python 2.7 compatible sync methods.
+    """Convert all methods in a class to Python 2.7 compatible format.
 
-    This function modifies the class_node in-place by:
-    1. Converting AsyncFunctionDef nodes to FunctionDef nodes
-    2. Recursively converting method bodies using convert_function_node_to_py27
+    This function modifies the class_node in-place by converting all function definitions
+    (both sync and async) to Python 2.7 compatible format. This includes:
+    1. Converting AsyncFunctionDef nodes to regular FunctionDef nodes
+    2. Removing type annotations from all methods
+    3. Recursively processing method bodies using convert_function_to_py27
 
     Args:
         class_node: The class definition node to convert
     """
     for i, node in enumerate(class_node.body):
-        if isinstance(node, ast.AsyncFunctionDef):
-            # Convert AsyncFunctionDef to FunctionDef by creating a new node
-            regular_func = ast.FunctionDef(
-                name=node.name,
-                args=node.args,
-                body=node.body,
-                decorator_list=node.decorator_list,
-                returns=node.returns,
-                type_comment=node.type_comment if hasattr(node, "type_comment") else None,
-                lineno=node.lineno,
-                col_offset=node.col_offset,
-            )
-            class_node.body[i] = regular_func
-            node = class_node.body[i]
-
-        if isinstance(node, ast.FunctionDef):
-            convert_function_node_to_py27(node)
+        if isinstance(node, ast.AsyncFunctionDef) or isinstance(node, ast.FunctionDef):
+            class_node.body[i] = convert_function_to_py27(node)
 
 
 ###############################################################################
 # Python package finder utility
-
-
 def find_packages_in_current_file(caller_stack: int = 1) -> list[str]:
     """Find all import statements in the caller's file by inspecting the call stack.
 
     This function walks up the call stack to find the module where it was called from,
-    then parses that module's source code to extract all import statements.
+    then parses that module's source code to extract all import statements that are
+    compatible with Python 2.7 and safe to send to D3 Designer.
 
     Args:
         caller_stack: Number of frames to go up the call stack. Default is 1 (immediate caller).
@@ -301,7 +329,9 @@ def find_packages_in_current_file(caller_stack: int = 1) -> list[str]:
         Sorted list of unique import statement strings (e.g., "import ast", "from pathlib import Path").
 
     Filters applied:
-        - Excludes imports inside `if TYPE_CHECKING:` blocks
+        - Excludes imports inside `if TYPE_CHECKING:` blocks (type checking only)
+        - Excludes imports from the 'd3blobgen' package (client-side only)
+        - Excludes imports from the 'typing' module (not supported in Python 2.7)
         - Excludes imports of this function itself to avoid circular references
     """
     # Get the this file frame
@@ -311,7 +341,7 @@ def find_packages_in_current_file(caller_stack: int = 1) -> list[str]:
 
     # Get the caller's frame (file where this function is called)
     caller_frame: types.FrameType | None = current_frame
-    for _i in range(caller_stack):
+    for _ in range(caller_stack):
         if not caller_frame or not caller_frame.f_back:
             return []
         caller_frame = caller_frame.f_back

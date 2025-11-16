@@ -22,7 +22,7 @@ from typing import Any, Generic, ParamSpec, TypeVar, get_type_hints, overload
 
 from pydantic import BaseModel, Field
 
-from d3blobgen.ast_utils import convert_function_node_to_py27, find_packages_in_current_file
+from d3blobgen.ast_utils import convert_function_to_py27, find_packages_in_current_file
 from d3blobgen.api import d3_api_register_module, d3_api_aregister_module
 from d3blobgen.models import TypedBlob, PluginRegisterResponse
 
@@ -75,7 +75,7 @@ def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
         raise ValueError(f"Given input is not a function\ninput:{source_code}")
 
     first_node = tree.body[0]
-    if not isinstance(first_node, ast.FunctionDef):
+    if not isinstance(first_node, ast.FunctionDef) and not isinstance(first_node, ast.AsyncFunctionDef):
         raise ValueError(f"Given input is not a function\ninput:{source_code}")
 
     # Extract function blob without decorator
@@ -100,8 +100,8 @@ def extract_function_info(func: Callable[..., Any]) -> FunctionInfo:
     for arg in first_node.args.args:
         args.append(arg.arg)
 
-    convert_function_node_to_py27(first_node)
-    blob_py27: str = ast.unparse(first_node)
+    first_node_py27 = convert_function_to_py27(first_node)
+    blob_py27: str = ast.unparse(first_node_py27)
 
     body_py27 = ""
     for stmt in body_nodes:
@@ -295,12 +295,9 @@ class D3Function(Generic[P, T]):
             - Execution blob dictionary
             - The return type class/type from the function's type hints (or Any if not annotated)
         """
-        type_hints = get_type_hints(self._function)
-        return_type = type_hints.get("return", Any)
 
         return TypedBlob[T](
             json=self.json(*args, **kwargs),
-            return_type=return_type,
             module_name=self.module_name,
         )
 

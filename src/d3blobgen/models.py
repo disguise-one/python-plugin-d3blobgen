@@ -40,6 +40,7 @@ class PluginStatus(BaseModel):
     details: list[PluginStatusDetail]
 
 
+# RetType is the return type of the function
 RetType = typing_extensions.TypeVar("RetType", default=Any)
 RetCastType = TypeVar("RetCastType")
 
@@ -164,10 +165,8 @@ class TypedBlob(Generic[RetType]):
 
     Attributes:
         blob: The execution blob dictionary (script, moduleName, etc.)
-        return_type: The expected return type of the execution
         module_name: The name of the module this execution belongs to
     """
 
     json: dict[str, str]
-    return_type: type[RetType]
     module_name: str
