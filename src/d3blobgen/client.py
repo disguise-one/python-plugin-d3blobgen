@@ -32,7 +32,8 @@ import functools
 import inspect
 import types
 from collections.abc import Callable
-from typing import Any, ParamSpec, TypeVar, get_type_hints
+from contextlib import contextmanager, asynccontextmanager
+from typing import ParamSpec, TypeVar
 
 from d3blobgen.ast_utils import (
     convert_class_to_py27,
@@ -55,6 +56,22 @@ P = ParamSpec("P")
 T = TypeVar("T")
 
 
+def build_blob(self, method_name: str, args, kwargs) -> TypedBlob[T]:
+    """Helper to build TypedBlob for both sync and async wrappers"""
+    # Serialize arguments to string representation for remote execution
+    args_parts = [repr(arg) for arg in args]
+    kwargs_parts = [f"{key}={repr(value)}" for key, value in kwargs.items()]
+    all_args = ", ".join(args_parts + kwargs_parts)
+
+    # Build the Python script that will execute remotely on D3 Designer
+    script = f"return plugin.{method_name}({all_args})"
+
+    # Create TypedBlob containing script, module info, and return type
+    return TypedBlob[T](
+        json={"moduleName": self.module_name, "script": script},
+        module_name=self.module_name,
+        )
+
 def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[P, T]):
     """Create a wrapper that executes a method remotely via D3 API calls.
 
@@ -73,34 +90,12 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
         An async wrapper if the original method is async, otherwise a sync wrapper.
         Both wrappers preserve the original method's metadata via functools.wraps.
     """
-
-    def _build_blob(self, args, kwargs) -> TypedBlob[T]:
-        """Helper to build TypedBlob for both sync and async wrappers"""
-        # Serialize arguments to string representation for remote execution
-        args_parts = [repr(arg) for arg in args]
-        kwargs_parts = [f"{key}={repr(value)}" for key, value in kwargs.items()]
-        all_args = ", ".join(args_parts + kwargs_parts)
-
-        # Build the Python script that will execute remotely on D3 Designer
-        script = f"return plugin.{method_name}({all_args})"
-
-        # Extract return type annotation from the original method for type safety
-        type_hints = get_type_hints(original_method)
-        return_type = type_hints.get("return", Any)
-
-        # Create TypedBlob containing script, module info, and return type
-        return TypedBlob[T](
-            json={"moduleName": self.module_name, "script": script},
-            return_type=return_type,
-            module_name=self.module_name,
-        )
-
     # Determine whether to create async or sync wrapper based on original method
     if inspect.iscoroutinefunction(original_method):
         # Create async wrapper that uses async D3 API call
         @functools.wraps(original_method)
         async def async_wrapper(self, *args, **kwargs):
-            blob = _build_blob(self, args, kwargs)
+            blob = build_blob(self, method_name, args, kwargs)
             response: PluginResponse[T] = await d3_api_aplugin(self.hostname, self.port, blob)
             return response.returnValue
 
@@ -109,11 +104,17 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
         # Create sync wrapper that uses synchronous D3 API call
         @functools.wraps(original_method)
         def sync_wrapper(self, *args, **kwargs):
-            blob = _build_blob(self, args, kwargs)
+            blob = build_blob(self, method_name, args, kwargs)
             response: PluginResponse[T] = d3_api_plugin(self.hostname, self.port, blob)
             return response.returnValue
 
         return sync_wrapper
+
+def create_d3_blob_wrapper(method_name: str, original_method: Callable[P, T]):
+    @functools.wraps(original_method)
+    def sync_wrapper(self, *args, **kwargs):
+        return build_blob(self, method_name, args, kwargs)
+    return sync_wrapper
 
 
 class D3PluginClientMeta(type):
@@ -159,9 +160,12 @@ class D3PluginClientMeta(type):
     instance_code: str
 
     def __new__(cls, name, bases, attrs):
+        # Skip the base class
+        if name == "D3PluginClient":
+            return super().__new__(cls, name, bases, attrs)
+
         # Use class name as default module_name if not explicitly provided
-        if not attrs.get("module_name"):
-            attrs["module_name"] = name
+        attrs["module_name"] = name
 
         # Get the caller's frame (where the class is being defined in user code)
         frame: types.FrameType | None = inspect.currentframe()
@@ -210,11 +214,7 @@ class D3PluginClientMeta(type):
         # Wrap all user-defined public methods to execute remotely via D3 API
         # Skip private methods (_*) and internal framework methods
         for attr_name, attr_value in attrs.items():
-            if (
-                callable(attr_value)
-                and not attr_name.startswith("_")
-                and attr_name not in ["get_register_module_blob", "get_register_module_content"]
-            ):
+            if callable(attr_value) and not attr_name.startswith("__"):
                 attrs[attr_name] = create_d3_plugin_method_wrapper(attr_name, attr_value)
 
         return super().__new__(cls, name, bases, attrs)
@@ -301,69 +301,52 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         accept additional parameters. The hostname and port are client-side only
         and won't be passed to the remote plugin instance.
     """
+    def __init__(self):
+        self.hostname: str | None = None
+        self.port: int | None = None
+        
+    def in_session(self):
+        return self.hostname and self.port
 
-    def __init__(self, hostname: str, port: int):
-        self.hostname: str = hostname
-        self.port: int = port
+    @asynccontextmanager
+    async def async_session(self, hostname: str, port: int, module_name: str | None):
+        try:
+            if module_name:
+                self.module_name = module_name
 
-    async def __aenter__(self):
-        """Async context manager entry: registers the module with D3 Designer.
+            self.hostname = hostname
+            self.port = port
+            await self._aregister(hostname, port)
+            print("Entering D3PluginModule context")
+            yield self
+        finally:
+            self.hostname = None
+            self.port = None
+            print("Exiting D3PluginModule context")
 
-        Returns:
-            self for use in 'async with' statements
-        """
-        await self.aregister()
-        print("Entering D3PluginModule context")
-        return self
+    @contextmanager
+    def session(self, hostname: str, port: int, module_name: str | None):
+        try:
+            if module_name:
+                self.module_name = module_name
 
-    async def __aexit__(self, exc_type, exc, tb):
-        """Async context manager exit: cleanup operations.
+            self.hostname = hostname
+            self.port = port
+            self._register(hostname, port)
+            print("Entering D3PluginModule context")
+            yield self
+        finally:
+            self.hostname = None
+            self.port = None
+            print("Exiting D3PluginModule context")
 
-        Args:
-            exc_type: Exception type if an exception occurred
-            exc: Exception instance if an exception occurred
-            tb: Traceback if an exception occurred
-        """
-        print("Exiting D3PluginModule context")
+    async def _aregister(self, hostname: str, port: int) -> None:
+        await d3_api_aregister_module(hostname, port, self._get_register_module_blob())
 
-    def __enter__(self):
-        """Sync context manager entry: registers the module with D3 Designer.
+    def _register(self, hostname: str, port: int) -> None:
+        d3_api_register_module(hostname, port, self._get_register_module_blob())
 
-        Returns:
-            Self for use in 'with' statements
-        """
-        self.register()
-        print("Entering D3PluginModule context")
-        return self
-
-    def __exit__(self, exc_type, exc_value, exc_traceback):
-        """Sync context manager exit: cleanup operations.
-
-        Args:
-            exc_type: Exception type if an exception occurred
-            exc_value: Exception instance if an exception occurred
-            exc_traceback: Traceback if an exception occurred
-        """
-        print("Exiting D3PluginModule context")
-
-    async def aregister(self) -> None:
-        await d3_api_aregister_module(self.hostname, self.port, self.get_register_module_blob())
-
-    def register(self) -> None:
-        d3_api_register_module(self.hostname, self.port, self.get_register_module_blob())
-
-    def get_register_module_blob(self) -> dict[str, str]:
-        """Build the module registration blob for Designer.
-
-        Returns:
-            Dictionary containing moduleName and contents for registration
-        """
-        return {
-            "moduleName": self.module_name,  # type: ignore[attr-defined]
-            "contents": self.get_register_module_content(),
-        }
-
-    def get_register_module_content(self) -> str:
+    def _get_register_module_content(self) -> str:
         """Generate the complete module content to register with Designer.
 
         This combines the Python 2.7 compatible class definition with the
@@ -373,3 +356,14 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
             String containing the full module code to execute on Designer
         """
         return f"{self.source_code_py27}\n\n{self.instance_code}"  # type: ignore[attr-defined]
+
+    def _get_register_module_blob(self) -> dict[str, str]:
+        """Build the module registration blob for Designer.
+
+        Returns:
+            Dictionary containing moduleName and contents for registration
+        """
+        return {
+            "moduleName": self.module_name,  # type: ignore[attr-defined]
+            "contents": self._get_register_module_content(),
+        }
