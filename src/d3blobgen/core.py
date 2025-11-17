@@ -22,7 +22,10 @@ from typing import Any, Generic, ParamSpec, TypeVar
 
 from pydantic import BaseModel, Field
 
-from d3blobgen.ast_utils import convert_function_to_py27, find_packages_in_current_file
+from d3blobgen.ast_utils import (
+    convert_function_to_py27,
+    find_packages_in_current_file
+)
 from d3blobgen.models import (
     PluginPayload,
     RegisterPayload,

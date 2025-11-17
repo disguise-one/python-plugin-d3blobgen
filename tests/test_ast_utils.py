@@ -227,15 +227,20 @@ class TestConvertToPython27Transformer:
         transformed = transformer.visit(tree)
 
         func = transformed.body[0]
+        assert isinstance(func, ast.FunctionDef)
         assign_stmt = func.body[0]
+        assert isinstance(assign_stmt, ast.Assign)
 
         # Should be a .format() call
         assert isinstance(assign_stmt.value, ast.Call)
+        assert isinstance(assign_stmt.value.func, ast.Attribute)
         assert assign_stmt.value.func.attr == "format"
 
         # The format string should preserve the format spec (if implementation supports it)
         # Current implementation handles simple format specs
+        assert isinstance(assign_stmt.value.func.value, ast.Constant)
         format_str = assign_stmt.value.func.value.value
+        assert isinstance(format_str, str)
         assert "Value:" in format_str
         assert "{" in format_str and "}" in format_str
 
@@ -255,12 +260,16 @@ class TestConvertToPython27Transformer:
         transformed = transformer.visit(tree)
 
         func = transformed.body[0]
+        assert isinstance(func, ast.FunctionDef)
         assign_stmt = func.body[0]
+        assert isinstance(assign_stmt, ast.Assign)
 
         # Should be a .format() call
         assert isinstance(assign_stmt.value, ast.Call)
+        assert isinstance(assign_stmt.value.func, ast.Attribute)
 
         # The format string should preserve the conversion flag
+        assert isinstance(assign_stmt.value.func.value, ast.Constant)
         assert assign_stmt.value.func.value.value == "Repr: {!r}"
 
         # It should have one argument (obj)
@@ -279,12 +288,16 @@ class TestConvertToPython27Transformer:
         transformed = transformer.visit(tree)
 
         func = transformed.body[0]
+        assert isinstance(func, ast.FunctionDef)
         assign_stmt = func.body[0]
+        assert isinstance(assign_stmt, ast.Assign)
 
         # Should be a .format() call
         assert isinstance(assign_stmt.value, ast.Call)
+        assert isinstance(assign_stmt.value.func, ast.Attribute)
 
         # The format string should have two placeholders
+        assert isinstance(assign_stmt.value.func.value, ast.Constant)
         assert assign_stmt.value.func.value.value == "Name: {}, Age: {}"
 
         # It should have two arguments (name, age)
@@ -303,12 +316,16 @@ class TestConvertToPython27Transformer:
         transformed = transformer.visit(tree)
 
         func = transformed.body[0]
+        assert isinstance(func, ast.FunctionDef)
         assign_stmt = func.body[0]
+        assert isinstance(assign_stmt, ast.Assign)
 
         # Should be a .format() call
         assert isinstance(assign_stmt.value, ast.Call)
+        assert isinstance(assign_stmt.value.func, ast.Attribute)
 
         # The format string should preserve the escaped braces
+        assert isinstance(assign_stmt.value.func.value, ast.Constant)
         assert assign_stmt.value.func.value.value == "Dict: {{key: {}}}"
 
         # It should have one argument (value)
@@ -327,12 +344,16 @@ class TestConvertToPython27Transformer:
         transformed = transformer.visit(tree)
 
         func = transformed.body[0]
+        assert isinstance(func, ast.FunctionDef)
         assign_stmt = func.body[0]
+        assert isinstance(assign_stmt, ast.Assign)
 
         # Should be a .format() call
         assert isinstance(assign_stmt.value, ast.Call)
+        assert isinstance(assign_stmt.value.func, ast.Attribute)
 
         # The format string should have one placeholder
+        assert isinstance(assign_stmt.value.func.value, ast.Constant)
         assert assign_stmt.value.func.value.value == "Count: {}"
 
         # It should have one argument (len(items))
@@ -352,13 +373,18 @@ class TestConvertToPython27Transformer:
         transformed = transformer.visit(tree)
 
         func = transformed.body[0]
+        assert isinstance(func, ast.FunctionDef)
         assign_stmt = func.body[0]
+        assert isinstance(assign_stmt, ast.Assign)
 
         # Should be a .format() call
         assert isinstance(assign_stmt.value, ast.Call)
+        assert isinstance(assign_stmt.value.func, ast.Attribute)
 
         # The format string should preserve conversion flag at minimum
+        assert isinstance(assign_stmt.value.func.value, ast.Constant)
         format_str = assign_stmt.value.func.value.value
+        assert isinstance(format_str, str)
         assert "Value:" in format_str
         assert "{!s" in format_str or "{" in format_str
 
@@ -379,6 +405,7 @@ class TestConvertFunctionToPy27:
 
         tree = ast.parse(source)
         func_node = tree.body[0]
+        assert isinstance(func_node, ast.FunctionDef)
 
         convert_function_to_py27(func_node)
 
@@ -402,6 +429,7 @@ class TestConvertFunctionToPy27:
 
         tree = ast.parse(source)
         func_node = tree.body[0]
+        assert isinstance(func_node, ast.AsyncFunctionDef)
 
         # First convert async to regular (simulating what happens in real usage)
         transformer = ConvertToPython27()
@@ -412,6 +440,7 @@ class TestConvertFunctionToPy27:
 
         # Check await was removed
         assign_stmt = new_func.body[0]
+        assert isinstance(assign_stmt, ast.Assign)
         assert isinstance(assign_stmt.value, ast.Call)
 
         # Check annotated assignment was converted
@@ -435,6 +464,7 @@ class TestConvertClassToPy27:
 
         tree = ast.parse(source)
         class_node = tree.body[0]
+        assert isinstance(class_node, ast.ClassDef)
 
         convert_class_to_py27(class_node)
 
@@ -519,6 +549,7 @@ class TestAsyncFunctionDefInvestigation:
         for_loop = func.body[1]
         assert isinstance(for_loop, ast.For)
         assign_in_loop = for_loop.body[0]
+        assert isinstance(assign_in_loop, ast.Assign)
         assert isinstance(assign_in_loop.value, ast.Call)
 
     def test_location_metadata_preserved(self):
@@ -590,6 +621,7 @@ class TestFilterBaseClasses:
 
         tree = ast.parse(source)
         class_node = tree.body[0]
+        assert isinstance(class_node, ast.ClassDef)
 
         # Verify bases exist before filtering
         assert len(class_node.bases) == 2
@@ -608,6 +640,7 @@ class TestFilterBaseClasses:
 
         tree = ast.parse(source)
         class_node = tree.body[0]
+        assert isinstance(class_node, ast.ClassDef)
 
         filter_base_classes(class_node)
 
@@ -629,6 +662,7 @@ class TestFilterInitArgs:
 
         tree = ast.parse(source)
         class_node = tree.body[0]
+        assert isinstance(class_node, ast.ClassDef)
 
         param_names = filter_init_args(class_node)
 
