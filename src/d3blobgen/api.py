@@ -10,9 +10,9 @@ from d3blobgen.models import (
     D3_PLUGIN_MODULE_REG_ENDPOINT,
     PluginError,
     PluginException,
-    PluginResponse,
-    PluginRegisterResponse,
     PluginPayload,
+    PluginRegisterResponse,
+    PluginResponse,
     RetType,
 )
 
@@ -192,7 +192,7 @@ def d3_api_plugin(
     payload: PluginPayload[RetType],
     timeout_sec: float | None = None,
 ) -> PluginResponse[RetType]:
-    
+
     response = d3_api_request(
         Method.POST,
         hostname,

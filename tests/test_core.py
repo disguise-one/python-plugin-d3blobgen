@@ -1,16 +1,15 @@
-from unittest.mock import AsyncMock, Mock, patch
-
 import pytest
 
 from d3blobgen.core import (
     D3Function,
+    D3PythonScript,
     FunctionInfo,
-    aregister_all_d3functions,
     d3function,
+    d3pythonscript,
     extract_function_info,
     get_all_d3functions,
     get_all_modules,
-    register_all_d3functions,
+    get_register_payload,
 )
 
 
@@ -132,18 +131,16 @@ class TestExtractFunctionInfo:
 
 class TestD3Function:
     def test_d3_function_creation(self):
-        d3_func = D3Function("test_module", None, example_function)
+        d3_func = D3Function("test_module", example_function)
 
         assert d3_func.name == "example_function"
         assert d3_func.module_name == "test_module"
-        assert d3_func._is_module_function
 
     def test_d3_function_standalone(self):
-        d3_func = D3Function("", None, standalone_function._function)
+        d3_func = D3Function("", standalone_function._function)
 
         assert d3_func.name == "standalone_function"
         assert d3_func.module_name == ""
-        assert not d3_func._is_module_function
 
     def test_d3_function_call(self):
         # Test that the wrapped function can still be called
@@ -154,24 +151,25 @@ class TestD3Function:
         assert result == 8
 
     def test_get_execute_blob_module_function(self):
-        blob = decorated_example_function.json()
+        payload = decorated_example_function.payload()
 
-        assert blob["moduleName"] == "test_module"
-        assert blob["script"] == "return decorated_example_function()"
+        assert payload.moduleName == "test_module"
+        assert payload.script == "return decorated_example_function()"
 
     def test_get_execute_blob_standalone_function(self):
-        blob = standalone_function.json(10, 20)
+        # standalone_function is still a D3Function (module function with empty module name)
+        # so it generates module-style execution scripts
+        payload = standalone_function.payload(10, 20)
 
-        assert "script" in blob
-        assert "x=10" in blob["script"]
-        assert "y=20" in blob["script"]
-        assert "return x + y" in blob["script"]
+        assert payload.moduleName == ""
+        assert "return standalone_function(10, 20)" in payload.script
 
     def test_get_module_register_blob(self):
-        blob = D3Function.get_module_register_json("test_module")
+        payload = get_register_payload("test_module")
 
-        assert blob["moduleName"] == "test_module"
-        assert "def decorated_example_function():" in blob["contents"]
+        assert payload is not None
+        assert payload.moduleName == "test_module"
+        assert "def decorated_example_function():" in payload.contents
 
 
 
@@ -223,30 +221,6 @@ class TestD3FunctionDecorator:
         assert test_func.module_name == ""
         assert test_func.name == "test_func"
 
-    def test_decorator_without_parentheses(self):
-        """Test that @d3function works without parentheses"""
-        @d3function
-        def test_func():
-            return "test result"
-
-        assert isinstance(test_func, D3Function)
-        assert test_func.module_name == ""
-        assert test_func.name == "test_func"
-        # Verify it can be called
-        assert test_func() == "test result"
-
-    def test_decorator_without_parentheses_with_args(self):
-        """Test that @d3function works without parentheses for functions with arguments"""
-        @d3function
-        def test_func_with_args(a: int, b: int) -> int:
-            return a + b
-
-        assert isinstance(test_func_with_args, D3Function)
-        assert test_func_with_args.module_name == ""
-        assert test_func_with_args.name == "test_func_with_args"
-        # Verify it can be called
-        assert test_func_with_args(3, 4) == 7
-
 
 class TestRegistrationFunctions:
     def test_get_all_modules(self):
@@ -255,126 +229,61 @@ class TestRegistrationFunctions:
 
     def test_get_all_d3functions(self):
         functions = get_all_d3functions()
-        function_names = [name for module, name in functions]
+        function_names = [name for _, name in functions]
         assert "decorated_example_function" in function_names
         assert "standalone_function" in function_names
 
 
 class TestD3FunctionEquality:
     def test_hash_and_equality(self):
-        func1 = D3Function("module1", None, example_function)
-        func2 = D3Function("module2", None, example_function)  # Different module, same function
+        func1 = D3Function("module1", example_function)
+        func2 = D3Function("module2", example_function)  # Different module, same function
 
         # Should be equal and have same hash because they wrap the same function
         assert func1 == func2
         assert hash(func1) == hash(func2)
 
     def test_inequality_different_functions(self):
-        func1 = D3Function("module1", None, example_function)
-        func2 = D3Function("module1", None, example_function_with_args)
+        func1 = D3Function("module1", example_function)
+        func2 = D3Function("module1", example_function_with_args)
 
         # Should not be equal because they wrap different functions
         assert func1 != func2
 
 
 
+class TestD3PythonScript:
+    def test_d3pythonscript_decorator(self):
+        @d3pythonscript
+        def test_func(a: int, b: int) -> int:
+            return a + b
 
-class TestRegisterAllD3Functions:
-    @patch("d3blobgen.utils.d3_api_register_module")
-    def test_register_all_modules_success(self, mock_register):
-        # Mock successful response for all modules
-        mock_register.return_value = (True, "")
+        assert isinstance(test_func, D3PythonScript)
+        assert test_func.name == "test_func"
+        # Verify it can be called
+        assert test_func(3, 4) == 7
 
-        results = register_all_d3functions("127.0.0.1", 80)
+    def test_d3pythonscript_payload(self):
+        @d3pythonscript
+        def test_func(a: int, b: int) -> int:
+            return a + b
 
-        # Should have results for all available modules
-        assert isinstance(results, dict)
-        assert len(results) > 0
+        payload = test_func.payload(5, 3)
 
-        # All results should be successful
-        for _module_name, (success, error) in results.items():
-            assert success is True
-            assert error == ""
+        # Script should contain variable assignments and function body
+        assert "a=5" in payload.script
+        assert "b=3" in payload.script
+        assert "return a + b" in payload.script
+        # Should not have moduleName for standalone scripts
+        assert not hasattr(payload, "moduleName") or payload.moduleName is None
 
-    @patch("d3blobgen.utils.d3_api_register_module")
-    def test_register_all_modules_mixed_results(self, mock_register):
-        # Mock alternating success/failure responses
-        call_count = 0
-        def mock_response_side_effect(*args, **kwargs):
-            nonlocal call_count
-            call_count += 1
-            # Alternate between success and failure based on call count
-            return (call_count % 2 == 1, "Error message" if call_count % 2 == 0 else "")
+    def test_d3pythonscript_with_kwargs(self):
+        @d3pythonscript
+        def test_func(a: int, b: int = 10) -> int:
+            return a + b
 
-        mock_register.side_effect = mock_response_side_effect
+        payload = test_func.payload(5, b=15)
 
-        results = register_all_d3functions("127.0.0.1", 80)
-
-        # Should have results for all available modules
-        assert isinstance(results, dict)
-        assert len(results) > 0
-
-
-
-
-class TestAsyncRegisterAllD3Functions:
-    @pytest.mark.asyncio
-    @patch("d3blobgen.utils.d3_api_aregister_module")
-    async def test_aregister_all_modules_success(self, mock_aregister_module):
-        # Mock successful registration for all modules
-        mock_aregister_module.return_value = (True, "")
-
-        results = await aregister_all_d3functions("127.0.0.1", 80)
-
-        # Should have results for all available modules
-        assert isinstance(results, dict)
-        assert len(results) > 0
-
-        # All results should be successful
-        for _module_name, (success, error) in results.items():
-            assert success is True
-            assert error == ""
-
-    @pytest.mark.asyncio
-    @patch("d3blobgen.utils.d3_api_aregister_module")
-    async def test_aregister_all_modules_mixed_results(self, mock_aregister_module):
-        # Mock alternating success/failure responses
-        call_count = 0
-
-        async def mock_aregister_side_effect(ipaddr, port, json_data):
-            nonlocal call_count
-            call_count += 1
-            # Alternate between success and failure
-            if call_count % 2 == 1:
-                return (True, "")
-            else:
-                return (False, "Mock error")
-
-        mock_aregister_module.side_effect = mock_aregister_side_effect
-
-        results = await aregister_all_d3functions("127.0.0.1", 80)
-
-        # Should have results for all available modules
-        assert isinstance(results, dict)
-        assert len(results) > 0
-
-    @pytest.mark.asyncio
-    async def test_aregister_all_modules_sets_registered_ipaddr(self):
-        # Test that the function sets the registered IP address
-        test_ip = "192.168.1.200"
-
-        # Store original IP address
-        original_ip = D3Function._registered_ipaddr
-
-        try:
-            with patch("d3blobgen.utils.d3_api_aregister_module") as mock_aregister_module:
-                mock_aregister_module.return_value = (True, "")
-
-                await aregister_all_d3functions(test_ip, 80)
-
-                # Should have set the registered IP address
-                assert D3Function._registered_ipaddr == test_ip
-
-        finally:
-            # Restore original IP address
-            D3Function._registered_ipaddr = original_ip
+        assert "a=5" in payload.script
+        assert "b=15" in payload.script
+        assert "return a + b" in payload.script

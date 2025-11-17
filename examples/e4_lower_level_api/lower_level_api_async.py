@@ -66,7 +66,7 @@ async def example_register_module(designer_ip: str, designer_port: int):
     def my_add(a: int, b: int) -> int:
         return a + b
 
-    json_data: dict[str, str] | None = D3Function.get_module_register_json("mymodule")
+    json_data: dict[str, str] | None = D3Function.get_module_register_payload("mymodule")
     print("json:")
     print(json_data)
 

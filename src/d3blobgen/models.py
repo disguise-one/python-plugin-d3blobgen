@@ -143,7 +143,7 @@ class PluginException(Exception):
             self._str = "\n".join(
                 [
                     Exception.__str__(self),
-                    f"D3PluginError:",
+                    "D3PluginError:",
                     f"- code       : {self.status.code}",
                     f"- messages   :\n{self.status.message}{details_str}",
                     f"- d3Log      : {self.d3Log}",
@@ -168,7 +168,14 @@ class PluginPayload(BaseModel, Generic[RetType]):
     """
     moduleName: str|None = Field(
         default=None,
-        exclude_if=lambda v: v is None, 
+        exclude_if=lambda v: v is None,
         description="Module name to run script on Deisgner"
     )
     script: str = Field(description="Script to run on Designer")
+
+    def is_module_payload(self) -> bool:
+        return bool(self.moduleName)
+
+class RegisterPayload(BaseModel):
+    moduleName: str = Field(description="Module name to regsiter contents")
+    contents: str = Field(description="Python text blob to register with the module name")

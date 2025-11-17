@@ -1,17 +1,18 @@
-import aiohttp
 from typing import Any, Unpack
 
-from d3blobgen.core import D3Function
-from d3blobgen.models import PluginResponse, PluginPayload, RetType
+import aiohttp
+
 from d3blobgen.api import (
     Method,
-    d3_api_plugin,
     d3_api_aplugin,
-    d3_api_request,
-    d3_api_arequest,
-    d3_api_register_module,
     d3_api_aregister_module,
+    d3_api_arequest,
+    d3_api_plugin,
+    d3_api_register_module,
+    d3_api_request,
 )
+from d3blobgen.core import D3Function
+from d3blobgen.models import PluginPayload, PluginResponse, RetType
 
 
 class D3SessionBase:
@@ -31,21 +32,21 @@ class D3Session(D3SessionBase):
             if not is_registered:
                 raise RuntimeError(f"module {module_name} is not registered with d3function")
         return self
-            
+
     def __exit__(self ,type, value, traceback) -> None:
         pass
 
     def rpc(self, blob: PluginPayload[RetType], timeout_sec: float | None = None) -> RetType:
         return self.plugin(blob, timeout_sec).returnValue
-    
+
     def plugin(self, blob: PluginPayload[RetType], timeout_sec: float | None = None) -> PluginResponse[RetType]:
         return d3_api_plugin(self.hostname, self.port, blob, timeout_sec)
-    
+
     def request(self, method: Method, url_endpoint: str, **kwargs):
         return d3_api_request(method, self.hostname, self.port, url_endpoint, **kwargs)
-    
+
     def register_module(self, module_name: str, timeout_sec: float | None = None) -> bool:
-        json: dict[str, str] | None = D3Function.get_module_register_json(module_name)
+        json: dict[str, str] | None = D3Function.get_module_register_payload(module_name)
         if json:
             d3_api_register_module(self.hostname, self.port, json, timeout_sec)
             return True
@@ -70,7 +71,7 @@ class D3AsyncSession(D3SessionBase):
             if not is_registered:
                 raise RuntimeError(f"module {module_name} is not registered with d3function")
         return self
-    
+
     async def __aexit__(self, exc_type, exc, tb) -> None:
         pass
 
@@ -84,7 +85,7 @@ class D3AsyncSession(D3SessionBase):
         return await d3_api_aplugin(self.hostname, self.port, blob, timeout_sec)
 
     async def register_module(self, module_name: str, timeout_sec: float | None = None):
-        json: dict[str, str] | None = D3Function.get_module_register_json(module_name)
+        json: dict[str, str] | None = D3Function.get_module_register_payload(module_name)
         if json:
             await d3_api_aregister_module(self.hostname, self.port, json, timeout_sec)
             return True

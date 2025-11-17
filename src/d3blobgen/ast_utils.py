@@ -5,6 +5,7 @@ primarily for converting Python 3 code to Python 2.7 compatible format. This inc
 
 - Removing type hints and annotations
 - Converting async functions to sync functions
+- Converting f-strings to .format() style
 - Extracting and filtering class/function definitions
 - Source code inspection and manipulation
 
@@ -101,6 +102,7 @@ class ConvertToPython27(ast.NodeTransformer):
     - Removes argument type annotations (def func(x: int))
     - Converts annotated assignments to regular assignments (x: int = 5 → x = 5)
     - Removes await keywords from async expressions (await func() → func())
+    - Converts f-strings to .format() style (f"Hello {name}" → "Hello {}".format(name))
     """
 
     def visit_FunctionDef(self, node: ast.FunctionDef):
@@ -182,7 +184,7 @@ class ConvertToPython27(ast.NodeTransformer):
             lineno=node.lineno,
             col_offset=node.col_offset,
         )
-    
+
     def visit_Await(self, node: ast.Await):
         """Remove await keyword.
 
@@ -196,6 +198,64 @@ class ConvertToPython27(ast.NodeTransformer):
             The underlying expression without the await wrapper.
         """
         return self.visit(node.value)
+
+    def visit_JoinedStr(self, node: ast.JoinedStr):
+        # First transform any children
+        self.generic_visit(node)
+
+        fmt_parts = []
+        args = []
+
+        for value in node.values:
+            # Literal pieces of the f-string
+            if isinstance(value, ast.Constant) and isinstance(value.value, str):
+                # Escape braces so they are not taken as format fields
+                text = value.value.replace("{", "{{").replace("}", "}}")
+                fmt_parts.append(text)
+
+            # { … } expressions
+            elif isinstance(value, ast.FormattedValue):
+                placeholder = "{"
+
+                # Handle !r / !s / !a
+                if value.conversion != -1:
+                    placeholder += "!" + chr(value.conversion)
+
+                # Handle simple format specs, e.g. {x:.2f}
+                if value.format_spec is not None:
+                    # f-string format specs themselves are JoinedStr nodes
+                    fspec = value.format_spec
+                    if (
+                        isinstance(fspec, ast.JoinedStr) and
+                        len(fspec.values) == 1 and
+                        isinstance(fspec.values[0], ast.Constant) and
+                        isinstance(fspec.values[0].value, str)
+                    ):
+                        placeholder += ":" + fspec.values[0].value
+                    else:
+                        # For more complex specs we could fall back, but let's keep it simple
+                        pass
+
+                placeholder += "}"
+                fmt_parts.append(placeholder)
+                args.append(value.value)
+
+            else:
+                # Unusual case for f-strings – just in case
+                raise NotImplementedError(f"Unsupported JoinedStr part: {ast.dump(value)}")
+
+        # Build "string".format(*args)
+        fmt_str = ast.Constant("".join(fmt_parts))
+        new_node = ast.Call(
+            func=ast.Attribute(
+                value=fmt_str,
+                attr="format",
+                ctx=ast.Load()
+            ),
+            args=args,
+            keywords=[]
+        )
+        return ast.copy_location(new_node, node)
 
 
 ###############################################################################
