@@ -24,7 +24,11 @@ from pydantic import BaseModel, Field
 
 from d3blobgen.ast_utils import convert_function_to_py27, find_packages_in_current_file
 from d3blobgen.api import d3_api_register_module, d3_api_aregister_module
-from d3blobgen.models import TypedBlob, PluginRegisterResponse
+from d3blobgen.models import (
+    PluginPayload,
+    PluginRegisterResponse,
+    PluginPayload
+)
 
 
 ###############################################################################
@@ -271,23 +275,7 @@ class D3Function(Generic[P, T]):
         kwargs_parts = [f"{name}={repr(value)}" for name, value in kwargs.items()]
         return "\n".join(args_parts + kwargs_parts)
 
-    def json(self, *args: P.args, **kwargs: P.kwargs) -> dict[str, str]:
-        """Generate an execution blob for running this function in Designer.
-
-        Returns:
-            - **module execute blob** if @d3function was registered with module_name
-            - **script execute blob** if @d3function was registered without module_name
-        """
-        if self._is_module_function:
-            return {
-                "moduleName": self._module_name,
-                "script": f"return {self._function_info.name}({self._args_to_string(*args, **kwargs)})",
-            }
-        else:
-            all_args: str = self._args_to_assign(*args, **kwargs)
-            return {"script": f"{all_args}\n{self._function_info.body_py27}"}
-
-    def blob(self, *args: P.args, **kwargs: P.kwargs) -> TypedBlob[T]:
+    def payload(self, *args: P.args, **kwargs: P.kwargs) -> PluginPayload[T]:
         """Generate an execution blob with the return type extracted from function annotations.
 
         Returns:
@@ -295,11 +283,16 @@ class D3Function(Generic[P, T]):
             - Execution blob dictionary
             - The return type class/type from the function's type hints (or Any if not annotated)
         """
-
-        return TypedBlob[T](
-            json=self.json(*args, **kwargs),
-            module_name=self.module_name,
-        )
+        if self._is_module_function:
+            return PluginPayload[T](
+                moduleName=self._module_name,
+                script=f"return {self._function_info.name}({self._args_to_string(*args, **kwargs)})",
+            )
+        else:
+            all_args: str = self._args_to_assign(*args, **kwargs)
+            return PluginPayload[T](
+                script=f"{all_args}\n{self._function_info.body_py27}"
+            )
 
 
 ###############################################################################

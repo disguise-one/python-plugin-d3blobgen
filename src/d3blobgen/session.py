@@ -2,7 +2,7 @@ import aiohttp
 from typing import Any, Unpack
 
 from d3blobgen.core import D3Function
-from d3blobgen.models import PluginResponse, TypedBlob, RetType
+from d3blobgen.models import PluginResponse, PluginPayload, RetType
 from d3blobgen.api import (
     Method,
     d3_api_plugin,
@@ -35,10 +35,10 @@ class D3Session(D3SessionBase):
     def __exit__(self ,type, value, traceback) -> None:
         pass
 
-    def rpc(self, blob: TypedBlob[RetType], timeout_sec: float | None = None) -> RetType:
+    def rpc(self, blob: PluginPayload[RetType], timeout_sec: float | None = None) -> RetType:
         return self.plugin(blob, timeout_sec).returnValue
     
-    def plugin(self, blob: TypedBlob[RetType], timeout_sec: float | None = None) -> PluginResponse[RetType]:
+    def plugin(self, blob: PluginPayload[RetType], timeout_sec: float | None = None) -> PluginResponse[RetType]:
         return d3_api_plugin(self.hostname, self.port, blob, timeout_sec)
     
     def request(self, method: Method, url_endpoint: str, **kwargs):
@@ -77,10 +77,10 @@ class D3AsyncSession(D3SessionBase):
     async def request(self, method: Method, url_endpoint: str, **kwargs: Unpack[aiohttp.client._RequestOptions]) -> Any:
         return await d3_api_arequest(method, self.hostname, self.port, url_endpoint, **kwargs)
 
-    async def rpc(self, blob: TypedBlob[RetType], timeout_sec: float | None = None) -> RetType:
+    async def rpc(self, blob: PluginPayload[RetType], timeout_sec: float | None = None) -> RetType:
         return (await self.plugin(blob, timeout_sec)).returnValue
 
-    async def plugin(self, blob: TypedBlob[RetType], timeout_sec: float | None = None) -> PluginResponse[RetType]:
+    async def plugin(self, blob: PluginPayload[RetType], timeout_sec: float | None = None) -> PluginResponse[RetType]:
         return await d3_api_aplugin(self.hostname, self.port, blob, timeout_sec)
 
     async def register_module(self, module_name: str, timeout_sec: float | None = None):

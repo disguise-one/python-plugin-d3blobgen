@@ -156,8 +156,7 @@ class PluginException(Exception):
 
 ###############################################################################
 # Typed execution blob
-@dataclass
-class TypedBlob(Generic[RetType]):
+class PluginPayload(BaseModel, Generic[RetType]):
     """Type-safe execution blob for plugin calls.
 
     This dataclass packages together the execution blob, expected return type,
@@ -167,6 +166,9 @@ class TypedBlob(Generic[RetType]):
         blob: The execution blob dictionary (script, moduleName, etc.)
         module_name: The name of the module this execution belongs to
     """
-
-    json: dict[str, str]
-    module_name: str
+    moduleName: str|None = Field(
+        default=None,
+        exclude_if=lambda v: v is None, 
+        description="Module name to run script on Deisgner"
+    )
+    script: str = Field(description="Script to run on Designer")

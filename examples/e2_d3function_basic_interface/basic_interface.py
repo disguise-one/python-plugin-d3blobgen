@@ -24,19 +24,19 @@ def main():
     print(f"- result: {ret_val}")
 
     print("2. execute over plugin")
-    ret_val_from_plugin: int = session.rpc(my_add.blob(1, 2))
+    ret_val_from_plugin: int = session.rpc(my_add.payload(1, 2))
     print(f"- result: {ret_val_from_plugin}")
 
     print("3. custom timeout 2ms")
     try:
-        ret_str: str = session.rpc(custom_timeout_2ms.blob(), timeout_sec=0.002)
+        ret_str: str = session.rpc(custom_timeout_2ms.payload(), timeout_sec=0.002)
         print(f"- result: {ret_str}")
     except Exception as e:
         print(e)
 
     print("4. custom timeout 1sec")
     try:
-        ret_str: str = session.rpc(custom_timeout_1sec.blob(), timeout_sec=1)
+        ret_str: str = session.rpc(custom_timeout_1sec.payload(), timeout_sec=1)
         print(f"- result: {ret_str}")
     except Exception as e:
         print(e)
@@ -44,22 +44,22 @@ def main():
     # test exception
     print("5. exception over execute")
     try:
-        session.rpc(my_exception.blob())
+        session.rpc(my_exception.payload())
     except Exception as e:
         print(e)
 
     # access resource in Designer
     print("6. get surface uid")
-    surface_uid: dict[str, str] = session.rpc(get_surface_uid.blob(surface_name="surface 1"))
+    surface_uid: dict[str, str] = session.rpc(get_surface_uid.payload(surface_name="surface 1"))
     print(surface_uid)
 
     # update resource in Designer
     print("7. rename surface")
-    session.rpc(rename_surface.blob(surface_name="surface 1", new_surface_name="surface 2"))
-    surface_uid = session.rpc(get_surface_uid.blob(surface_name="surface 2"))
+    session.rpc(rename_surface.payload(surface_name="surface 1", new_surface_name="surface 2"))
+    surface_uid = session.rpc(get_surface_uid.payload(surface_name="surface 2"))
     print(surface_uid)
-    session.rpc(rename_surface.blob(surface_name="surface 2", new_surface_name="surface 1"))
-    surface_uid = session.rpc(get_surface_uid.blob(surface_name="surface 1"))
+    session.rpc(rename_surface.payload(surface_name="surface 2", new_surface_name="surface 1"))
+    surface_uid = session.rpc(get_surface_uid.payload(surface_name="surface 1"))
     print(surface_uid)
 
 if __name__ == "__main__":

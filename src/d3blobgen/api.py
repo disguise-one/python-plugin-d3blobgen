@@ -12,7 +12,7 @@ from d3blobgen.models import (
     PluginException,
     PluginResponse,
     PluginRegisterResponse,
-    TypedBlob,
+    PluginPayload,
     RetType,
 )
 
@@ -106,7 +106,7 @@ async def d3_api_aplugin_raw(
 async def d3_api_aplugin(
     hostname: str,
     port: int,
-    plugin_blob: TypedBlob[RetType],
+    payload: PluginPayload[RetType],
     timeout_sec: float | None = None,
 ) -> PluginResponse[RetType]:
 
@@ -115,7 +115,7 @@ async def d3_api_aplugin(
         hostname,
         port,
         D3_PLUGIN_ENDPOINT,
-        json=plugin_blob.json,
+        json=payload.model_dump(),
         timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
     )
     try:
@@ -189,7 +189,7 @@ def d3_api_plugin_raw(
 def d3_api_plugin(
     hostname: str,
     port: int,
-    plugin_blob: TypedBlob[RetType],
+    payload: PluginPayload[RetType],
     timeout_sec: float | None = None,
 ) -> PluginResponse[RetType]:
     
@@ -198,7 +198,7 @@ def d3_api_plugin(
         hostname,
         port,
         D3_PLUGIN_ENDPOINT,
-        json=plugin_blob.json,
+        json=payload.model_dump(),
         timeout=timeout_sec if timeout_sec else None,
     )
 

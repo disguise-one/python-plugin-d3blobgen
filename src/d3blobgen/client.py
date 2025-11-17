@@ -41,10 +41,11 @@ from d3blobgen.ast_utils import (
     filter_init_args,
     get_class_node,
     get_source,
-    init_args_to_exclude,
-    is_exclude_class_var,
 )
-from d3blobgen.models import PluginResponse, TypedBlob
+from d3blobgen.models import (
+    PluginResponse,
+    PluginPayload,
+)
 from d3blobgen.api import (
     d3_api_aplugin,
     d3_api_aregister_module,
@@ -55,8 +56,9 @@ from d3blobgen.api import (
 P = ParamSpec("P")
 T = TypeVar("T")
 
+from typing import Any
 
-def build_blob(self, method_name: str, args, kwargs) -> TypedBlob[T]:
+def build_payload(self, method_name: str, args, kwargs) -> PluginPayload[Any]:
     """Helper to build TypedBlob for both sync and async wrappers"""
     # Serialize arguments to string representation for remote execution
     args_parts = [repr(arg) for arg in args]
@@ -67,10 +69,10 @@ def build_blob(self, method_name: str, args, kwargs) -> TypedBlob[T]:
     script = f"return plugin.{method_name}({all_args})"
 
     # Create TypedBlob containing script, module info, and return type
-    return TypedBlob[T](
-        json={"moduleName": self.module_name, "script": script},
-        module_name=self.module_name,
-        )
+    return PluginPayload[Any](
+        moduleName=self.module_name,
+        script=script
+    )
 
 def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[P, T]):
     """Create a wrapper that executes a method remotely via D3 API calls.
@@ -95,7 +97,7 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
         # Create async wrapper that uses async D3 API call
         @functools.wraps(original_method)
         async def async_wrapper(self, *args, **kwargs):
-            blob = build_blob(self, method_name, args, kwargs)
+            blob = build_payload(self, method_name, args, kwargs)
             response: PluginResponse[T] = await d3_api_aplugin(self.hostname, self.port, blob)
             return response.returnValue
 
@@ -104,16 +106,16 @@ def create_d3_plugin_method_wrapper(method_name: str, original_method: Callable[
         # Create sync wrapper that uses synchronous D3 API call
         @functools.wraps(original_method)
         def sync_wrapper(self, *args, **kwargs):
-            blob = build_blob(self, method_name, args, kwargs)
+            blob = build_payload(self, method_name, args, kwargs)
             response: PluginResponse[T] = d3_api_plugin(self.hostname, self.port, blob)
             return response.returnValue
 
         return sync_wrapper
 
-def create_d3_blob_wrapper(method_name: str, original_method: Callable[P, T]):
+def create_d3_payload_wrapper(method_name: str, original_method: Callable[P, T]):
     @functools.wraps(original_method)
     def sync_wrapper(self, *args, **kwargs):
-        return build_blob(self, method_name, args, kwargs)
+        return build_payload(self, method_name, args, kwargs)
     return sync_wrapper
 
 
@@ -189,9 +191,6 @@ class D3PluginClientMeta(type):
         if not class_node:
             raise ValueError(f"D3PluginClientMeta: Failed to find class definition for {name}")
 
-        # Remove client-side-only class variables (e.g., module_name) from the AST
-        class_node.body = [node for node in class_node.body if not is_exclude_class_var(node)]
-
         # Remove all base class for now as we don't support inheritance
         filter_base_classes(class_node)
 
@@ -237,9 +236,9 @@ class D3PluginClientMeta(type):
         param_names: list[str] = cls.filtered_init_args
         arg_mapping: dict[str, str] = {}
 
-        # Map positional arguments (skip first N args which are client-side only: hostname, port)
+        # Map positional arguments
         for i, param_name in enumerate(param_names):
-            filtered_idx = i + len(init_args_to_exclude)  # Account for excluded client-side args
+            filtered_idx = i  # Account for excluded client-side args
             if filtered_idx < len(args):
                 arg_mapping[param_name] = repr(args[filtered_idx])
 

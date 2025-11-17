@@ -13,7 +13,7 @@ For sync examples, see lower_level_api.py
 
 import asyncio
 import aiohttp
-from d3blobgen.core import d3function, D3Function, TypedBlob
+from d3blobgen.core import d3function, D3Function, PluginPayload
 from d3blobgen.models import PluginResponse, PluginException
 from d3blobgen.api import (
     get_plugin_module_register_url,
@@ -34,7 +34,7 @@ async def example_blob_without_module():
     def my_add(a: int, b: int) -> int:
         return a + b
 
-    blob: TypedBlob[int] = my_add.blob(1, 2)
+    blob: PluginPayload[int] = my_add.payload(1, 2)
     print(f"blob: {blob}")
     print(f"\nScript:\n{blob.json['script']}")
 
@@ -49,7 +49,7 @@ async def example_blob_with_module():
     def my_add(a: int, b: int) -> int:
         return a + b
 
-    blob: TypedBlob[int] = my_add.blob(1, 2)
+    blob: PluginPayload[int] = my_add.payload(1, 2)
     print(f"blob: {blob}")
     print(f"\nScript:\n{blob.json['script']}")
 
@@ -125,7 +125,7 @@ async def example_execute_typed_blob(designer_ip: str, designer_port: int, my_ad
     print("Example 5: Execute with blob (type information) - async")
     print("=" * 60)
 
-    blob: TypedBlob[int] = my_add.blob(1, 2)
+    blob: PluginPayload[int] = my_add.blob(1, 2)
     print("blob:")
     print(blob)
 
@@ -149,7 +149,7 @@ async def example_exception_handling(designer_ip: str, designer_port: int):
     def my_exception_handling():
         raise RuntimeError("This is my exception!")
 
-    blob: TypedBlob = my_exception_handling.blob()
+    blob: PluginPayload = my_exception_handling.payload()
     print("blob:")
     print(blob)
 
@@ -183,9 +183,9 @@ async def example_concurrent_requests(designer_ip: str, designer_port: int):
     try:
         # Create multiple tasks to run concurrently
         tasks = [
-            d3_api_aplugin(designer_ip, designer_port, add_1_2.blob(1, 2)),
-            d3_api_aplugin(designer_ip, designer_port, add_3_4.blob(3, 4)),
-            d3_api_aplugin(designer_ip, designer_port, add_5_6.blob(5, 6)),
+            d3_api_aplugin(designer_ip, designer_port, add_1_2.payload(1, 2)),
+            d3_api_aplugin(designer_ip, designer_port, add_3_4.payload(3, 4)),
+            d3_api_aplugin(designer_ip, designer_port, add_5_6.payload(5, 6)),
         ]
 
         # Run all tasks concurrently and wait for all to complete

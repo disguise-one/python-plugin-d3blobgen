@@ -13,7 +13,7 @@ For async examples, see lower_level_api_async.py
 """
 
 import requests
-from d3blobgen.core import d3function, D3Function, TypedBlob
+from d3blobgen.core import d3function, D3Function, PluginPayload
 from d3blobgen.models import PluginResponse, PluginException
 from d3blobgen.api import (
     get_plugin_module_register_url,
@@ -33,7 +33,7 @@ def example_blob_without_module():
     def my_add(a: int, b: int) -> int:
         return a + b
 
-    blob: TypedBlob[int] = my_add.blob(1, 2)
+    blob: PluginPayload[int] = my_add.payload(1, 2)
     print(f"blob: {blob}")
     print(f"\nScript:\n{blob.json['script']}")
 
@@ -48,7 +48,7 @@ def example_blob_with_module():
     def my_add(a: int, b: int) -> int:
         return a + b
 
-    blob: TypedBlob[int] = my_add.blob(1, 2)
+    blob: PluginPayload[int] = my_add.payload(1, 2)
     print(f"blob: {blob}")
     print(f"\nScript:\n{blob.json['script']}")
 
@@ -122,7 +122,7 @@ def example_execute_typed_blob(designer_ip: str, designer_port: int, my_add):
     print("Example 5: Execute with blob (type information)")
     print("=" * 60)
 
-    blob: TypedBlob[int] = my_add.blob(1, 2)
+    blob: PluginPayload[int] = my_add.blob(1, 2)
     print("blob:")
     print(blob)
 
@@ -146,7 +146,7 @@ def example_exception_handling(designer_ip: str, designer_port: int):
     def my_exception_handling():
         raise RuntimeError("This is my exception!")
 
-    blob: TypedBlob = my_exception_handling.blob()
+    blob: PluginPayload = my_exception_handling.payload()
     print("blob:")
     print(blob)
 

@@ -19,22 +19,7 @@ import types
 
 
 ###############################################################################
-# Configuration for filtering client-side-only constructs
-
-class_vars_to_exclude: set[str] = {"module_name"}
-"""Class variables that should be excluded from the source code sent to D3 Designer."""
-
-init_args_to_exclude: set[str] = {"hostname", "port"}
-"""Arguments that should be excluded from __init__ when registering with D3 Designer.
-
-These arguments are client-side only and not needed by the remote plugin instance.
-"""
-
-
-###############################################################################
 # Source code extraction utilities
-
-
 def get_source(frame: types.FrameType) -> str | None:
     """Extract and dedent source code from a frame object.
 
@@ -69,40 +54,6 @@ def get_class_node(tree, class_name: str) -> ast.ClassDef | None:
 
 ###############################################################################
 # AST node filtering utilities
-
-
-def is_exclude_class_var(node: ast.stmt) -> bool:
-    """Check if an AST node represents a class variable that should be excluded.
-
-    Args:
-        node: AST statement node to check
-
-    Returns:
-        True if the node is an excluded class variable, False otherwise
-    """
-    if isinstance(node, ast.AnnAssign):
-        if isinstance(node.target, ast.Name) and node.target.id in class_vars_to_exclude:
-            return True
-    elif isinstance(node, ast.Assign):
-        if any(
-            isinstance(target, ast.Name) and target.id in class_vars_to_exclude
-            for target in node.targets
-        ):
-            return True
-    return False
-
-
-def is_exclude_arg(arg: ast.expr) -> bool:
-    """Check if an AST expression node represents an excluded argument.
-
-    Args:
-        arg: AST expression node to check
-
-    Returns:
-        True if the argument is in the exclusion list, False otherwise
-    """
-    return isinstance(arg, ast.Name) and arg.id in init_args_to_exclude
-
 def filter_base_classes(class_node: ast.ClassDef):
     """Remove all base classes from a class definition for Python 2.7 compatibility.
 
@@ -133,29 +84,6 @@ def filter_init_args(class_node: ast.ClassDef) -> list[str]:
             continue
         if node.name != "__init__":
             continue
-
-        # Remove super().__init__() calls from the body
-        node.body = [
-            stmt for stmt in node.body
-            if not (
-                isinstance(stmt, ast.Expr)
-                and isinstance(stmt.value, ast.Call)
-                and isinstance(stmt.value.func, ast.Attribute)
-                and stmt.value.func.attr == "__init__"
-                and isinstance(stmt.value.func.value, ast.Call)
-                and isinstance(stmt.value.func.value.func, ast.Name)
-                and stmt.value.func.value.func.id == "super"
-            )
-        ]
-
-        # Filter out excluded arguments from the parameter list
-        node.args.args = [arg for arg in node.args.args if arg.arg not in init_args_to_exclude]
-
-        # Filter keyword-only arguments if present (Python 3+ feature)
-        if node.args.kwonlyargs:
-            node.args.kwonlyargs = [
-                arg for arg in node.args.kwonlyargs if arg.arg not in init_args_to_exclude
-            ]
 
         # Return filtered parameter names (excluding 'self' which is implicit)
         return [arg.arg for arg in node.args.args if arg.arg != "self"]
