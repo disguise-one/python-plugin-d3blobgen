@@ -51,6 +51,7 @@ from d3blobgen.ast_utils import (
 from d3blobgen.models import (
     PluginPayload,
     PluginResponse,
+    RegisterPayload,
 )
 
 P = ParamSpec("P")
@@ -357,13 +358,13 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         """
         return f"{self.source_code_py27}\n\n{self.instance_code}"  # type: ignore[attr-defined]
 
-    def _get_register_module_blob(self) -> dict[str, str]:
+    def _get_register_module_blob(self) -> RegisterPayload:
         """Build the module registration blob for Designer.
 
         Returns:
             Dictionary containing moduleName and contents for registration
         """
-        return {
-            "moduleName": self.module_name,  # type: ignore[attr-defined]
-            "contents": self._get_register_module_content(),
-        }
+        return RegisterPayload(
+            moduleName=self.module_name,  # type: ignore[attr-defined]
+            contents=self._get_register_module_content()
+        )
