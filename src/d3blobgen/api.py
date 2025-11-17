@@ -11,6 +11,7 @@ from d3blobgen.models import (
     PluginError,
     PluginException,
     PluginPayload,
+    RegisterPayload,
     PluginRegisterResponse,
     PluginResponse,
     RetType,
@@ -130,7 +131,7 @@ async def d3_api_aplugin(
 
 
 async def d3_api_aregister_module(
-    hostname: str, port: int, json: dict | None = None, timeout_sec: float | None = None
+    hostname: str, port: int, payload: RegisterPayload, timeout_sec: float | None = None
 ) -> PluginRegisterResponse:
 
     try:
@@ -139,12 +140,12 @@ async def d3_api_aregister_module(
             hostname,
             port,
             D3_PLUGIN_MODULE_REG_ENDPOINT,
-            json=json,
+            json=payload.model_dump(),
             timeout=aiohttp.ClientTimeout(timeout_sec) if timeout_sec else None,
         )
     except Exception as e:
         raise Exception(
-            f"Failed to register module '{json.get('moduleName') if json else ''}'"
+            f"Failed to register module '{payload.moduleName}"
         ) from e
 
     plugin_response: PluginRegisterResponse = PluginRegisterResponse.model_validate(response)
@@ -216,7 +217,7 @@ def d3_api_plugin(
 def d3_api_register_module(
     hostname: str,
     port: int,
-    json: dict | None = None,
+    payload: RegisterPayload,
     timeout_sec: float | None = None,
 ) -> PluginRegisterResponse:
 
@@ -226,12 +227,12 @@ def d3_api_register_module(
             hostname,
             port,
             D3_PLUGIN_MODULE_REG_ENDPOINT,
-            json=json,
+            json=payload.model_dump(),
             timeout=timeout_sec if timeout_sec else None,
         )
     except Exception as e:
         raise Exception(
-            f"Failed to register module: '{json.get('moduleName') if json else ''}'"
+            f"Failed to register module: {payload.moduleName}"
         ) from e
 
     plugin_response: PluginRegisterResponse = PluginRegisterResponse.model_validate(response)
