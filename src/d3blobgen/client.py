@@ -342,10 +342,10 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
             print("Exiting D3PluginModule context")
 
     async def _aregister(self, hostname: str, port: int) -> None:
-        await d3_api_aregister_module(hostname, port, self._get_register_module_blob())
+        await d3_api_aregister_module(hostname, port, self._get_register_module_payload())
 
     def _register(self, hostname: str, port: int) -> None:
-        d3_api_register_module(hostname, port, self._get_register_module_blob())
+        d3_api_register_module(hostname, port, self._get_register_module_payload())
 
     def _get_register_module_content(self) -> str:
         """Generate the complete module content to register with Designer.
@@ -358,7 +358,7 @@ class D3PluginClient(metaclass=D3PluginClientMeta):
         """
         return f"{self.source_code_py27}\n\n{self.instance_code}"  # type: ignore[attr-defined]
 
-    def _get_register_module_blob(self) -> RegisterPayload:
+    def _get_register_module_payload(self) -> RegisterPayload:
         """Build the module registration blob for Designer.
 
         Returns:
